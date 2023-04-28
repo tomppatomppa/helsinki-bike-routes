@@ -1,4 +1,4 @@
-function validateCSV(data, validator) {
+function validateCSV(data, validator = null) {
   const fs = require('fs')
   const csv = require('csv-parser')
 
@@ -8,9 +8,9 @@ function validateCSV(data, validator) {
     fs.createReadStream(data)
       .pipe(csv())
       .on('data', (row) => {
-        if (validator && validator(row)) {
+        if (!validator) {
           result.push(row)
-        } else {
+        } else if (validator(row) === true) {
           result.push(row)
         }
       })

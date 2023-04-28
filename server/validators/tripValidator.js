@@ -12,7 +12,7 @@ function tripValidator(row) {
 
   const rowKeys = Object.keys(row)
 
-  if (!validCsvRowKeys.every((field) => rowKeys.includes(field))) {
+  if (!rowKeys.every((field) => validCsvRowKeys.includes(field.trim()))) {
     return false
   }
   if (isNaN(row[validCsvRowKeys[3]]) || row[validCsvRowKeys[3]] < 600)
