@@ -20,9 +20,21 @@ describe('Test validation.js', () => {
     })
   })
   describe('With tripValidator  function', () => {
-    test('should filter out 4 rows that have duration < 600', async () => {
+    test('should only return 5 objects', async () => {
       const result = await validateCSV(filePath, tripValidator)
       expect(result.length).toEqual(5)
+    })
+    test('remaining objects should have duration > 600', async () => {
+      const result = await validateCSV(filePath, tripValidator)
+      result.forEach((item) =>
+        expect(Number(item['Duration (sec.)'])).toBeGreaterThanOrEqual(600)
+      )
+    })
+    test('remaining objects should have distance > 10', async () => {
+      const result = await validateCSV(filePath, tripValidator)
+      result.forEach((item) =>
+        expect(Number(item['Covered distance (m)'])).toBeGreaterThanOrEqual(10)
+      )
     })
   })
 })
