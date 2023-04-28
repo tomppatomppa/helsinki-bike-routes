@@ -1,6 +1,6 @@
 const path = require('path')
 
-const { validateCSV } = require('../validations/validateCSV')
+const { validateCSV } = require('../validators/validateCSV')
 
 const filePath = path.resolve(__dirname, './files/testfile_trips.csv')
 
@@ -14,6 +14,6 @@ describe('Test validation.js', () => {
   })
   test('validateCSV correct length', async () => {
     const result = await validateCSV(filePath)
-    expect(result.length).toEqual(7)
+    expect(result.length).toEqual(9)
   })
 })

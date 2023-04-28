@@ -8,7 +8,11 @@ function validateCSV(data, validator) {
     fs.createReadStream(data)
       .pipe(csv())
       .on('data', (row) => {
-        result.push(row)
+        if (validator && validator(row)) {
+          result.push(row)
+        } else {
+          result.push(row)
+        }
       })
       .on('end', () => {
         resolve(result)
