@@ -8,12 +8,24 @@ const config = require('./config')
 const validCsvRow = config.tripValidator.validCsvRow
 
 describe('Test tripValidator fucntion', () => {
-  test('tripValidator returns true for trip duration > 600 seconds', async () => {
-    expect(tripValidator(validCsvRow)).toBe(true)
+  describe('duration', () => {
+    test('tripValidator returns true for trip duration > 600 seconds', () => {
+      expect(tripValidator(validCsvRow)).toBe(true)
+    })
+    test('tripValidator returns false for trip duration < 600 seconds', () => {
+      expect(tripValidator({ ...validCsvRow, 'Duration (sec.)': '599' })).toBe(
+        false
+      )
+    })
   })
-  test('tripValidator returns false for trip duration < 600 seconds', async () => {
-    expect(tripValidator({ ...validCsvRow, 'Duration (sec.)': '599' })).toBe(
-      false
-    )
+  describe('distance', () => {
+    test('tripValidator returns true for trip distance > 10 meters', () => {
+      expect(tripValidator(validCsvRow)).toBe(true)
+    })
+    test('tripValidator returns false for trip distance < 10 meters', () => {
+      expect(tripValidator({ ...validCsvRow, 'Covered distance (m)': 9 })).toBe(
+        false
+      )
+    })
   })
 })
