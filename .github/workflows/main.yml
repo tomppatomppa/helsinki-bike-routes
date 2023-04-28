@@ -23,7 +23,7 @@ jobs:
 
       - name: List Directory Content
         run: |
-          cd server/uploaded_files/
+          cd server
           ls -l
 
       - name: Heroku login credentials
