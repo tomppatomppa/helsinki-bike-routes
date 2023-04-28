@@ -21,6 +21,11 @@ jobs:
           cd server
           npm install
 
+      - name: List Directory Content
+        run: |
+          cd server/uploaded_files/
+          ls -l
+
       - name: Heroku login credentials
         run: |
           cat > ~/.netrc <<EOF
