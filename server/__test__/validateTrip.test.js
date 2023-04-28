@@ -68,4 +68,17 @@ describe('Test tripValidator fucntion', () => {
       expect(tripValidator(rowWithoutDistance)).toBe(false)
     })
   })
+
+  describe('Test dates', () => {
+    test('should return false with Departure as an invalid date', () => {
+      expect(
+        tripValidator({ ...validCsvRow, Departure: '2021-13-31T23:52:03' })
+      ).toBe(false)
+    })
+    test('should return false with Return as an invalid date', () => {
+      expect(
+        tripValidator({ ...validCsvRow, Return: '203-13-31T23:52:03' })
+      ).toBe(false)
+    })
+  })
 })
