@@ -90,4 +90,30 @@ describe('Test tripValidator fucntion', () => {
       ).toBe(false)
     })
   })
+  describe('Departure station id', () => {
+    test('Id should return false if not a positive integer', () => {
+      expect(
+        tripValidator({
+          ...validCsvRow,
+          'Departure station id': 0,
+        })
+      ).toBe(false)
+    })
+    test('Id should return false if a negative integer', () => {
+      expect(
+        tripValidator({
+          ...validCsvRow,
+          'Departure station id': -1,
+        })
+      ).toBe(false)
+    })
+    test('Id should return true with a positive integer', () => {
+      expect(
+        tripValidator({
+          ...validCsvRow,
+          'Departure station id': 1,
+        })
+      ).toBe(true)
+    })
+  })
 })

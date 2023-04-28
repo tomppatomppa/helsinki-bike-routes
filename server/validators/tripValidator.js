@@ -22,20 +22,25 @@ function tripValidator(row) {
   if (isNaN(trimmed[validKey[0]]) || trimmed[validKey[0]] < 10) return false
 
   if (
-    isNaN(Date.parse(trimmed[validKey[7]])) ||
-    isNaN(Date.parse(trimmed[validKey[4]]))
+    isNaN(Date.parse(trimmed['Departure'])) ||
+    isNaN(Date.parse(trimmed['Return']))
   ) {
     return false
   }
-  //Check if Departure > Return
+
   if (Date.parse(trimmed['Departure']) > Date.parse(trimmed['Return'])) {
     return false
   }
-  if (isNaN(trimmed['Departure station id'])) {
+
+  if (
+    isNaN(trimmed['Departure station id']) ||
+    parseInt(trimmed['Departure station id']) < 1
+  ) {
     return false
   }
 
-  if (isNaN(trimmed[validKey[3]]) || trimmed[validKey[3]] < 600) return false
+  if (isNaN(trimmed['Duration (sec.)']) || trimmed['Duration (sec.)'] < 600)
+    return false
 
   return true
 }
