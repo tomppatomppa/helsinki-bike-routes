@@ -1,16 +1,19 @@
 const path = require('path')
-const { validateCSV } = require('../middleware/validateCSV')
-const filePath = path.resolve(
-  __dirname,
-  './files/Helsingin_ja_Espoon_kaupunkipy.csv'
-)
+
+const { validateCSV } = require('../validations/validateCSV')
+
+const filePath = path.resolve(__dirname, './files/testfile_trips.csv')
 
 describe('Test validation.js', () => {
   test('check that testfile exists', () => {
     expect(filePath).toBeDefined()
   })
-  test('check that testfile exists', () => {
-    const result = validateCSV(filePath)
-    expect(result).toBeDefined()
+  test('validateCSV returns an array', async () => {
+    const result = await validateCSV(filePath)
+    expect(Array.isArray(result)).toBe(true)
+  })
+  test('validateCSV correct length', async () => {
+    const result = await validateCSV(filePath)
+    expect(result.length).toEqual(7)
   })
 })
