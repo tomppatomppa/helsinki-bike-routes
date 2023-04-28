@@ -80,5 +80,14 @@ describe('Test tripValidator fucntion', () => {
         tripValidator({ ...validCsvRow, Return: '203-13-31T23:52:03' })
       ).toBe(false)
     })
+    test('should return false if departure later than arrival', () => {
+      expect(
+        tripValidator({
+          ...validCsvRow,
+          Departure: '2021-05-31T23:56:59',
+          Return: '2021-05-31T23:55:59',
+        })
+      ).toBe(false)
+    })
   })
 })

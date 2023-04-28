@@ -9,6 +9,7 @@ function tripValidator(row) {
     'Return station name',
     'Departure',
   ]
+
   const trimmed = Object.fromEntries(
     Object.entries(row).map(([key, value]) => [key.trim(), value])
   )
@@ -24,6 +25,13 @@ function tripValidator(row) {
     isNaN(Date.parse(trimmed[validKey[7]])) ||
     isNaN(Date.parse(trimmed[validKey[4]]))
   ) {
+    return false
+  }
+  //Check if Departure > Return
+  if (Date.parse(trimmed['Departure']) > Date.parse(trimmed['Return'])) {
+    return false
+  }
+  if (isNaN(trimmed['Departure station id'])) {
     return false
   }
 
