@@ -27,5 +27,25 @@ describe('Test tripValidator fucntion', () => {
         false
       )
     })
+    test('tripValidator returns false when distance is undefined', () => {
+      expect(
+        tripValidator({ ...validCsvRow, 'Covered distance (m)': undefined })
+      ).toBe(false)
+    })
+    test('tripValidator returns false when distance is NaN', () => {
+      expect(
+        tripValidator({ ...validCsvRow, 'Covered distance (m)': 'notanumber' })
+      ).toBe(false)
+    })
+    test('tripValidator returns false when distance is empty string', () => {
+      expect(
+        tripValidator({ ...validCsvRow, 'Covered distance (m)': 'notanumber' })
+      ).toBe(false)
+    })
+    test('tripValidator returns false when distance is null', () => {
+      expect(
+        tripValidator({ ...validCsvRow, 'Covered distance (m)': null })
+      ).toBe(false)
+    })
   })
 })
