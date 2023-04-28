@@ -18,6 +18,7 @@ jobs:
 
       - name: Install Node dependencies
         run: |
+          cd server
           npm install
 
       - name: Heroku login credentials
