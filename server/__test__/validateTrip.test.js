@@ -1,11 +1,9 @@
-const path = require('path')
-
-const { validateCSV } = require('../validators/validateCSV')
 const tripValidator = require('../validators/tripValidator')
-const filePath = path.resolve(__dirname, './files/testfile_trips.csv')
 
 const config = require('./config')
 const validCsvRow = config.tripValidator.validCsvRow
+const rowWithoutDuration = config.tripValidator.rowWithoutDuration
+const rowWithoutDistance = config.tripValidator.rowWithoutDistance
 
 describe('Test tripValidator fucntion', () => {
   describe('duration', () => {
@@ -17,7 +15,26 @@ describe('Test tripValidator fucntion', () => {
         false
       )
     })
+    test('tripValidator returns false for trip duration is undefined', () => {
+      expect(
+        tripValidator({ ...validCsvRow, 'Duration (sec.)': undefined })
+      ).toBe(false)
+    })
+    test('tripValidator returns false for trip duration is NaN', () => {
+      expect(
+        tripValidator({ ...validCsvRow, 'Duration (sec.)': 'notanumber' })
+      ).toBe(false)
+    })
+    test('tripValidator returns false for trip duration is null', () => {
+      expect(tripValidator({ ...validCsvRow, 'Duration (sec.)': null })).toBe(
+        false
+      )
+    })
+    test('tripValidator returns false duration doesnt exists', () => {
+      expect(tripValidator(rowWithoutDuration)).toBe(false)
+    })
   })
+
   describe('distance', () => {
     test('tripValidator returns true for trip distance > 10 meters', () => {
       expect(tripValidator(validCsvRow)).toBe(true)
@@ -46,6 +63,9 @@ describe('Test tripValidator fucntion', () => {
       expect(
         tripValidator({ ...validCsvRow, 'Covered distance (m)': null })
       ).toBe(false)
+    })
+    test('tripValidator returns false when distance doesnt exist', () => {
+      expect(tripValidator(rowWithoutDistance)).toBe(false)
     })
   })
 })
