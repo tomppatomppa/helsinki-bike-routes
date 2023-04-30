@@ -16,7 +16,7 @@ module.exports = {
       'y',
     ],
   },
-  tripValidator: {
+  validateJourney: {
     validCsvRow: {
       'Covered distance (m)': '1870',
       'Departure station id': '082',

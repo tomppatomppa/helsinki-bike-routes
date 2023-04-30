@@ -1,4 +1,4 @@
-function tripValidator(row) {
+function validateJourney(row) {
   const validKey = [
     'Covered distance (m)',
     'Departure station id',
@@ -45,4 +45,4 @@ function tripValidator(row) {
   return true
 }
 
-module.exports = tripValidator
+module.exports = validateJourney
