@@ -69,6 +69,7 @@ function validateJourney(row) {
   ) {
     return false
   }
+
   return true
 }
 
