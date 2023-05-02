@@ -13,6 +13,7 @@ const ID = 'ID'
 const NAME_FI = 'Nimi'
 const NAME_SWE = 'Namn'
 const NAME_EN = 'Name'
+const Adress_FIN = 'Osoite'
 const X_COORDINATE = 'x'
 const Y_COORDINATE = 'y'
 const VALID_KEYS = [
@@ -61,6 +62,10 @@ function validateStation(row) {
     !isString(trimmedRow[NAME_SWE]) ||
     !isString(trimmedRow[NAME_EN])
   ) {
+    return false
+  }
+  //Adress
+  if (!isString(trimmedRow[Adress_FIN])) {
     return false
   }
 

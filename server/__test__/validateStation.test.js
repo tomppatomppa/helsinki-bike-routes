@@ -118,6 +118,30 @@ describe('Test for validateStation', () => {
       })
     })
   })
+  describe('Validate Adress', () => {
+    describe('Finnish address', () => {
+      test('returns false if address not a string', () => {
+        expect(validateStation({ ...validCsvRow, Osoite: 2 })).toBe(false)
+      })
+      test('returns false if address is a number', () => {
+        expect(validateStation({ ...validCsvRow, Osoite: '2' })).toBe(false)
+      })
+      test('returns false if address is null', () => {
+        expect(validateStation({ ...validCsvRow, Osoite: null })).toBe(false)
+      })
+      test('returns false if address is undefined', () => {
+        expect(validateStation({ ...validCsvRow, Osoite: undefined })).toBe(
+          false
+        )
+      })
+      test('returns false if address is boolean', () => {
+        expect(validateStation({ ...validCsvRow, Osoite: false })).toBe(false)
+      })
+      test('returns true if address valid', () => {
+        expect(validateStation(validCsvRow)).toBe(true)
+      })
+    })
+  })
   describe('Validate x coordinate', () => {
     test('Too large value for X coordinate should return false', () => {
       expect(validateStation({ ...validCsvRow, x: 181 })).toBe(false)
