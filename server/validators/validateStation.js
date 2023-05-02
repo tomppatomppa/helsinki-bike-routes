@@ -7,8 +7,6 @@ const MIN_X_COORDINATE = -180
 const MAX_Y_COORDINATE = 90
 const MIN_Y_COORDINATE = -90
 
-const MIN_KAPASITEET = 1
-
 const VALID_OPERAATTORS = ['CityBike Finland']
 
 const MIN_FID = 1
