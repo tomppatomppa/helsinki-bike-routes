@@ -16,6 +16,7 @@ const NAME_EN = 'Name'
 const ADDRESS_FIN = 'Osoite'
 const ADDRESS_SWE = 'Adress'
 const CITY_NAME_FIN = 'Kaupunki'
+const CITY_NAME_SWE = 'Stad'
 const X_COORDINATE = 'x'
 const Y_COORDINATE = 'y'
 
@@ -80,7 +81,10 @@ function validateStation(row) {
   }
 
   //Kaupunki
-  if (!isString(trimmedRow[CITY_NAME_FIN])) {
+  if (
+    !isString(trimmedRow[CITY_NAME_FIN]) ||
+    !isString(trimmedRow[CITY_NAME_SWE])
+  ) {
     return false
   }
 
