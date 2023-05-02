@@ -10,7 +10,7 @@ function parseCSV(data, validatorFn) {
       .on('data', (row) => {
         if (!validatorFn) {
           result.push(row)
-        } else if (validatorFn(row) === true) {
+        } else if (validatorFn(row)) {
           result.push(row)
         }
       })
