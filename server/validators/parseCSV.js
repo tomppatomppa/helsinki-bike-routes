@@ -1,4 +1,4 @@
-function validateCSV(data, validator = null) {
+function parseCSV(data, validator = null) {
   const fs = require('fs')
   const csv = require('csv-parser')
 
@@ -22,4 +22,4 @@ function validateCSV(data, validator = null) {
       })
   })
 }
-module.exports = { validateCSV }
+module.exports = parseCSV

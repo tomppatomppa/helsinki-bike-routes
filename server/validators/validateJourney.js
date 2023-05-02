@@ -8,7 +8,7 @@ const RETURN_DATE = 'Return'
 const DEPARTURE_STATION_ID = 'Departure station id'
 const JOURNEY_DURATION = 'Duration (sec.)'
 
-const validKeys = [
+const VALID_KEYS = [
   'Covered distance (m)',
   'Departure station id',
   'Departure station name',
@@ -24,7 +24,7 @@ function validateJourney(row) {
     Object.entries(row).map(([key, value]) => [key.trim(), value])
   )
 
-  if (!Object.keys(trimmedRow).every((field) => validKeys.includes(field))) {
+  if (!Object.keys(trimmedRow).every((field) => VALID_KEYS.includes(field))) {
     return false
   }
 
