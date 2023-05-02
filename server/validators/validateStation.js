@@ -6,6 +6,8 @@ const MIN_X_COORDINATE = -180
 const MAX_Y_COORDINATE = 90
 const MIN_Y_COORDINATE = -90
 
+const VALID_OPERAATTORS = ['CityBike Finland']
+
 const MIN_FID = 1
 const MIN_ID = 1
 const FID = 'FID'
@@ -17,6 +19,7 @@ const ADDRESS_FIN = 'Osoite'
 const ADDRESS_SWE = 'Adress'
 const CITY_NAME_FIN = 'Kaupunki'
 const CITY_NAME_SWE = 'Stad'
+const OPERAATTOR = 'Operaattor'
 const X_COORDINATE = 'x'
 const Y_COORDINATE = 'y'
 
@@ -80,10 +83,18 @@ function validateStation(row) {
     return false
   }
 
-  //Kaupunki
+  //Kaupunki, Stad
   if (
     !isString(trimmedRow[CITY_NAME_FIN]) ||
     !isString(trimmedRow[CITY_NAME_SWE])
+  ) {
+    return false
+  }
+
+  //Operaattor
+  if (
+    !isString(trimmedRow[OPERAATTOR]) ||
+    !VALID_OPERAATTORS.includes(trimmedRow[OPERAATTOR])
   ) {
     return false
   }

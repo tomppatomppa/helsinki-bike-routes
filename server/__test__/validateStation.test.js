@@ -30,6 +30,7 @@ describe('Test for validateStation', () => {
       expect(validateStation(validCsvRow)).toBe(true)
     })
   })
+
   describe('Validate ID', () => {
     test('returns false if ID is less than 1', () => {
       expect(validateStation({ ...validCsvRow, ID: 0 })).toBe(false)
@@ -56,7 +57,8 @@ describe('Test for validateStation', () => {
       expect(validateStation(validCsvRow)).toBe(true)
     })
   })
-  describe('Validate names', () => {
+
+  describe('Validate station names, FIN, SWE, EN', () => {
     describe('Finnish name tests', () => {
       test('return false if name is not a string', () => {
         expect(validateStation({ ...validCsvRow, Nimi: 2 })).toBe(false)
@@ -118,7 +120,8 @@ describe('Test for validateStation', () => {
       })
     })
   })
-  describe('Validate Adress', () => {
+
+  describe('Validate Address, FIN, SWE', () => {
     describe('Finnish address', () => {
       test('returns false if address not a string', () => {
         expect(validateStation({ ...validCsvRow, Osoite: 2 })).toBe(false)
@@ -165,7 +168,7 @@ describe('Test for validateStation', () => {
     })
   })
 
-  describe('Validate City fields', () => {
+  describe('Validate City names, FIN, SWE ', () => {
     describe('Finnish city name', () => {
       test('returns false if not a string', () => {
         expect(validateStation({ ...validCsvRow, Kaupunki: 23 })).toBe(false)
@@ -209,6 +212,34 @@ describe('Test for validateStation', () => {
       test('returns true if valid City', () => {
         expect(validateStation(validCsvRow)).toBe(true)
       })
+    })
+  })
+
+  describe('Validate Operaattor field', () => {
+    test('return false if empty string', () => {
+      expect(validateStation({ ...validCsvRow, Operaattor: '' })).toBe(false)
+    })
+    test('return false if operaattor not included in VALID_OPERAATTORS array', () => {
+      expect(
+        validateStation({ ...validCsvRow, Operaattor: 'CityBike Sweden' })
+      ).toBe(false)
+    })
+    test('return false if value is null', () => {
+      expect(validateStation({ ...validCsvRow, Operaattor: null })).toBe(false)
+    })
+    test('return false if value is undefined', () => {
+      expect(validateStation({ ...validCsvRow, Operaattor: undefined })).toBe(
+        false
+      )
+    })
+    test('return false if value is boolean', () => {
+      expect(validateStation({ ...validCsvRow, Operaattor: true })).toBe(false)
+    })
+    test('return false if value is number', () => {
+      expect(validateStation({ ...validCsvRow, Operaattor: 200.3 })).toBe(false)
+    })
+    test('return false if value is a valid operaattor', () => {
+      expect(validateStation(validCsvRow)).toBe(true)
     })
   })
 
