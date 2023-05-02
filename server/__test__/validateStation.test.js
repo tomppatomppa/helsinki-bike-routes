@@ -30,6 +30,32 @@ describe('Test for validateStation', () => {
       expect(validateStation(validCsvRow)).toBe(true)
     })
   })
+  describe('Validate ID', () => {
+    test('returns false if ID is less than 1', () => {
+      expect(validateStation({ ...validCsvRow, ID: 0 })).toBe(false)
+    })
+    test('returns false if ID is not Integer type', () => {
+      expect(validateStation({ ...validCsvRow, ID: 'notanINT' })).toBe(false)
+    })
+    test('returns false if ID is null', () => {
+      expect(validateStation({ ...validCsvRow, ID: null })).toBe(false)
+    })
+    test('returns false if ID is undefined', () => {
+      expect(validateStation({ ...validCsvRow, ID: undefined })).toBe(false)
+    })
+    test('returns false if ID is float', () => {
+      expect(validateStation({ ...validCsvRow, ID: 2.2 })).toBe(false)
+    })
+    test('returns false if ID is string float', () => {
+      expect(validateStation({ ...validCsvRow, ID: '2.2' })).toBe(false)
+    })
+    test('returns true if ID is Integer as string', () => {
+      expect(validateStation({ ...validCsvRow, ID: '1' })).toBe(true)
+    })
+    test('returns true if ID is valid', () => {
+      expect(validateStation(validCsvRow)).toBe(true)
+    })
+  })
 
   describe('Validate x coordinate', () => {
     test('Too large value for X coordinate should return false', () => {
@@ -51,6 +77,7 @@ describe('Test for validateStation', () => {
       expect(validateStation(validCsvRow)).toBe(true)
     })
   })
+
   describe('Validate y coordinate', () => {
     test('Too large value for Y coordinate should return false', () => {
       expect(validateStation({ ...validCsvRow, y: 91 })).toBe(false)
