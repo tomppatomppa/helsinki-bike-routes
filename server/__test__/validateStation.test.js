@@ -77,6 +77,26 @@ describe('Test for validateStation', () => {
         expect(validateStation(validCsvRow)).toBe(true)
       })
     })
+    describe('Swedish name tests', () => {
+      test('return false if name is not a string', () => {
+        expect(validateStation({ ...validCsvRow, Namn: 2 })).toBe(false)
+      })
+      test('return false if name is not a valid string', () => {
+        expect(validateStation({ ...validCsvRow, Namn: '2' })).toBe(false)
+      })
+      test('return false if name is null', () => {
+        expect(validateStation({ ...validCsvRow, Namn: null })).toBe(false)
+      })
+      test('return false if name is undefined', () => {
+        expect(validateStation({ ...validCsvRow, Namn: undefined })).toBe(false)
+      })
+      test('return false if name is boolean', () => {
+        expect(validateStation({ ...validCsvRow, Namn: true })).toBe(false)
+      })
+      test('return true if name is valid string', () => {
+        expect(validateStation(validCsvRow)).toBe(true)
+      })
+    })
   })
   describe('Validate x coordinate', () => {
     test('Too large value for X coordinate should return false', () => {

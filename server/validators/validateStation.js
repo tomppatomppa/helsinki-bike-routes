@@ -10,6 +10,7 @@ const MIN_ID = 1
 const FID = 'FID'
 const ID = 'ID'
 const NAME_FI = 'Nimi'
+const NAME_SWE = 'Namn'
 const X_COORDINATE = 'x'
 const Y_COORDINATE = 'y'
 const VALID_KEYS = [
@@ -59,6 +60,14 @@ function validateStation(row) {
   ) {
     return false
   }
+  //Namn
+  if (
+    typeof trimmedRow[NAME_SWE] !== 'string' ||
+    !isNaN(Number(trimmedRow[NAME_SWE]))
+  ) {
+    return false
+  }
+
   if (
     isNaN(parseFloat(trimmedRow[X_COORDINATE])) ||
     parseFloat(trimmedRow[X_COORDINATE]) > MAX_X_COORDINATE ||
