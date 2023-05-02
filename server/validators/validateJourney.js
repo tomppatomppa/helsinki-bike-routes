@@ -1,3 +1,6 @@
+const MIN_STATION_ID = 1
+const MIN_JOURNEY_DURATION = 600
+const MIN_COVERED_DISTANCE = 10
 function validateJourney(row) {
   const validKey = [
     'Covered distance (m)',
@@ -19,7 +22,12 @@ function validateJourney(row) {
     return false
   }
 
-  if (isNaN(trimmed[validKey[0]]) || trimmed[validKey[0]] < 10) return false
+  if (
+    isNaN(trimmed[validKey[0]]) ||
+    trimmed[validKey[0]] < MIN_COVERED_DISTANCE
+  ) {
+    return false
+  }
 
   if (
     isNaN(Date.parse(trimmed['Departure'])) ||
@@ -34,12 +42,15 @@ function validateJourney(row) {
 
   if (
     isNaN(trimmed['Departure station id']) ||
-    parseInt(trimmed['Departure station id']) < 1
+    parseInt(trimmed['Departure station id']) < MIN_STATION_ID
   ) {
     return false
   }
 
-  if (isNaN(trimmed['Duration (sec.)']) || trimmed['Duration (sec.)'] < 600)
+  if (
+    isNaN(trimmed['Duration (sec.)']) ||
+    trimmed['Duration (sec.)'] < MIN_JOURNEY_DURATION
+  )
     return false
 
   return true
