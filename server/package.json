@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "set NODE_ENV=test && jest --runInBand --silent",
+    "test": "set NODE_ENV=test&& jest --runInBand --silent",
     "build:dev": "cd ../client && npm install && npm run build && xcopy /s /y /i dist ..\\server\\dist && rmdir /s /q dist && cd ../server",
     "build:prod": "cd ../client && npm install && npm run build && cp -r dist ../server/dist && rm -rf dist && cd ../server"
   },
