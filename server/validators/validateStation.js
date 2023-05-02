@@ -1,10 +1,13 @@
 const isFloat = require('./isFloat')
 const isString = require('./isString')
+const isPositiveInteger = require('./isPositiveInteger')
 
 const MAX_X_COORDINATE = 180
 const MIN_X_COORDINATE = -180
 const MAX_Y_COORDINATE = 90
 const MIN_Y_COORDINATE = -90
+
+const MIN_KAPASITEET = 1
 
 const VALID_OPERAATTORS = ['CityBike Finland']
 
@@ -20,6 +23,7 @@ const ADDRESS_SWE = 'Adress'
 const CITY_NAME_FIN = 'Kaupunki'
 const CITY_NAME_SWE = 'Stad'
 const OPERAATTOR = 'Operaattor'
+const KAPASITEET = 'Kapasiteet'
 const X_COORDINATE = 'x'
 const Y_COORDINATE = 'y'
 
@@ -96,6 +100,11 @@ function validateStation(row) {
     !isString(trimmedRow[OPERAATTOR]) ||
     !VALID_OPERAATTORS.includes(trimmedRow[OPERAATTOR])
   ) {
+    return false
+  }
+
+  //Kapasiteet should be a positive Integer
+  if (!trimmedRow[KAPASITEET] || !isPositiveInteger(trimmedRow[KAPASITEET])) {
     return false
   }
 

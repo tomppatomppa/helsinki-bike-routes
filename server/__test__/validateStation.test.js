@@ -243,6 +243,34 @@ describe('Test for validateStation', () => {
     })
   })
 
+  describe('Validate Kapasiteet field', () => {
+    test('returns false if value is not a number', () => {
+      expect(
+        validateStation({ ...validCsvRow, Kapasiteet: 'not a number' })
+      ).toBe(false)
+    })
+    test('returns false if value is a float', () => {
+      expect(validateStation({ ...validCsvRow, Kapasiteet: '1.2' })).toBe(false)
+    })
+    test('returns false if value is a negative integer', () => {
+      expect(validateStation({ ...validCsvRow, Kapasiteet: -1 })).toBe(false)
+    })
+    test('returns false if value is null', () => {
+      expect(validateStation({ ...validCsvRow, Kapasiteet: null })).toBe(false)
+    })
+    test('returns false if value is undefined', () => {
+      expect(validateStation({ ...validCsvRow, Kapasiteet: undefined })).toBe(
+        false
+      )
+    })
+    test('returns false if value is boolean', () => {
+      expect(validateStation({ ...validCsvRow, Kapasiteet: false })).toBe(false)
+    })
+    test('returns true if kapasiteet is valid', () => {
+      expect(validateStation(validCsvRow)).toBe(true)
+    })
+  })
+
   describe('Validate x coordinate', () => {
     test('Too large value for X coordinate should return false', () => {
       expect(validateStation({ ...validCsvRow, x: 181 })).toBe(false)
