@@ -1,4 +1,5 @@
 const isFloat = require('./isFloat')
+const isString = require('./isString')
 
 const MAX_X_COORDINATE = 180
 const MIN_X_COORDINATE = -180
@@ -11,6 +12,7 @@ const FID = 'FID'
 const ID = 'ID'
 const NAME_FI = 'Nimi'
 const NAME_SWE = 'Namn'
+const NAME_EN = 'Name'
 const X_COORDINATE = 'x'
 const Y_COORDINATE = 'y'
 const VALID_KEYS = [
@@ -53,17 +55,11 @@ function validateStation(row) {
   ) {
     return false
   }
-  //Nimi
+  //Nimi, Namn, Name
   if (
-    typeof trimmedRow[NAME_FI] !== 'string' ||
-    !isNaN(Number(trimmedRow[NAME_FI]))
-  ) {
-    return false
-  }
-  //Namn
-  if (
-    typeof trimmedRow[NAME_SWE] !== 'string' ||
-    !isNaN(Number(trimmedRow[NAME_SWE]))
+    !isString(trimmedRow[NAME_FI]) ||
+    !isString(trimmedRow[NAME_SWE]) ||
+    !isString(trimmedRow[NAME_EN])
   ) {
     return false
   }
