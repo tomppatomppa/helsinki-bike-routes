@@ -17,6 +17,7 @@ const VALID_KEYS = [
   'x',
   'y',
 ]
+
 function validateStation(row) {
   const trimmedRow = Object.fromEntries(
     Object.entries(row).map(([key, value]) => [key.trim(), value])
@@ -27,11 +28,14 @@ function validateStation(row) {
   }
 
   if (
-    trimmedRow[X_COORDINATE] > MAX_X_COORDINATE ||
-    trimmedRow[X_COORDINATE] < MIN_X_COORDINATE
+    !trimmedRow[X_COORDINATE] ||
+    parseFloat(trimmedRow[X_COORDINATE]) > MAX_X_COORDINATE ||
+    parseFloat(trimmedRow[X_COORDINATE]) < MIN_X_COORDINATE ||
+    isNaN(trimmedRow[X_COORDINATE])
   ) {
     return false
   }
+
   return true
 }
 
