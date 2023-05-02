@@ -7,6 +7,8 @@ const DEPARTURE_DATE = 'Departure'
 const RETURN_DATE = 'Return'
 const DEPARTURE_STATION_ID = 'Departure station id'
 const JOURNEY_DURATION = 'Duration (sec.)'
+const RETURN_STATION_NAME = 'Return station name'
+const DEPARTURE_STATION_NAME = 'Departure station name'
 
 const VALID_KEYS = [
   'Covered distance (m)',
@@ -61,6 +63,12 @@ function validateJourney(row) {
   )
     return false
 
+  if (
+    typeof trimmedRow[DEPARTURE_STATION_NAME] !== 'string' ||
+    typeof trimmedRow[RETURN_STATION_NAME] !== 'string'
+  ) {
+    return false
+  }
   return true
 }
 

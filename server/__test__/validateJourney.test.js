@@ -6,7 +6,7 @@ const rowWithoutDuration = config.validateJourney.rowWithoutDuration
 const rowWithoutDistance = config.validateJourney.rowWithoutDistance
 
 describe('Test validateJourney fucntion', () => {
-  describe('duration', () => {
+  describe('Duration', () => {
     test('validateJourney returns true for trip duration > 600 seconds', () => {
       expect(validateJourney(validCsvRow)).toBe(true)
     })
@@ -35,7 +35,7 @@ describe('Test validateJourney fucntion', () => {
     })
   })
 
-  describe('distance', () => {
+  describe('Distance', () => {
     test('validateJourney returns true for trip distance > 10 meters', () => {
       expect(validateJourney(validCsvRow)).toBe(true)
     })
@@ -75,7 +75,7 @@ describe('Test validateJourney fucntion', () => {
     })
   })
 
-  describe('Test dates', () => {
+  describe('Test Dates', () => {
     test('should return false with Departure as an invalid date', () => {
       expect(
         validateJourney({ ...validCsvRow, Departure: '2021-13-31T23:52:03' })
@@ -120,6 +120,56 @@ describe('Test validateJourney fucntion', () => {
           'Departure station id': 1,
         })
       ).toBe(true)
+    })
+  })
+  describe('Departure and Return station names', () => {
+    test('Should return false when Departure station name is not a string', () => {
+      expect(
+        validateJourney({
+          ...validCsvRow,
+          'Departure station name': 1,
+        })
+      ).toBe(false)
+    })
+    test('Should return false when Departure station name is null', () => {
+      expect(
+        validateJourney({
+          ...validCsvRow,
+          'Departure station name': null,
+        })
+      ).toBe(false)
+    })
+    test('Should return false when Departure station name is undefined', () => {
+      expect(
+        validateJourney({
+          ...validCsvRow,
+          'Departure station name': undefined,
+        })
+      ).toBe(false)
+    })
+    test('Should return false when Return station name is not a string', () => {
+      expect(
+        validateJourney({
+          ...validCsvRow,
+          'Departure station name': 1.0,
+        })
+      ).toBe(false)
+    })
+    test('Should return false when Return station name is null', () => {
+      expect(
+        validateJourney({
+          ...validCsvRow,
+          'Departure station name': null,
+        })
+      ).toBe(false)
+    })
+    test('Should return false when Return station name is undefined', () => {
+      expect(
+        validateJourney({
+          ...validCsvRow,
+          'Departure station name': undefined,
+        })
+      ).toBe(false)
     })
   })
 })
