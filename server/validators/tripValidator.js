@@ -10,36 +10,40 @@ function tripValidator(row) {
     'Departure',
   ]
 
-  const trimmed = Object.fromEntries(
+  const trimmedRow = Object.fromEntries(
     Object.entries(row).map(([key, value]) => [key.trim(), value])
   )
-  const rowKeys = Object.keys(trimmed)
+  const rowKeys = Object.keys(trimmedRow)
 
   if (!rowKeys.every((field) => validKey.includes(field))) {
     return false
   }
 
-  if (isNaN(trimmed[validKey[0]]) || trimmed[validKey[0]] < 10) return false
+  if (isNaN(trimmedRow[validKey[0]]) || trimmedRow[validKey[0]] < 10)
+    return false
 
   if (
-    isNaN(Date.parse(trimmed['Departure'])) ||
-    isNaN(Date.parse(trimmed['Return']))
+    isNaN(Date.parse(trimmedRow['Departure'])) ||
+    isNaN(Date.parse(trimmedRow['Return']))
   ) {
     return false
   }
 
-  if (Date.parse(trimmed['Departure']) > Date.parse(trimmed['Return'])) {
+  if (Date.parse(trimmedRow['Departure']) > Date.parse(trimmedRow['Return'])) {
     return false
   }
 
   if (
-    isNaN(trimmed['Departure station id']) ||
-    parseInt(trimmed['Departure station id']) < 1
+    isNaN(trimmedRow['Departure station id']) ||
+    parseInt(trimmedRow['Departure station id']) < 1
   ) {
     return false
   }
 
-  if (isNaN(trimmed['Duration (sec.)']) || trimmed['Duration (sec.)'] < 600)
+  if (
+    isNaN(trimmedRow['Duration (sec.)']) ||
+    trimmedRow['Duration (sec.)'] < 600
+  )
     return false
 
   return true
