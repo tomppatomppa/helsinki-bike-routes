@@ -1,19 +1,18 @@
 const route = require('express').Router()
 const path = require('path')
-
+const multer = require('multer')
+const upload = multer({ dest: 'tmp/csv/' })
 const parseCSV = require('../validators/parseCSV')
-
+const fs = require('fs')
 const validateJourney = require('../validators/validateJourney')
 
-const filePath = path.resolve(
-  __dirname,
-  '../__test__/files/testfile_journeys.csv'
-)
+route.post('/add-many', upload.single('file'), async (req, res) => {
+  let data = fs.createReadStream(req.file.path)
 
-route.post('/add-many', async (req, res) => {
-  const result = await parseCSV(filePath, validateJourney)
-  console.log(result)
-  res.status(200).json('api/journeys/add-many endpoint')
+  const journeys = path.resolve(__dirname, '../' + data.path)
+  const result = await parseCSV(journeys, validateJourney)
+
+  res.status(200).json(result)
 })
 
 module.exports = route

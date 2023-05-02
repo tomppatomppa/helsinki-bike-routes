@@ -15,7 +15,7 @@ describe('test api', () => {
   test('should return status 200', async () => {
     const res = await request(app)
       .post('/api/journeys/add-many')
-      .attach('csvFile', fs.readFileSync(journeysCsvFile), 'journeys.csv')
+      .attach('file', fs.readFileSync(journeysCsvFile), 'journeys.csv')
       .set('Content-Type', 'multipart/form-data')
 
     expect(res.status).toBe(200)
