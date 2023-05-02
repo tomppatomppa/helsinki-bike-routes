@@ -1,7 +1,10 @@
 const MAX_X_COORDINATE = 180
 const MIN_X_COORDINATE = -180
+const MAX_Y_COORDINATE = 90
+const MIN_Y_COORDINATE = -90
 
 const X_COORDINATE = 'x'
+const Y_COORDINATE = 'y'
 const VALID_KEYS = [
   'FID',
   'ID',
@@ -32,6 +35,14 @@ function validateStation(row) {
     parseFloat(trimmedRow[X_COORDINATE]) > MAX_X_COORDINATE ||
     parseFloat(trimmedRow[X_COORDINATE]) < MIN_X_COORDINATE ||
     isNaN(trimmedRow[X_COORDINATE])
+  ) {
+    return false
+  }
+  if (
+    !trimmedRow[Y_COORDINATE] ||
+    parseFloat(trimmedRow[Y_COORDINATE]) > MAX_Y_COORDINATE ||
+    parseFloat(trimmedRow[Y_COORDINATE]) < MIN_Y_COORDINATE ||
+    isNaN(trimmedRow[Y_COORDINATE])
   ) {
     return false
   }
