@@ -1,8 +1,13 @@
+const isFloat = require('./isFloat')
+
 const MAX_X_COORDINATE = 180
 const MIN_X_COORDINATE = -180
 const MAX_Y_COORDINATE = 90
 const MIN_Y_COORDINATE = -90
 
+const MIN_FID = 1
+
+const FID = 'FID'
 const X_COORDINATE = 'x'
 const Y_COORDINATE = 'y'
 const VALID_KEYS = [
@@ -31,18 +36,24 @@ function validateStation(row) {
   }
 
   if (
-    !trimmedRow[X_COORDINATE] ||
+    parseInt(trimmedRow[FID]) < MIN_FID ||
+    isFloat(Number(trimmedRow[FID])) ||
+    isNaN(parseInt(trimmedRow[FID]))
+  ) {
+    return false
+  }
+
+  if (
+    isNaN(parseFloat(trimmedRow[X_COORDINATE])) ||
     parseFloat(trimmedRow[X_COORDINATE]) > MAX_X_COORDINATE ||
-    parseFloat(trimmedRow[X_COORDINATE]) < MIN_X_COORDINATE ||
-    isNaN(trimmedRow[X_COORDINATE])
+    parseFloat(trimmedRow[X_COORDINATE]) < MIN_X_COORDINATE
   ) {
     return false
   }
   if (
-    !trimmedRow[Y_COORDINATE] ||
+    isNaN(parseFloat(trimmedRow[Y_COORDINATE])) ||
     parseFloat(trimmedRow[Y_COORDINATE]) > MAX_Y_COORDINATE ||
-    parseFloat(trimmedRow[Y_COORDINATE]) < MIN_Y_COORDINATE ||
-    isNaN(trimmedRow[Y_COORDINATE])
+    parseFloat(trimmedRow[Y_COORDINATE]) < MIN_Y_COORDINATE
   ) {
     return false
   }
