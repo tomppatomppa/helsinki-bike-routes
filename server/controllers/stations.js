@@ -1,19 +1,17 @@
 const route = require('express').Router()
 const path = require('path')
-
+const upload = require('../middleware/upload')
 const parseCSV = require('../validators/parseCSV')
 
 const validateStation = require('../validators/validateStation')
+const deleteTmpFile = require('../middleware/deleteTmpFile')
 
-const filePath = path.resolve(
-  __dirname,
-  '../__test__/files/testfile_stations.csv'
-)
-
-route.post('/add-many', async (req, res) => {
+route.post('/add-many', upload.single('file'), async (req, res) => {
+  const filePath = path.resolve(__dirname, `../${req.file.path}`)
   const result = await parseCSV(filePath, validateStation)
-  console.log(result)
-  res.status(200).json('Testing add-many stations endpoint')
+
+  deleteTmpFile(filePath)
+  res.status(200).json(result)
 })
 
 module.exports = route
