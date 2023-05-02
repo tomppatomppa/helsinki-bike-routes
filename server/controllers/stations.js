@@ -10,10 +10,10 @@ const filePath = path.resolve(
   '../__test__/files/testfile_stations.csv'
 )
 
-route.post('/', async (req, res) => {
+route.post('/add-many', async (req, res) => {
   const result = await parseCSV(filePath, validateStation)
-
-  res.status(200).json('Testing add trip endpoint')
+  console.log(result)
+  res.status(200).json('Testing add-many stations endpoint')
 })
 
 module.exports = route

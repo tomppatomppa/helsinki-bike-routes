@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "jest --runInBand --silent",
+    "test": "set NODE_ENV=test && jest --runInBand --silent",
     "build:dev": "cd ../client && npm install && npm run build && xcopy /s /y /i dist ..\\server\\dist && rmdir /s /q dist && cd ../server",
     "build:prod": "cd ../client && npm install && npm run build && cp -r dist ../server/dist && rm -rf dist && cd ../server"
   },
@@ -15,8 +15,11 @@
   "dependencies": {
     "cors": "^2.8.5",
     "csv-parser": "^3.0.0",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "pg": "^8.10.0",
+    "sequelize": "^6.31.1"
   },
   "devDependencies": {
     "jest": "^29.5.0",
