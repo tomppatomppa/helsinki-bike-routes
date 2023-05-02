@@ -15,8 +15,10 @@ const NAME_SWE = 'Namn'
 const NAME_EN = 'Name'
 const ADDRESS_FIN = 'Osoite'
 const ADDRESS_SWE = 'Adress'
+const CITY_NAME_FIN = 'Kaupunki'
 const X_COORDINATE = 'x'
 const Y_COORDINATE = 'y'
+
 const VALID_KEYS = [
   'FID',
   'ID',
@@ -41,6 +43,7 @@ function validateStation(row) {
   if (!Object.keys(trimmedRow).every((field) => VALID_KEYS.includes(field))) {
     return false
   }
+
   //FID
   if (
     parseInt(trimmedRow[FID]) < MIN_FID ||
@@ -49,6 +52,7 @@ function validateStation(row) {
   ) {
     return false
   }
+
   //ID
   if (
     parseInt(trimmedRow[ID]) < MIN_ID ||
@@ -57,6 +61,7 @@ function validateStation(row) {
   ) {
     return false
   }
+
   //Nimi, Namn, Name
   if (
     !isString(trimmedRow[NAME_FI]) ||
@@ -65,7 +70,8 @@ function validateStation(row) {
   ) {
     return false
   }
-  //Adress
+
+  //Osoite, Adress
   if (
     !isString(trimmedRow[ADDRESS_FIN]) ||
     !isString(trimmedRow[ADDRESS_SWE])
@@ -73,14 +79,20 @@ function validateStation(row) {
     return false
   }
 
+  //Kaupunki
+  if (!isString(trimmedRow[CITY_NAME_FIN])) {
+    return false
+  }
+
+  //X coordinate
   if (
     isNaN(parseFloat(trimmedRow[X_COORDINATE])) ||
     parseFloat(trimmedRow[X_COORDINATE]) > MAX_X_COORDINATE ||
     parseFloat(trimmedRow[X_COORDINATE]) < MIN_X_COORDINATE
   ) {
-    //X coordinate
     return false
   }
+
   //Y coordinate
   if (
     isNaN(parseFloat(trimmedRow[Y_COORDINATE])) ||
