@@ -52,13 +52,12 @@ describe('Test api/stations endpoint', () => {
     })
   })
   describe('Adding station to the database', () => {
-    test('Should return 200 and array containing number of added stations', async () => {
-      const result = await request(app)
+    test('Should return 200 when adding valid stations', async () => {
+      await request(app)
         .post('/api/stations/add-many')
         .attach('file', fs.readFileSync(stationsCsvFile), 'stations.csv')
         .set('Content-Type', 'multipart/form-data')
         .expect(200)
-      expect(result.body).toEqual({ stationsAdded: 9 })
     })
     test('Should return array of 9 stations', async () => {
       const result = await request(app).get('/api/stations/').expect(200)

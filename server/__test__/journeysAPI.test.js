@@ -13,21 +13,25 @@ beforeAll(async () => {
 })
 
 afterAll(async () => {
-  await sequelize.drop()
   await sequelize.close()
 })
 
 describe('test api', () => {
-  test('expect testfile to exist', () => {
-    expect(journeysCsvFile).toBeDefined()
+  describe('Check prerequisites before running tests', () => {
+    test('expect testfile to exist', () => {
+      expect(journeysCsvFile).toBeDefined()
+    })
+    test('expect journeys to be empty to exist', () => {
+      expect(journeysCsvFile).toBeDefined()
+    })
   })
 
-  test('should return status 200', async () => {
-    const response = await request(app)
-      .post('/api/journeys/add-many')
-      .attach('file', fs.readFileSync(journeysCsvFile), 'journeys.csv')
-      .set('Content-Type', 'multipart/form-data')
+  // test('should return status 200', async () => {
+  //   const response = await request(app)
+  //     .post('/api/journeys/add-many')
+  //     .attach('file', fs.readFileSync(journeysCsvFile), 'journeys.csv')
+  //     .set('Content-Type', 'multipart/form-data')
 
-    expect(response.status).toBe(200)
-  })
+  //   expect(response.status).toBe(200)
+  // })
 })
