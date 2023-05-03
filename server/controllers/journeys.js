@@ -17,7 +17,10 @@ route.post(
     const filePath = path.resolve(__dirname, `../${req.file.path}`)
     const parsedJourneys = await parseCSV(filePath, validateJourney)
 
-    const addedJourneys = await Journey.bulkCreate(parsedJourneys)
+    const addedJourneys = await Journey.bulkCreate(parsedJourneys, {
+      ignoreDuplicates: true,
+    })
+
     deleteTmpFile(filePath)
     res.status(200).json({ addedJourneys: addedJourneys.length })
   }
