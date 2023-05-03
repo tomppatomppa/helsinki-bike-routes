@@ -34,6 +34,7 @@ route.post(
 
 route.get('/', async (req, res) => {
   const { offset = 0, limit = 1 } = req.query
+
   const allJourneys = await Journey.findAndCountAll({
     offset: offset,
     limit: limit,
