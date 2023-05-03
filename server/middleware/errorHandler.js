@@ -19,7 +19,7 @@ function errorHandler(error, req, res, next) {
         error: error.errors.map((e) => e.message),
       })
     }
-    return res.status(400).json({ error: err.message })
+    return res.status(400).json({ error: error.message })
   }
   next()
 }

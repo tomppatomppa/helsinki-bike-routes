@@ -7,6 +7,8 @@ const request = supertest
 const app = require('../app')
 const { connectToDatabase, sequelize } = require('../utils/database')
 
+const { Journey, Station } = require('../models/index')
+
 const journeysCsvFile = path.join(__dirname, './files/testfile_journeys.csv')
 const journeyWithInvalidReturnStation = path.join(
   __dirname,
@@ -48,7 +50,6 @@ const station2 = {
   y: 60.171524,
 }
 
-const { Journey, Station } = require('../models/index')
 beforeAll(async () => {
   await connectToDatabase()
 })
@@ -57,7 +58,7 @@ afterAll(async () => {
   await sequelize.close()
 })
 
-describe('test api', () => {
+describe('Test /api/journeys', () => {
   describe('Check prerequisites before running tests', () => {
     test('expect testfile to exist', () => {
       expect(journeysCsvFile).toBeDefined()
@@ -81,12 +82,12 @@ describe('test api', () => {
       expect(response.status).toBe(400)
     })
     test('Added journeys should not exists in the database', async () => {
-      const response = await request(app).get('/api/journeys/')
-      expect(response.body.length).toBe(0)
+      const allJourneys = await Journey.findAll()
+      expect(allJourneys.length).toBe(0)
     })
   })
 
-  describe('Test when a station exists', () => {
+  describe('Test when two stations exists', () => {
     test('Add two Stations to the database', async () => {
       await Station.create(station)
       await Station.create(station2)
