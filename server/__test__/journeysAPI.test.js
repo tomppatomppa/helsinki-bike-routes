@@ -6,7 +6,6 @@ const supertest = require('supertest')
 const request = supertest
 const app = require('../app')
 const { connectToDatabase, sequelize } = require('../utils/database')
-const { DATABASE_URL } = require('../utils/config')
 const journeysCsvFile = path.join(__dirname, './files/testfile_journeys.csv')
 
 beforeAll(async () => {
@@ -14,6 +13,7 @@ beforeAll(async () => {
 })
 
 afterAll(async () => {
+  await sequelize.drop()
   await sequelize.close()
 })
 

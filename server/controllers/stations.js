@@ -30,4 +30,5 @@ route.get('/', async (req, res) => {
   const allStations = await Station.findAll()
   res.status(200).json(allStations)
 })
+
 module.exports = route

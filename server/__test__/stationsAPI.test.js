@@ -8,6 +8,7 @@ const { connectToDatabase, sequelize } = require('../utils/database')
 const { Station } = require('../models/index')
 
 const stationsCsvFile = path.join(__dirname, './files/testfile_stations.csv')
+
 beforeAll(async () => {
   await connectToDatabase()
   await Station.destroy({
@@ -16,19 +17,19 @@ beforeAll(async () => {
 })
 
 afterAll(async () => {
-  await Station.destroy({
-    where: {},
-  })
+  await sequelize.drop()
   await sequelize.close()
 })
 
-describe('test api', () => {
-  test('expect testfile to exist', () => {
-    expect(stationsCsvFile).toBeDefined()
-  })
-  test('expect Station to be empty', async () => {
-    const result = await request(app).get('/api/stations/')
-    expect(result.body.length).toBe(0)
+describe('Test api/stations endpoint', () => {
+  describe('Check prerequisites before running tests', () => {
+    test('expect testfile to exist', () => {
+      expect(stationsCsvFile).toBeDefined()
+    })
+    test('expect stations to be empty before tests', async () => {
+      const result = await request(app).get('/api/stations/')
+      expect(result.body.length).toBe(0)
+    })
   })
 
   test('should return correct number of stations', async () => {
