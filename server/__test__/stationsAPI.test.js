@@ -5,9 +5,12 @@ const request = supertest
 const app = require('../app')
 
 const { connectToDatabase, sequelize } = require('../utils/database')
-const { Station } = require('../models/index')
 
 const stationsCsvFile = path.join(__dirname, './files/testfile_stations.csv')
+const invalidStationCsvFile = path.join(
+  __dirname,
+  './files/testfile_invalid_stations.csv'
+)
 const textfile = path.join(__dirname, './files/textfile.txt')
 
 beforeAll(async () => {
@@ -22,6 +25,7 @@ describe('Test api/stations endpoint', () => {
   describe('Check prerequisites before running tests', () => {
     test('expect testfile to exist', () => {
       expect(stationsCsvFile).toBeDefined()
+      expect(invalidStationCsvFile).toBeDefined()
     })
     test('expect stations to be empty before tests', async () => {
       const result = await request(app).get('/api/stations/')
@@ -45,6 +49,29 @@ describe('Test api/stations endpoint', () => {
         .attach('errorKey', fs.readFileSync(stationsCsvFile), 'stations.csv')
         .set('Content-Type', 'multipart/form-data')
         .expect(400)
+    })
+  })
+  describe('Adding station to the database', () => {
+    test('Should return 200 and array containing number of added stations', async () => {
+      const result = await request(app)
+        .post('/api/stations/add-many')
+        .attach('file', fs.readFileSync(stationsCsvFile), 'stations.csv')
+        .set('Content-Type', 'multipart/form-data')
+        .expect(200)
+      expect(result.body).toEqual({ stationsAdded: 9 })
+    })
+    test('Should return array of 9 stations', async () => {
+      const result = await request(app).get('/api/stations/').expect(200)
+      expect(result.body.length).toEqual(9)
+    })
+  })
+  describe('Adding an existing station', () => {
+    test('Should not throw error when duplicate FID', async () => {
+      await request(app)
+        .post('/api/stations/add-many')
+        .attach('file', fs.readFileSync(invalidStationCsvFile), 'stations.csv')
+        .set('Content-Type', 'multipart/form-data')
+        .expect(200)
     })
   })
 })
