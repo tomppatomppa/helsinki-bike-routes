@@ -28,16 +28,8 @@ describe('Test api/stations endpoint', () => {
       expect(result.body.length).toBe(0)
     })
   })
-  // test('should return correct number of stations', async () => {
-  //   const response = await request(app)
-  //     .post('/api/stations/add-many')
-  //     .attach('file', fs.readFileSync(stationsCsvFile), 'stations.csv')
-  //     .set('Content-Type', 'multipart/form-data')
-
-  //   expect(response.body.length).toBe(9)
-  // })
-  describe('Error sending file', () => {
-    test('Sending nothing to /add-many should throw 400 error', async () => {
+  describe('Test seding invalid files to the endpoint', () => {
+    test('Should return 400 when nothing is sent', async () => {
       await request(app).post('/api/stations/add-many').expect(400)
     })
     test('Should return 400 when wrong filetype is sent', async () => {
