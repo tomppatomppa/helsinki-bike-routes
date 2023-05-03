@@ -11,7 +11,6 @@ const connectToDatabase = async () => {
       await sequelize.sync({ force: true })
       console.log('tables dropped and recreated')
     }
-
     await sequelize.authenticate()
     console.log('connected to the database')
   } catch (err) {

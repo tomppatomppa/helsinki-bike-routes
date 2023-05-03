@@ -91,7 +91,7 @@ describe('Test /api/journeys', () => {
     })
   })
 
-  describe('Test when two stations exists', () => {
+  describe('When two stations exists in the database', () => {
     test('Add two Stations to the database', async () => {
       await Station.create(station)
       await Station.create(station2)
@@ -149,7 +149,7 @@ describe('Test /api/journeys', () => {
     })
   })
 
-  describe('GET /api/journeys', () => {
+  describe('GET /api/journeys with query params', () => {
     describe('Setup database', () => {
       test('Reset Stations and Journeys', async () => {
         await Journey.truncate()
@@ -174,12 +174,13 @@ describe('Test /api/journeys', () => {
     })
   })
 
-  describe('GET /api/journeys', () => {
+  describe('Test all query params', () => {
     test('Api counts 5 journeys in the database', async () => {
       const response = await request(app).get('/api/journeys')
       expect(response.body.allJourneys.count).toBe(journeys.length)
     })
-    describe('query param limit tests', () => {
+
+    describe('Testing query param <limit>', () => {
       test('Expect rows length to be 1 without query params limit', async () => {
         const response = await request(app).get('/api/journeys')
         expect(response.body.allJourneys.rows.length).toBe(1)
@@ -197,7 +198,7 @@ describe('Test /api/journeys', () => {
         expect(response.body.allJourneys.rows.length).toBe(5)
       })
     })
-    describe('query param offset', () => {
+    describe('Testing query param <offset>', () => {
       test('returns nextCursor=1 when no offset param is defined', async () => {
         const response = await request(app).get('/api/journeys')
         expect(response.body.nextCursor).toBe(1)
@@ -216,8 +217,8 @@ describe('Test /api/journeys', () => {
       })
     })
 
-    describe('query param order', () => {
-      test('default order is by Ascending order by id', async () => {
+    describe('Testing default query param <order>', () => {
+      test('default order should be ["id", "ASC"]', async () => {
         const response = await request(app)
           .get('/api/journeys')
           .query({ limit: 5 })
@@ -226,7 +227,7 @@ describe('Test /api/journeys', () => {
         expect(response.body.allJourneys.rows[2].id).toEqual(journeys[2].id)
         expect(response.body.allJourneys.rows[4].id).toEqual(journeys[4].id)
       })
-      test('should return journeys in Descending order', async () => {
+      test('Testing order = ["id", "DESC"]', async () => {
         const response = await request(app)
           .get('/api/journeys')
           .query({ limit: 5, order: ['id', 'DESC'] })
@@ -235,7 +236,7 @@ describe('Test /api/journeys', () => {
         expect(response.body.allJourneys.rows[2].id).toEqual(journeys[2].id)
         expect(response.body.allJourneys.rows[4].id).toEqual(journeys[0].id)
       })
-      test('DESCENDING order by covered_distance_m', async () => {
+      test('Testing order = ["Covered_distance_m", "DESC"]', async () => {
         const response = await request(app)
           .get('/api/journeys')
           .query({ limit: 5, order: ['Covered_distance_m', 'DESC'] })
@@ -248,7 +249,7 @@ describe('Test /api/journeys', () => {
           journeys[2].Covered_distance_m
         )
       })
-      test('ASCENDING order by covered_distance_m', async () => {
+      test('Testing order = ["Covered_distance_m", "ASC"]', async () => {
         const response = await request(app)
           .get('/api/journeys')
           .query({ limit: 5, order: ['Covered_distance_m', 'ASC'] })
