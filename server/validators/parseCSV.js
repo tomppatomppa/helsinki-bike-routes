@@ -1,3 +1,4 @@
+const parseRow = require('./parseRow')
 function parseCSV(data, validatorFn) {
   const fs = require('fs')
   const csv = require('csv-parser')
@@ -11,7 +12,7 @@ function parseCSV(data, validatorFn) {
         if (!validatorFn) {
           result.push(row)
         } else if (validatorFn(row)) {
-          result.push(row)
+          result.push(parseRow(row))
         }
       })
       .on('end', () => {
