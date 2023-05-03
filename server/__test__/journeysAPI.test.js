@@ -26,12 +26,17 @@ describe('test api', () => {
     })
   })
 
-  // test('should return status 200', async () => {
-  //   const response = await request(app)
-  //     .post('/api/journeys/add-many')
-  //     .attach('file', fs.readFileSync(journeysCsvFile), 'journeys.csv')
-  //     .set('Content-Type', 'multipart/form-data')
-
-  //   expect(response.status).toBe(200)
-  // })
+  describe('Adding journeys when there are no stations', () => {
+    test('should return status 400', async () => {
+      const response = await request(app)
+        .post('/api/journeys/add-many')
+        .attach('file', fs.readFileSync(journeysCsvFile), 'journeys.csv')
+        .set('Content-Type', 'multipart/form-data')
+      expect(response.status).toBe(400)
+    })
+    test('Added journeys should not exists in the database', async () => {
+      const response = await request(app).get('/api/journeys/')
+      expect(response.body.length).toBe(0)
+    })
+  })
 })

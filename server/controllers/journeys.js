@@ -2,6 +2,7 @@ const route = require('express').Router()
 const path = require('path')
 const upload = require('../middleware/upload')
 const parseCSV = require('../validators/parseCSV')
+const { Station, Journey } = require('../models/index')
 
 const validateFileUpload = require('../middleware/validateFileUpload')
 
@@ -14,14 +15,16 @@ route.post(
   validateFileUpload,
   async (req, res) => {
     const filePath = path.resolve(__dirname, `../${req.file.path}`)
-    const result = await parseCSV(filePath, validateJourney)
+    const parsedJourneys = await parseCSV(filePath, validateJourney)
 
+    const addedJourneys = await Journey.bulkCreate(parsedJourneys)
     deleteTmpFile(filePath)
-    res.status(200).json(result)
+    res.status(200).json({ addedJourneys: addedJourneys.length })
   }
 )
 
 route.get('/', async (req, res) => {
-  res.status(200).json('return all joryneys')
+  const allJourneys = await Journey.findAll()
+  res.status(200).json(allJourneys)
 })
 module.exports = route

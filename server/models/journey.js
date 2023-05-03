@@ -16,17 +16,18 @@ Journey.init(
     Return: {
       type: DataTypes.DATE,
     },
-    Departure: {
-      type: DataTypes.STRING,
-    },
     Departure_station_id: {
       type: DataTypes.INTEGER,
+      allowNull: false,
+      references: { model: 'stations', key: 'ID' },
     },
     Departure_station_name: {
       type: DataTypes.STRING,
     },
     Return_station_id: {
       type: DataTypes.INTEGER,
+      allowNull: false,
+      references: { model: 'stations', key: 'ID' },
     },
     Return_station_name: {
       type: DataTypes.STRING,
@@ -34,7 +35,7 @@ Journey.init(
     Covered_distance_m: {
       type: DataTypes.INTEGER,
     },
-    Duration_s: {
+    Duration_sec: {
       type: DataTypes.INTEGER,
     },
   },
