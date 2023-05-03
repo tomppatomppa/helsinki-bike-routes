@@ -6,7 +6,20 @@ const supertest = require('supertest')
 const request = supertest
 const app = require('../app')
 const { connectToDatabase, sequelize } = require('../utils/database')
+
 const journeysCsvFile = path.join(__dirname, './files/testfile_journeys.csv')
+const journeyWithInvalidReturnStation = path.join(
+  __dirname,
+  './files/testfile_withInvalidReturnStation.csv'
+)
+const journeyWithValidStations = path.join(
+  __dirname,
+  './files/testfile_withValidStations.csv'
+)
+const journeyWithOneValidOneInvalid = path.join(
+  __dirname,
+  './files/testfile_OneValidOneInvalidJourney.csv'
+)
 
 const station = {
   FID: 1,
@@ -87,6 +100,47 @@ describe('test api', () => {
 
       expect(stationExists.FID).toEqual(station.FID)
       expect(station2Exists.FID).toEqual(station2.FID)
+    })
+
+    test('Should not add journey with invalid return station id', async () => {
+      await request(app)
+        .post('/api/journeys/add-many')
+        .attach(
+          'file',
+          fs.readFileSync(journeyWithInvalidReturnStation),
+          'journeys.csv'
+        )
+        .set('Content-Type', 'multipart/form-data')
+
+      const allJourneys = await Journey.findAll()
+      expect(allJourneys.length).toBe(0)
+    })
+    test('Should add journey with both valid station ids', async () => {
+      await request(app)
+        .post('/api/journeys/add-many')
+        .attach(
+          'file',
+          fs.readFileSync(journeyWithValidStations),
+          'journeys.csv'
+        )
+        .set('Content-Type', 'multipart/form-data')
+
+      const allJourneys = await Journey.findAll()
+      expect(allJourneys.length).toBe(1)
+    })
+    test('Should only add one journey and ignore invalid journey', async () => {
+      await request(app)
+        .post('/api/journeys/add-many')
+        .attach(
+          'file',
+          fs.readFileSync(journeyWithOneValidOneInvalid),
+          'journeys.csv'
+        )
+        .set('Content-Type', 'multipart/form-data')
+        .expect(200)
+
+      const allJourneys = await Journey.findAll()
+      expect(allJourneys.length).toBe(2)
     })
   })
 })

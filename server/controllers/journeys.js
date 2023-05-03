@@ -2,12 +2,13 @@ const route = require('express').Router()
 const path = require('path')
 const upload = require('../middleware/upload')
 const parseCSV = require('../validators/parseCSV')
-const { Station, Journey } = require('../models/index')
+const { Journey } = require('../models/index')
 
 const validateFileUpload = require('../middleware/validateFileUpload')
 
 const validateJourney = require('../validators/validateJourney')
 const deleteTmpFile = require('../middleware/deleteTmpFile')
+const filterJourneys = require('../validators/filterJourneys')
 
 route.post(
   '/add-many',
@@ -17,7 +18,13 @@ route.post(
     const filePath = path.resolve(__dirname, `../${req.file.path}`)
     const parsedJourneys = await parseCSV(filePath, validateJourney)
 
-    const addedJourneys = await Journey.bulkCreate(parsedJourneys, {
+    const filteredJourneys = await filterJourneys(parsedJourneys)
+
+    if (filteredJourneys.length === 0) {
+      return res.status(400).json('No valid journeys')
+    }
+
+    const addedJourneys = await Journey.bulkCreate(filteredJourneys, {
       ignoreDuplicates: true,
     })
 
