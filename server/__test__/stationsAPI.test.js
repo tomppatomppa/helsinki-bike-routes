@@ -11,13 +11,9 @@ const stationsCsvFile = path.join(__dirname, './files/testfile_stations.csv')
 
 beforeAll(async () => {
   await connectToDatabase()
-  await Station.destroy({
-    where: {},
-  })
 })
 
 afterAll(async () => {
-  await sequelize.drop()
   await sequelize.close()
 })
 
@@ -31,7 +27,6 @@ describe('Test api/stations endpoint', () => {
       expect(result.body.length).toBe(0)
     })
   })
-
   test('should return correct number of stations', async () => {
     const response = await request(app)
       .post('/api/stations/add-many')

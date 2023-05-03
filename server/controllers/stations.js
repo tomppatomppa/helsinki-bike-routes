@@ -12,15 +12,7 @@ route.post('/add-many', upload.single('file'), async (req, res) => {
   const filePath = path.resolve(__dirname, `../${req.file.path}`)
   const result = await parseCSV(filePath, validateStation)
 
-  const filtered = result.map((station) => {
-    const { ID, ...rest } = station
-    const obje = {
-      ID: ID,
-    }
-    return obje
-  })
-
-  const savedStations = await Station.bulkCreate(filtered)
+  const savedStations = await Station.bulkCreate(result)
   deleteTmpFile(filePath)
 
   res.status(200).json(savedStations)
