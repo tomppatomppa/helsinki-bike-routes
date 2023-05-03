@@ -174,12 +174,12 @@ describe('Test /api/journeys', () => {
     })
   })
 
-  describe('GET without query params', () => {
+  describe('GET /api/journeys', () => {
     test('Api counts 5 journeys in the database', async () => {
       const response = await request(app).get('/api/journeys')
       expect(response.body.allJourneys.count).toBe(journeys.length)
     })
-    describe('query param limit', () => {
+    describe('query param limit tests', () => {
       test('Expect rows length to be 1 without query params limit', async () => {
         const response = await request(app).get('/api/journeys')
         expect(response.body.allJourneys.rows.length).toBe(1)
@@ -198,7 +198,7 @@ describe('Test /api/journeys', () => {
       })
     })
     describe('query param offset', () => {
-      test('returns nextCursor=1 when no offset param', async () => {
+      test('returns nextCursor=1 when no offset param is defined', async () => {
         const response = await request(app).get('/api/journeys')
         expect(response.body.nextCursor).toBe(1)
       })
@@ -208,22 +208,33 @@ describe('Test /api/journeys', () => {
           .query({ offset: 1 })
         expect(response.body.nextCursor).toBe(2)
       })
+      test('Expect nextCursor to be undefined when no more journeys exist', async () => {
+        const response = await request(app)
+          .get('/api/journeys')
+          .query({ offset: 4 })
+        expect(response.body.nextCursor).toBe(undefined)
+      })
     })
-    // test('Expect nextCursor to be 1 when only fetching 1 journey', async () => {
-    //   const response = await request(app).get('/api/journeys')
-    //   expect(response.body.nextCursor).toBe(1)
-    // })
-    // test('Expect nextCursor to be 2 when only offset is 1 journey', async () => {
-    //   const response = await request(app)
-    //     .get('/api/journeys')
-    //     .query({ offset: 1 })
-    //   expect(response.body.nextCursor).toBe(2)
-    // })
-    // test('Expect nextCursor to be undefined when no journeys exist', async () => {
-    //   const response = await request(app)
-    //     .get('/api/journeys')
-    //     .query({ limit: 5 })
-    //   expect(response.body.nextCursor).toBe(undefined)
-    // })
+
+    describe('query param order', () => {
+      test('default order is by Ascending order by id', async () => {
+        const response = await request(app)
+          .get('/api/journeys')
+          .query({ limit: 5 })
+
+        expect(response.body.allJourneys.rows[0].id).toEqual(journeys[0].id)
+        expect(response.body.allJourneys.rows[2].id).toEqual(journeys[2].id)
+        expect(response.body.allJourneys.rows[4].id).toEqual(journeys[4].id)
+      })
+      test('should return journeys in Descending order', async () => {
+        const response = await request(app)
+          .get('/api/journeys')
+          .query({ limit: 5, order: ['id', 'DESC'] })
+
+        expect(response.body.allJourneys.rows[0].id).toEqual(journeys[4].id)
+        expect(response.body.allJourneys.rows[2].id).toEqual(journeys[2].id)
+        expect(response.body.allJourneys.rows[4].id).toEqual(journeys[0].id)
+      })
+    })
   })
 })

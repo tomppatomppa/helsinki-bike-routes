@@ -35,9 +35,16 @@ route.post(
 route.get('/', async (req, res) => {
   const { offset = 0, limit = 1 } = req.query
 
+  let order = ['id', 'ASC']
+
+  if (req.query.order) {
+    order = req.query.order
+  }
+
   const allJourneys = await Journey.findAndCountAll({
     offset: offset,
     limit: limit,
+    order: [order],
   })
 
   let cursor = 0
