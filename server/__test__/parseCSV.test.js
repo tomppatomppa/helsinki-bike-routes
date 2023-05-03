@@ -7,7 +7,7 @@ const validateStation = require('../validators/validateStation')
 const journeys = path.resolve(__dirname, './files/testfile_journeys.csv')
 const stations = path.resolve(__dirname, './files/testfile_stations.csv')
 
-describe('Test validation.js', () => {
+describe('Test parseCSV.js', () => {
   describe('Without a validation function ', () => {
     test('check that testfile exists', () => {
       expect(journeys).toBeDefined()
@@ -21,7 +21,8 @@ describe('Test validation.js', () => {
       expect(result.length).toEqual(9)
     })
   })
-  describe('With validateJourney  function', () => {
+
+  describe('With validateJourney function', () => {
     test('should only return 5 objects', async () => {
       const result = await parseCSV(journeys, validateJourney)
       expect(result.length).toEqual(5)
@@ -29,13 +30,13 @@ describe('Test validation.js', () => {
     test('remaining objects should have duration > 600', async () => {
       const result = await parseCSV(journeys, validateJourney)
       result.forEach((item) =>
-        expect(Number(item['Duration (sec.)'])).toBeGreaterThanOrEqual(600)
+        expect(Number(item['Duration_sec'])).toBeGreaterThanOrEqual(600)
       )
     })
     test('remaining objects should have distance > 10', async () => {
       const result = await parseCSV(journeys, validateJourney)
       result.forEach((item) =>
-        expect(Number(item['Covered distance (m)'])).toBeGreaterThanOrEqual(10)
+        expect(Number(item['Covered_distance_m'])).toBeGreaterThanOrEqual(10)
       )
     })
   })
