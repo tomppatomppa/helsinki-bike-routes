@@ -5,9 +5,13 @@ const path = require('path')
 const supertest = require('supertest')
 const request = supertest
 const app = require('../app')
+
 const { connectToDatabase, sequelize } = require('../utils/database')
 
 const { Journey, Station } = require('../models/index')
+
+const stations = require('./config').stations
+const journeys = require('./config').journeys
 
 const journeysCsvFile = path.join(__dirname, './files/testfile_journeys.csv')
 const journeyWithInvalidReturnStation = path.join(
@@ -142,6 +146,36 @@ describe('Test /api/journeys', () => {
 
       const allJourneys = await Journey.findAll()
       expect(allJourneys.length).toBe(2)
+    })
+  })
+  describe('GET /api/journeys', () => {
+    describe('Setup database', () => {
+      test('Reset Stations and Journeys', async () => {
+        await Journey.truncate()
+        await Station.truncate({ cascade: true, restartIdentity: true })
+
+        const allJourneys = await Journey.findAll()
+        const allStations = await Station.findAll()
+
+        expect(allJourneys.length).toBe(0)
+        expect(allStations.length).toBe(0)
+      })
+      test('Populate database with 9 Stations', async () => {
+        await Station.bulkCreate(stations)
+        const allStations = await Station.findAll()
+        expect(allStations.length).toBe(9)
+      })
+      test('Populate database with 5 journeys', async () => {
+        await Journey.bulkCreate(journeys)
+        const allJourneys = await Journey.findAll()
+        expect(allJourneys.length).toBe(5)
+      })
+    })
+  })
+  describe('GET /api/journeys', () => {
+    test('Api counts 5 journeys in the database', async () => {
+      const response = await request(app).get('/api/journeys')
+      expect(response.body.count).toBe(journeys.length)
     })
   })
 })

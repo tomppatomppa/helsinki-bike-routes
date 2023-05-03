@@ -33,7 +33,7 @@ route.post(
 )
 
 route.get('/', async (req, res) => {
-  const allJourneys = await Journey.findAll({})
+  const allJourneys = await Journey.findAndCountAll()
   res.status(200).json(allJourneys)
 })
 module.exports = route
