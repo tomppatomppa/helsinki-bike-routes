@@ -33,7 +33,20 @@ route.post(
 )
 
 route.get('/', async (req, res) => {
-  const allJourneys = await Journey.findAndCountAll()
-  res.status(200).json(allJourneys)
+  const { offset = 0, limit = 1 } = req.query
+  const allJourneys = await Journey.findAndCountAll({
+    offset: offset,
+    limit: limit,
+  })
+
+  let cursor = 0
+
+  cursor += Number(offset) + allJourneys.rows.length
+
+  if (cursor >= allJourneys.count) {
+    cursor = undefined
+  }
+
+  res.status(200).json({ allJourneys, nextCursor: cursor })
 })
 module.exports = route

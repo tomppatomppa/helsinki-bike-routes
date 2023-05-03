@@ -148,6 +148,7 @@ describe('Test /api/journeys', () => {
       expect(allJourneys.length).toBe(2)
     })
   })
+
   describe('GET /api/journeys', () => {
     describe('Setup database', () => {
       test('Reset Stations and Journeys', async () => {
@@ -172,10 +173,21 @@ describe('Test /api/journeys', () => {
       })
     })
   })
-  describe('GET /api/journeys', () => {
+
+  describe('GET without query params', () => {
     test('Api counts 5 journeys in the database', async () => {
       const response = await request(app).get('/api/journeys')
-      expect(response.body.count).toBe(journeys.length)
+      expect(response.body.allJourneys.count).toBe(journeys.length)
+    })
+    test('Expect rows length to be 1 without query params limit', async () => {
+      const response = await request(app).get('/api/journeys')
+      expect(response.body.allJourneys.rows.length).toBe(1)
+    })
+    test('Expect rows length to be 5 with query limit=5', async () => {
+      const response = await request(app)
+        .get('/api/journeys')
+        .query({ limit: 5 })
+      expect(response.body.allJourneys.rows.length).toBe(5)
     })
   })
 })
