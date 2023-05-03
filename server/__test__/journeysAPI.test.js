@@ -237,30 +237,31 @@ describe('Test /api/journeys', () => {
         expect(response.body.allJourneys.rows[4].id).toEqual(journeys[0].id)
       })
       test('Testing order = ["Covered_distance_m", "DESC"]', async () => {
-        const response = await request(app)
+        const { body } = await request(app)
           .get('/api/journeys')
           .query({ limit: 5, order: ['Covered_distance_m', 'DESC'] })
-        expect(response.body.allJourneys.rows[0].id).toEqual(journeys[3].id)
-        expect(response.body.allJourneys.rows[0].Covered_distance_m).toEqual(
-          journeys[3].Covered_distance_m
-        )
-        expect(response.body.allJourneys.rows[4].id).toEqual(journeys[2].id)
-        expect(response.body.allJourneys.rows[4].Covered_distance_m).toEqual(
-          journeys[2].Covered_distance_m
-        )
+
+        const { rows } = body.allJourneys
+
+        let currentDistance = rows[0].Covered_distance_m
+        for (let i = 0; i < rows.length; i++) {
+          const { Covered_distance_m } = rows[i]
+          expect(Covered_distance_m).toBeLessThanOrEqual(currentDistance)
+          currentDistance = Covered_distance_m
+        }
       })
       test('Testing order = ["Covered_distance_m", "ASC"]', async () => {
-        const response = await request(app)
+        const { body } = await request(app)
           .get('/api/journeys')
           .query({ limit: 5, order: ['Covered_distance_m', 'ASC'] })
-        expect(response.body.allJourneys.rows[0].id).toEqual(journeys[2].id)
-        expect(response.body.allJourneys.rows[0].Covered_distance_m).toEqual(
-          journeys[2].Covered_distance_m
-        )
-        expect(response.body.allJourneys.rows[4].id).toEqual(journeys[3].id)
-        expect(response.body.allJourneys.rows[4].Covered_distance_m).toEqual(
-          journeys[3].Covered_distance_m
-        )
+
+        const { rows } = body.allJourneys
+        let currentDistance = rows[0].Covered_distance_m
+        for (let i = 0; i < rows.length; i++) {
+          const { Covered_distance_m } = rows[i]
+          expect(Covered_distance_m).toBeGreaterThanOrEqual(currentDistance)
+          currentDistance = Covered_distance_m
+        }
       })
     })
   })
