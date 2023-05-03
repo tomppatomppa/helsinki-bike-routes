@@ -235,6 +235,19 @@ describe('Test /api/journeys', () => {
         expect(response.body.allJourneys.rows[2].id).toEqual(journeys[2].id)
         expect(response.body.allJourneys.rows[4].id).toEqual(journeys[0].id)
       })
+      test('DESCENDING order by covered_distance_m', async () => {
+        const response = await request(app)
+          .get('/api/journeys')
+          .query({ limit: 5, order: ['Covered_distance_m', 'DESC'] })
+        expect(response.body.allJourneys.rows[0].id).toEqual(journeys[3].id)
+        expect(response.body.allJourneys.rows[0].Covered_distance_m).toEqual(
+          journeys[3].Covered_distance_m
+        )
+        expect(response.body.allJourneys.rows[4].id).toEqual(journeys[2].id)
+        expect(response.body.allJourneys.rows[4].Covered_distance_m).toEqual(
+          journeys[2].Covered_distance_m
+        )
+      })
     })
   })
 })
