@@ -264,5 +264,43 @@ describe('Test /api/journeys', () => {
         }
       })
     })
+
+    describe('Test query param search', () => {
+      test('Endpoint should not find any journeys with the given starting station', async () => {
+        const { body } = await request(app).get('/api/journeys').query({
+          limit: 5,
+          search: 'doesnotexist',
+          search_field: 'Departure_station_name',
+        })
+        expect(body.allJourneys.rows.length).toBe(0)
+      })
+      test('Endpoint should find one journey where departure station starts with search value', async () => {
+        const { body } = await request(app).get('/api/journeys').query({
+          limit: 5,
+          search: 'Hana',
+          search_field: 'Departure_station_name',
+        })
+        expect(body.allJourneys.rows.length).toBe(1)
+        expect(body.nextCursor).toBe(undefined)
+      })
+      test('Endpoint should find two journeys where departure station has "h"', async () => {
+        const { body } = await request(app).get('/api/journeys').query({
+          limit: 5,
+          search: 'h',
+          search_field: 'Departure_station_name',
+        })
+        expect(body.allJourneys.rows.length).toBe(3)
+        expect(body.nextCursor).toBe(undefined)
+      })
+      test('Test pagination with search, nextCursor should be 1', async () => {
+        const { body } = await request(app).get('/api/journeys').query({
+          limit: 1,
+          search: 'h',
+          search_field: 'Departure_station_name',
+        })
+        expect(body.allJourneys.rows.length).toBe(1)
+        expect(body.nextCursor).toBe(1)
+      })
+    })
   })
 })
