@@ -9,9 +9,14 @@ export interface StationDataWithCursor {
   nextCursor: number
 }
 
-export const fetchStationsByCursor = async (cursor: number, limit: number) => {
+export const fetchStationsByCursor = async (
+  cursor: number,
+  limit: number,
+  search: string,
+  search_field: string
+) => {
   const { data } = await axios.get<StationDataWithCursor>(baseUrl, {
-    params: { offset: cursor, limit },
+    params: { offset: cursor, limit, search, search_field },
   })
 
   return data
