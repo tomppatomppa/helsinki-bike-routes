@@ -146,6 +146,48 @@ describe('Test api/stations endpoint', () => {
           })
           expect(result.body.allStations.rows).toHaveLength(0)
         })
+        test('Search multiple fields at the same time', async () => {
+          const result = await request(app).get('/api/stations').query({
+            limit: 5,
+            search: 'norr',
+            search_field: 'Nimi, Namn, Name',
+          })
+          expect(result.body.allStations.rows).toHaveLength(1)
+        })
+        test('Search multiple fields at the same time', async () => {
+          const result = await request(app).get('/api/stations').query({
+            limit: 5,
+            search: 'norr',
+            search_field: 'Nimi, Namn, Name',
+          })
+          expect(result.body.allStations.rows).toHaveLength(1)
+        })
+        test('Should not find any Nimi or Name that matches "norr" ', async () => {
+          const result = await request(app).get('/api/stations').query({
+            limit: 5,
+            search: 'norr',
+            search_field: 'Nimi, Name',
+          })
+          expect(result.body.allStations.rows).toHaveLength(0)
+        })
+      })
+    })
+  })
+  describe('Test /api/stations/:id', () => {
+    describe('Test Invalid station search', () => {
+      test('returns 404 when station doesnt exist', async () => {
+        await request(app).get('/api/stations/9999').expect(404)
+      })
+      test('returns 400 when station doesnt exist', async () => {
+        await request(app).get('/api/stations/invalid').expect(400)
+      })
+    })
+    describe('Test valid station search', () => {
+      test('returns 200 when station exists', async () => {
+        await request(app).get('/api/stations/501').expect(200)
+      })
+      test('returns 200 when station exists', async () => {
+        const result = await request(app).get('/api/stations/501').expect(200)
       })
     })
   })

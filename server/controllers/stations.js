@@ -29,6 +29,7 @@ route.post(
 
 route.get('/', async (req, res) => {
   let where = {}
+
   if (req.query.search && req.query.search_field) {
     const { search, search_field } = req.query
     const fields = search_field.split(',')
@@ -37,7 +38,6 @@ route.get('/', async (req, res) => {
         [Op.iLike]: `%${search}%`,
       },
     }))
-
     where = {
       [Op.or]: conditions,
     }
@@ -62,4 +62,14 @@ route.get('/', async (req, res) => {
   res.status(200).json({ allStations, nextCursor: cursor })
 })
 
+route.get('/:id', async (req, res) => {
+  const stationExists = await Station.findOne({
+    where: {
+      ID: req.params.id,
+    },
+  })
+  if (!stationExists)
+    return res.status(404).json({ error: 'Station doesnt exist' })
+  return res.status(200).json(stationExists)
+})
 module.exports = route
