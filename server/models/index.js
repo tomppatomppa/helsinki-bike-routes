@@ -15,4 +15,15 @@ Journey.belongsTo(Station, {
   targetKey: 'ID',
 })
 
+Station.hasMany(Journey, {
+  foreignKey: 'Return_station_id',
+  as: 'returns',
+  sourceKey: 'ID',
+})
+Journey.belongsTo(Station, {
+  foreignKey: 'Return_station_id',
+  as: 'returnStation',
+  targetKey: 'ID',
+})
+
 module.exports = { Station, Journey }

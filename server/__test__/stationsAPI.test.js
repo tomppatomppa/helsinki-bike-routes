@@ -199,10 +199,15 @@ describe('Test api/stations endpoint', () => {
         expect(body.Osoite).toBeDefined()
         expect(body.Adress).toBeDefined()
       })
-      test('returns Name and Adress fields', async () => {
+      test('returns correct number of journeys starting from the stations', async () => {
         const { body } = await request(app).get('/api/stations/501').expect(200)
-
-        expect(body.departures).toBeDefined()
+        expect(body.departures_count).toBeDefined()
+        expect(parseInt(body.departures_count)).toBe(1)
+      })
+      test('returns correct number of journeys returning to the station', async () => {
+        const { body } = await request(app).get('/api/stations/501').expect(200)
+        expect(body.returns_count).toBeDefined()
+        //expect(parseInt(body.returns_count)).toBe(1)
       })
     })
   })

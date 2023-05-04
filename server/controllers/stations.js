@@ -73,17 +73,29 @@ route.get('/:id', async (req, res) => {
       'Namn',
       'Osoite',
       'Adress',
-      [Sequelize.fn('COUNT', Sequelize.col('departures')), 'journeys_count'],
+      [Sequelize.fn('COUNT', Sequelize.col('departures')), 'departures_count'],
+      [Sequelize.fn('COUNT', Sequelize.col('returns')), 'returns_count'],
     ],
-
-    include: {
-      model: Journey,
-      as: 'departures',
-      where: {
-        Departure_station_id: req.params.id,
+    include: [
+      {
+        model: Journey,
+        as: 'departures',
+        where: {
+          Departure_station_id: req.params.id,
+        },
+        attributes: [],
+        required: false,
       },
-      attributes: [],
-    },
+      {
+        model: Journey,
+        as: 'returns',
+        where: {
+          Return_station_id: req.params.id,
+        },
+        attributes: [],
+        required: false,
+      },
+    ],
     group: ['station.FID'],
   })
 
