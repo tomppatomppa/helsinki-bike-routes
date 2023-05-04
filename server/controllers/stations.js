@@ -49,6 +49,9 @@ route.get('/', async (req, res) => {
     offset: offset,
     limit: limit,
     where,
+    attributes: {
+      exclude: ['FID', 'createdAt', 'updatedAt'],
+    },
   })
 
   let cursor = 0
