@@ -9,9 +9,9 @@ export interface StationDataWithCursor {
   nextCursor: number
 }
 
-export const fetchStationsByCursor = async (cursor: number) => {
+export const fetchStationsByCursor = async (cursor: number, limit: number) => {
   const { data } = await axios.get<StationDataWithCursor>(baseUrl, {
-    params: { offset: cursor },
+    params: { offset: cursor, limit },
   })
 
   return data
