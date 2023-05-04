@@ -86,7 +86,7 @@ describe('Test api/stations endpoint', () => {
     test('Populate database with 5 journeys', async () => {
       await Journey.bulkCreate(journeys)
       const allJourneys = await Journey.findAll()
-      expect(allJourneys.length).toBe(5)
+      expect(allJourneys.length).toBe(journeys.length)
     })
     describe('Test endpoint without query params', () => {
       test('Should return 1 station and the nextCursor should be 1', async () => {
@@ -96,8 +96,8 @@ describe('Test api/stations endpoint', () => {
       })
     })
     describe('Test endpoint with query params', () => {
-      describe('Query param limit', () => {
-        test('Should return 5 station and the nextCursor should be 5', async () => {
+      describe('Test Query param limit', () => {
+        test('Should return 5 stations and the nextCursor should be 5', async () => {
           const result = await request(app)
             .get('/api/stations')
             .query({ limit: 5 })

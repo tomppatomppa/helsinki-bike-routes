@@ -82,7 +82,7 @@ describe('Test /api/journeys', () => {
     })
   })
 
-  describe('Adding journeys when there are no stations', () => {
+  describe('Adding Journeys when no Stations exist in the database', () => {
     test('should return status 400', async () => {
       const response = await request(app)
         .post('/api/journeys/add-many')
@@ -90,7 +90,7 @@ describe('Test /api/journeys', () => {
         .set('Content-Type', 'multipart/form-data')
       expect(response.status).toBe(400)
     })
-    test('Added journeys should not exists in the database', async () => {
+    test('Added journeys should not be in the database', async () => {
       const allJourneys = await Journey.findAll()
       expect(allJourneys.length).toBe(0)
     })
@@ -101,7 +101,7 @@ describe('Test /api/journeys', () => {
       await Station.create(station)
       await Station.create(station2)
     })
-    test('Expect stations to exist in the database', async () => {
+    test('Expect added stations to exist in the database', async () => {
       const stationExists = await Station.findByPk(station.FID)
       const station2Exists = await Station.findByPk(station2.FID)
 
@@ -112,7 +112,7 @@ describe('Test /api/journeys', () => {
       expect(station2Exists.FID).toEqual(station2.FID)
     })
 
-    test('Should not add journey with invalid return station id', async () => {
+    test('Should not add Journey when Return_station_id does not exist', async () => {
       await request(app)
         .post('/api/journeys/add-many')
         .attach(
@@ -125,7 +125,7 @@ describe('Test /api/journeys', () => {
       const allJourneys = await Journey.findAll()
       expect(allJourneys.length).toBe(0)
     })
-    test('Should add journey with both valid station ids', async () => {
+    test('Should add Journey when Departure and Return station ids are valid', async () => {
       await request(app)
         .post('/api/journeys/add-many')
         .attach(
@@ -138,7 +138,7 @@ describe('Test /api/journeys', () => {
       const allJourneys = await Journey.findAll()
       expect(allJourneys.length).toBe(1)
     })
-    test('Should only add one journey and ignore invalid journey', async () => {
+    test('Should only add one Journey and ignore the invalid Journey', async () => {
       await request(app)
         .post('/api/journeys/add-many')
         .attach(
@@ -155,8 +155,8 @@ describe('Test /api/journeys', () => {
   })
 
   describe('GET /api/journeys with query params', () => {
-    describe('Setup database', () => {
-      test('Reset Stations and Journeys', async () => {
+    describe('Reset and Re-populate database', () => {
+      test('Delete Stations and Journeys', async () => {
         await Journey.truncate()
         await Station.truncate({ cascade: true, restartIdentity: true })
 
@@ -169,18 +169,18 @@ describe('Test /api/journeys', () => {
       test('Populate database with 9 Stations', async () => {
         await Station.bulkCreate(stations)
         const allStations = await Station.findAll()
-        expect(allStations.length).toBe(9)
+        expect(allStations.length).toBe(stations.length)
       })
-      test('Populate database with 5 journeys', async () => {
+      test('Populate database with 5 Journeys', async () => {
         await Journey.bulkCreate(journeys)
         const allJourneys = await Journey.findAll()
-        expect(allJourneys.length).toBe(5)
+        expect(allJourneys.length).toBe(journeys.length)
       })
     })
   })
 
   describe('Test all query params', () => {
-    test('Api counts 5 journeys in the database', async () => {
+    test('Endpoint counts total of 5 journeys in the database', async () => {
       const response = await request(app).get('/api/journeys')
       expect(response.body.allJourneys.count).toBe(journeys.length)
     })
@@ -223,7 +223,7 @@ describe('Test /api/journeys', () => {
     })
 
     describe('Testing default query param <order>', () => {
-      test('default order should be ["id", "ASC"]', async () => {
+      test('returns Journeys in ascending order by id, by default', async () => {
         const response = await request(app)
           .get('/api/journeys')
           .query({ limit: 5 })
@@ -232,7 +232,7 @@ describe('Test /api/journeys', () => {
         expect(response.body.allJourneys.rows[2].id).toEqual(journeys[2].id)
         expect(response.body.allJourneys.rows[4].id).toEqual(journeys[4].id)
       })
-      test('Testing order = ["id", "DESC"]', async () => {
+      test('returns Journeys in descending order by id', async () => {
         const response = await request(app)
           .get('/api/journeys')
           .query({ limit: 5, order: ['id', 'DESC'] })
@@ -241,7 +241,7 @@ describe('Test /api/journeys', () => {
         expect(response.body.allJourneys.rows[2].id).toEqual(journeys[2].id)
         expect(response.body.allJourneys.rows[4].id).toEqual(journeys[0].id)
       })
-      test('Testing order = ["Covered_distance_m", "DESC"]', async () => {
+      test('returns Journeys in descending order by Covered_distance_m', async () => {
         const { body } = await request(app)
           .get('/api/journeys')
           .query({ limit: 5, order: ['Covered_distance_m', 'DESC'] })
@@ -257,7 +257,7 @@ describe('Test /api/journeys', () => {
         }
       })
 
-      test('Testing order = ["Covered_distance_m", "ASC"]', async () => {
+      test('returns Journeys in ascending order by Covered_distance_m', async () => {
         const { body } = await request(app)
           .get('/api/journeys')
           .query({ limit: 5, order: ['Covered_distance_m', 'ASC'] })
