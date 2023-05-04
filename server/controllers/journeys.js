@@ -5,8 +5,10 @@ const upload = require('../middleware/upload')
 const parseCSV = require('../validators/parseCSV')
 const { Journey } = require('../models/index')
 
-const validateFileUpload = require('../middleware/validateFileUpload')
+const { validationResult } = require('express-validator')
 
+const validateFileUpload = require('../middleware/validateFileUpload')
+const journeysQueryValidator = require('../validators/journeysQueryValidator')
 const validateJourney = require('../validators/validateJourney')
 const deleteTmpFile = require('../middleware/deleteTmpFile')
 const filterJourneys = require('../validators/filterJourneys')
@@ -34,7 +36,13 @@ route.post(
   }
 )
 
-route.get('/', async (req, res) => {
+route.get('/', journeysQueryValidator(), async (req, res) => {
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() })
+  }
+
   const { offset = 0, limit = 1 } = req.query
 
   let order = ['id', 'ASC']
