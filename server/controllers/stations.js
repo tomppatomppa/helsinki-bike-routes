@@ -8,6 +8,7 @@ const deleteTmpFile = require('../middleware/deleteTmpFile')
 
 const { Station } = require('../models/index')
 const validateFileUpload = require('../middleware/validateFileUpload')
+const { Op } = require('sequelize')
 
 route.post(
   '/add-many',
@@ -29,9 +30,16 @@ route.post(
 route.get('/', async (req, res) => {
   let where = {}
   if (req.query.search && req.query.search_field) {
-    const { search_field } = req.query
+    const { search, search_field } = req.query
+    const fields = search_field.split(',')
+    const conditions = fields.map((field) => ({
+      [field.trim()]: {
+        [Op.iLike]: `%${search}%`,
+      },
+    }))
+
     where = {
-      [Op.or]: [{ [search_field]: { [Op.iLike]: `%${req.query.search}%` } }],
+      [Op.or]: conditions,
     }
   }
 

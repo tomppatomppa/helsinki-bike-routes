@@ -136,6 +136,17 @@ describe('Test api/stations endpoint', () => {
           expect(result.body.nextCursor).toBe(undefined)
         })
       })
+
+      describe('Query param search', () => {
+        test('Endpoint should not find any stations with the given finnish Name', async () => {
+          const result = await request(app).get('/api/stations').query({
+            limit: 5,
+            search: 'doesnotexist',
+            search_field: 'Nimi',
+          })
+          expect(result.body.allStations.rows).toHaveLength(0)
+        })
+      })
     })
   })
 })
