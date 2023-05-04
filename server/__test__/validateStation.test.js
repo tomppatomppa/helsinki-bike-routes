@@ -1,4 +1,4 @@
-const validateStation = require('../validators/validateStation')
+const validateStation = require('../utils/validators/validateStation')
 
 const config = require('./config')
 const validCsvRow = config.validateStation.validCsvRow

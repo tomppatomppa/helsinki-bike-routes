@@ -1,8 +1,8 @@
 const path = require('path')
 
 const parseCSV = require('../utils/parsers/parseCSV')
-const validateJourney = require('../validators/validateJourney')
-const validateStation = require('../validators/validateStation')
+const validateJourney = require('../utils/validators/validateJourney')
+const validateStation = require('../utils/validators/validateStation')
 
 const journeys = path.resolve(__dirname, './files/testfile_journeys.csv')
 const stations = path.resolve(__dirname, './files/testfile_stations.csv')

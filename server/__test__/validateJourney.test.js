@@ -1,4 +1,4 @@
-const validateJourney = require('../validators/validateJourney')
+const validateJourney = require('../utils/validators/validateJourney')
 
 const config = require('./config')
 const validCsvRow = config.validateJourney.validCsvRow

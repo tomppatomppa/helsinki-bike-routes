@@ -3,7 +3,7 @@ const path = require('path')
 const upload = require('../middleware/upload')
 const parseCSV = require('../utils/parsers/parseCSV')
 
-const validateStation = require('../validators/validateStation')
+const validateStation = require('../utils/validators/validateStation')
 const deleteTmpFile = require('../middleware/deleteTmpFile')
 
 const { Station, Journey } = require('../models/index')

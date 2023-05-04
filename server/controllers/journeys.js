@@ -8,10 +8,10 @@ const { Journey } = require('../models/index')
 const { validationResult } = require('express-validator')
 
 const validateFileUpload = require('../middleware/validateFileUpload')
-const journeysQueryValidator = require('../validators/journeysQueryValidator')
-const validateJourney = require('../validators/validateJourney')
+const journeysQueryValidator = require('../utils/validators/journeysQueryValidator')
+const validateJourney = require('../utils/validators/validateJourney')
 const deleteTmpFile = require('../middleware/deleteTmpFile')
-const filterJourneys = require('../validators/filterJourneys')
+const { filterJourneys } = require('../utils/helpers')
 const { Op } = require('sequelize')
 
 route.post(
