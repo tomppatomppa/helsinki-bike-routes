@@ -91,7 +91,7 @@ describe('Test api/stations endpoint', () => {
     describe('Test endpoint without query params', () => {
       test('Should return 1 station and the nextCursor should be 1', async () => {
         const result = await request(app).get('/api/stations')
-        expect(result.body.allStations.rows).toHaveLength(1)
+        expect(result.body.rows).toHaveLength(1)
         expect(result.body.nextCursor).toBe(1)
       })
     })
@@ -101,14 +101,14 @@ describe('Test api/stations endpoint', () => {
           const result = await request(app)
             .get('/api/stations')
             .query({ limit: 5 })
-          expect(result.body.allStations.rows).toHaveLength(5)
+          expect(result.body.rows).toHaveLength(5)
           expect(result.body.nextCursor).toBe(5)
         })
         test('Should return 9 station and the nextCursor should be undefined', async () => {
           const result = await request(app)
             .get('/api/stations')
             .query({ limit: 9 })
-          expect(result.body.allStations.rows).toHaveLength(9)
+          expect(result.body.rows).toHaveLength(9)
           expect(result.body.nextCursor).toBe(undefined)
         })
       })
@@ -124,15 +124,13 @@ describe('Test api/stations endpoint', () => {
             .get('/api/stations')
             .query({ offset: cursor })
 
-          expect(result1.body.allStations.rows).not.toEqual(
-            result2.body.allStations.rows
-          )
+          expect(result1.body.rows).not.toEqual(result2.body.rows)
         })
         test('Should return 1 station and the nextCursor should be undefined', async () => {
           const result = await request(app)
             .get('/api/stations')
             .query({ offset: 8 })
-          expect(result.body.allStations.rows).toHaveLength(1)
+          expect(result.body.rows).toHaveLength(1)
           expect(result.body.nextCursor).toBe(undefined)
         })
       })
@@ -144,7 +142,7 @@ describe('Test api/stations endpoint', () => {
             search: 'doesnotexist',
             search_field: 'Nimi',
           })
-          expect(result.body.allStations.rows).toHaveLength(0)
+          expect(result.body.rows).toHaveLength(0)
         })
         test('Search multiple fields at the same time', async () => {
           const result = await request(app).get('/api/stations').query({
@@ -152,7 +150,7 @@ describe('Test api/stations endpoint', () => {
             search: 'norr',
             search_field: 'Nimi, Namn, Name',
           })
-          expect(result.body.allStations.rows).toHaveLength(1)
+          expect(result.body.rows).toHaveLength(1)
         })
         test('Search multiple fields at the same time', async () => {
           const result = await request(app).get('/api/stations').query({
@@ -160,7 +158,7 @@ describe('Test api/stations endpoint', () => {
             search: 'norr',
             search_field: 'Nimi, Namn, Name',
           })
-          expect(result.body.allStations.rows).toHaveLength(1)
+          expect(result.body.rows).toHaveLength(1)
         })
         test('Should not find any Nimi or Name that matches "norr" ', async () => {
           const result = await request(app).get('/api/stations').query({
@@ -168,7 +166,7 @@ describe('Test api/stations endpoint', () => {
             search: 'norr',
             search_field: 'Nimi, Name',
           })
-          expect(result.body.allStations.rows).toHaveLength(0)
+          expect(result.body.rows).toHaveLength(0)
         })
       })
     })
