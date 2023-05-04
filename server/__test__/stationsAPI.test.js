@@ -207,7 +207,7 @@ describe('Test api/stations endpoint', () => {
       test('returns correct number of journeys returning to the station', async () => {
         const { body } = await request(app).get('/api/stations/501').expect(200)
         expect(body.returns_count).toBeDefined()
-        //expect(parseInt(body.returns_count)).toBe(1)
+        expect(parseInt(body.returns_count)).toBe(0)
       })
     })
   })
