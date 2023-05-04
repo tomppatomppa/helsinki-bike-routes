@@ -43,7 +43,7 @@ route.get('/', journeysQueryValidator(), async (req, res) => {
     return res.status(400).json({ errors: errors.array() })
   }
 
-  const { offset = 0, limit = 1 } = req.query
+  const { offset, limit } = req.query
 
   let order = ['id', 'ASC']
   if (req.query.order) {

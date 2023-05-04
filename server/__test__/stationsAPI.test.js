@@ -6,6 +6,8 @@ const app = require('../app')
 
 const { connectToDatabase, sequelize } = require('../utils/database')
 
+const journeys = require('./config').journeys
+const { Journey, Station } = require('../models/index')
 const stationsCsvFile = path.join(__dirname, './files/testfile_stations.csv')
 const invalidStationCsvFile = path.join(
   __dirname,
@@ -29,11 +31,11 @@ describe('Test api/stations endpoint', () => {
         expect(invalidStationCsvFile).toBeDefined()
       })
       test('expect stations to be empty before tests', async () => {
-        const result = await request(app).get('/api/stations/')
-        expect(result.body.length).toBe(0)
+        const result = await Station.findAll()
+        expect(result.length).toBe(0)
       })
     })
-    describe('Test seding invalid files to the endpoint', () => {
+    describe('Test sending invalid files to the endpoint', () => {
       test('Should return 400 when nothing is sent', async () => {
         await request(app).post('/api/stations/add-many').expect(400)
       })
@@ -61,8 +63,8 @@ describe('Test api/stations endpoint', () => {
           .expect(200)
       })
       test('Should return array of 9 stations', async () => {
-        const result = await request(app).get('/api/stations/').expect(200)
-        expect(result.body.length).toEqual(9)
+        const result = await Station.findAll()
+        expect(result.length).toEqual(9)
       })
     })
     describe('Adding an existing station', () => {
@@ -76,6 +78,63 @@ describe('Test api/stations endpoint', () => {
           )
           .set('Content-Type', 'multipart/form-data')
           .expect(200)
+      })
+    })
+  })
+
+  describe('GET /api/station/', () => {
+    test('Populate database with 5 journeys', async () => {
+      await Journey.bulkCreate(journeys)
+      const allJourneys = await Journey.findAll()
+      expect(allJourneys.length).toBe(5)
+    })
+    describe('Test endpoint without query params', () => {
+      test('Should return 1 station and the nextCursor should be 1', async () => {
+        const result = await request(app).get('/api/stations')
+        expect(result.body.allStations.rows).toHaveLength(1)
+        expect(result.body.nextCursor).toBe(1)
+      })
+    })
+    describe('Test endpoint with query params', () => {
+      describe('Query param limit', () => {
+        test('Should return 5 station and the nextCursor should be 5', async () => {
+          const result = await request(app)
+            .get('/api/stations')
+            .query({ limit: 5 })
+          expect(result.body.allStations.rows).toHaveLength(5)
+          expect(result.body.nextCursor).toBe(5)
+        })
+        test('Should return 9 station and the nextCursor should be undefined', async () => {
+          const result = await request(app)
+            .get('/api/stations')
+            .query({ limit: 9 })
+          expect(result.body.allStations.rows).toHaveLength(9)
+          expect(result.body.nextCursor).toBe(undefined)
+        })
+      })
+      describe('Query param offset', () => {
+        test('Should not return the same station when cursor from previous request', async () => {
+          const result1 = await request(app)
+            .get('/api/stations')
+            .query({ offset: 0 })
+
+          const cursor = result1.body.nextCursor
+
+          const result2 = await request(app)
+            .get('/api/stations')
+            .query({ offset: cursor })
+
+          expect(result1.body.allStations.rows).not.toEqual(
+            result2.body.allStations.rows
+          )
+        })
+        test('Should return 1 station and the nextCursor should be undefined', async () => {
+          const result = await request(app)
+            .get('/api/stations')
+            .query({ offset: 8 })
+          expect(result.body.allStations.rows).toHaveLength(1)
+          expect(result.body.nextCursor).toBe(undefined)
+        })
       })
     })
   })

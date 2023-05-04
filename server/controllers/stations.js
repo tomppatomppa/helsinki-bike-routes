@@ -27,8 +27,31 @@ route.post(
 )
 
 route.get('/', async (req, res) => {
-  const allStations = await Station.findAll()
-  res.status(200).json(allStations)
+  let where = {}
+  if (req.query.search && req.query.search_field) {
+    const { search_field } = req.query
+    where = {
+      [Op.or]: [{ [search_field]: { [Op.iLike]: `%${req.query.search}%` } }],
+    }
+  }
+
+  const { offset = 0, limit = 1 } = req.query
+
+  const allStations = await Station.findAndCountAll({
+    offset: offset,
+    limit: limit,
+    where,
+  })
+
+  let cursor = 0
+
+  cursor += Number(offset) + allStations.rows.length
+
+  if (cursor >= allStations.count) {
+    cursor = undefined
+  }
+
+  res.status(200).json({ allStations, nextCursor: cursor })
 })
 
 module.exports = route

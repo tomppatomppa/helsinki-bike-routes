@@ -58,4 +58,16 @@ describe('journeysQueryValidator', () => {
       await request(app).get('/api/journeys').query({ offset: 0 }).expect(200)
     })
   })
+  describe('Test order', () => {
+    test('should return 400 when order is not an array', async () => {
+      await request(app).get('/api/journeys').query({ order: 'id' }).expect(400)
+    })
+    test('should return 400 when array has only 1 value', async () => {
+      await request(app)
+        .get('/api/journeys')
+        .query({ order: ['id'] })
+        .expect(400)
+    })
+    //TODO: test that second value is "ASC" or "DESC"
+  })
 })
