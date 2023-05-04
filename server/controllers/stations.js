@@ -6,7 +6,7 @@ const parseCSV = require('../validators/parseCSV')
 const validateStation = require('../validators/validateStation')
 const deleteTmpFile = require('../middleware/deleteTmpFile')
 
-const { Station } = require('../models/index')
+const { Station, Journey } = require('../models/index')
 const validateFileUpload = require('../middleware/validateFileUpload')
 const { Op } = require('sequelize')
 
@@ -67,9 +67,19 @@ route.get('/:id', async (req, res) => {
     where: {
       ID: req.params.id,
     },
+    attributes: ['Nimi', 'Name', 'Namn', 'Osoite', 'Adress'],
+    include: {
+      model: Journey,
+      as: 'departures', // specify the correct alias here
+      where: {
+        Departure_station_id: req.params.id,
+      },
+    },
   })
+
   if (!stationExists)
     return res.status(404).json({ error: 'Station doesnt exist' })
+
   return res.status(200).json(stationExists)
 })
 module.exports = route

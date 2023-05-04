@@ -187,7 +187,17 @@ describe('Test api/stations endpoint', () => {
         await request(app).get('/api/stations/501').expect(200)
       })
       test('returns 200 when station exists', async () => {
-        const result = await request(app).get('/api/stations/501').expect(200)
+        await request(app).get('/api/stations/501').expect(200)
+      })
+      test('returns Name and Adress fields', async () => {
+        const { body } = await request(app).get('/api/stations/501').expect(200)
+
+        expect(body.Name).toBeDefined()
+        expect(body.Namn).toBeDefined()
+        expect(body.Nimi).toBeDefined()
+
+        expect(body.Osoite).toBeDefined()
+        expect(body.Adress).toBeDefined()
       })
     })
   })

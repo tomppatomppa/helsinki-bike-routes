@@ -23,6 +23,9 @@ Station.init(
     Name: {
       type: DataTypes.STRING,
     },
+    Osoite: {
+      type: DataTypes.STRING,
+    },
     Adress: {
       type: DataTypes.STRING,
     },
