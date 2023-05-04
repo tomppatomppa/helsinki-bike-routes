@@ -199,6 +199,11 @@ describe('Test api/stations endpoint', () => {
         expect(body.Osoite).toBeDefined()
         expect(body.Adress).toBeDefined()
       })
+      test('returns Name and Adress fields', async () => {
+        const { body } = await request(app).get('/api/stations/501').expect(200)
+
+        expect(body.departures).toBeDefined()
+      })
     })
   })
 })

@@ -8,7 +8,7 @@ const deleteTmpFile = require('../middleware/deleteTmpFile')
 
 const { Station, Journey } = require('../models/index')
 const validateFileUpload = require('../middleware/validateFileUpload')
-const { Op } = require('sequelize')
+const { Op, Sequelize } = require('sequelize')
 
 route.post(
   '/add-many',
@@ -67,14 +67,24 @@ route.get('/:id', async (req, res) => {
     where: {
       ID: req.params.id,
     },
-    attributes: ['Nimi', 'Name', 'Namn', 'Osoite', 'Adress'],
+    attributes: [
+      'Nimi',
+      'Name',
+      'Namn',
+      'Osoite',
+      'Adress',
+      [Sequelize.fn('COUNT', Sequelize.col('departures')), 'journeys_count'],
+    ],
+
     include: {
       model: Journey,
-      as: 'departures', // specify the correct alias here
+      as: 'departures',
       where: {
         Departure_station_id: req.params.id,
       },
+      attributes: [],
     },
+    group: ['station.FID'],
   })
 
   if (!stationExists)
