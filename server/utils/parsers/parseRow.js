@@ -2,7 +2,7 @@ const {
   convertSpaceToUnderscore,
   removeParethesis,
   removeDot,
-} = require('../utils/helpers')
+} = require('../helpers')
 
 function parseRow(row) {
   const rowWithoutDots = removeDot(row)

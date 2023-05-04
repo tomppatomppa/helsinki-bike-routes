@@ -1,4 +1,4 @@
-const parseRow = require('../validators/parseRow')
+const parseRow = require('../utils/parsers/parseRow')
 
 const object = {
   'test field (m)': 'value',

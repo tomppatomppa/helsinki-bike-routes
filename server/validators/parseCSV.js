@@ -1,4 +1,4 @@
-const parseRow = require('./parseRow')
+const parseRow = require('../utils/parsers/parseRow')
 function parseCSV(data, validatorFn) {
   const fs = require('fs')
   const csv = require('csv-parser')
