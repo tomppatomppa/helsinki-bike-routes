@@ -1,6 +1,6 @@
 const path = require('path')
 
-const parseCSV = require('../validators/parseCSV')
+const parseCSV = require('../utils/parsers/parseCSV')
 const validateJourney = require('../validators/validateJourney')
 const validateStation = require('../validators/validateStation')
 
