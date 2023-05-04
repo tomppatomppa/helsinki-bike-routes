@@ -3,7 +3,7 @@ const path = require('path')
 const upload = require('../middleware/upload')
 
 const parseCSV = require('../validators/parseCSV')
-const { Journey, Station } = require('../models/index')
+const { Journey } = require('../models/index')
 
 const validateFileUpload = require('../middleware/validateFileUpload')
 
@@ -67,4 +67,5 @@ route.get('/', async (req, res) => {
 
   res.status(200).json({ allJourneys, nextCursor: cursor })
 })
+
 module.exports = route

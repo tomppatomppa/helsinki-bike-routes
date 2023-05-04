@@ -64,8 +64,13 @@ afterAll(async () => {
 
 describe('Test /api/journeys', () => {
   describe('Check prerequisites before running tests', () => {
-    test('expect testfile to exist', () => {
+    test('expect neccessary testfiles and data to exist', () => {
       expect(journeysCsvFile).toBeDefined()
+      expect(journeyWithInvalidReturnStation).toBeDefined()
+      expect(journeyWithValidStations).toBeDefined()
+      expect(journeyWithOneValidOneInvalid).toBeDefined()
+      expect(stations).toBeDefined()
+      expect(journeys).toBeDefined()
     })
     test('expect journeys to be empty', async () => {
       const allJourneys = await Journey.findAll()
@@ -244,20 +249,23 @@ describe('Test /api/journeys', () => {
         const { rows } = body.allJourneys
 
         let currentDistance = rows[0].Covered_distance_m
-        for (let i = 0; i < rows.length; i++) {
+
+        for (let i = 1; i < rows.length; i++) {
           const { Covered_distance_m } = rows[i]
           expect(Covered_distance_m).toBeLessThanOrEqual(currentDistance)
           currentDistance = Covered_distance_m
         }
       })
+
       test('Testing order = ["Covered_distance_m", "ASC"]', async () => {
         const { body } = await request(app)
           .get('/api/journeys')
           .query({ limit: 5, order: ['Covered_distance_m', 'ASC'] })
 
         const { rows } = body.allJourneys
+
         let currentDistance = rows[0].Covered_distance_m
-        for (let i = 0; i < rows.length; i++) {
+        for (let i = 1; i < rows.length; i++) {
           const { Covered_distance_m } = rows[i]
           expect(Covered_distance_m).toBeGreaterThanOrEqual(currentDistance)
           currentDistance = Covered_distance_m
@@ -274,7 +282,7 @@ describe('Test /api/journeys', () => {
         })
         expect(body.allJourneys.rows.length).toBe(0)
       })
-      test('Endpoint should find one journey where departure station starts with search value', async () => {
+      test('Endpoint should find one journey where departure station has "Hana"', async () => {
         const { body } = await request(app).get('/api/journeys').query({
           limit: 5,
           search: 'Hana',
@@ -283,7 +291,7 @@ describe('Test /api/journeys', () => {
         expect(body.allJourneys.rows.length).toBe(1)
         expect(body.nextCursor).toBe(undefined)
       })
-      test('Endpoint should find two journeys where departure station has "h"', async () => {
+      test('Endpoint should find three journeys where departure station has "h"', async () => {
         const { body } = await request(app).get('/api/journeys').query({
           limit: 5,
           search: 'h',
