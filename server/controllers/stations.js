@@ -62,7 +62,7 @@ route.get('/', async (req, res) => {
     cursor = undefined
   }
 
-  res.status(200).json({ allStations, nextCursor: cursor })
+  res.status(200).json({ ...allStations, nextCursor: cursor })
 })
 
 route.get('/:id', async (req, res) => {

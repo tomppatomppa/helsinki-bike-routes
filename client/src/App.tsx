@@ -1,3 +1,4 @@
+import InfiniteScrollStations from './components/InfiniteScrollStations'
 import NavBar from './components/NavBar'
 
 function App() {
@@ -5,6 +6,7 @@ function App() {
     <>
       <div className="text-center">
         <NavBar />
+        <InfiniteScrollStations />
       </div>
     </>
   )
