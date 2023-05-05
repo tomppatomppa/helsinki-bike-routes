@@ -6,7 +6,8 @@ const {
 
 function parseRow(row) {
   const rowWithoutDots = removeDot(row)
-  return convertSpaceToUnderscore(removeParethesis(rowWithoutDots))
+  const rowWithoutParenthesis = removeParethesis(rowWithoutDots)
+  return convertSpaceToUnderscore(rowWithoutParenthesis)
 }
 
 module.exports = parseRow

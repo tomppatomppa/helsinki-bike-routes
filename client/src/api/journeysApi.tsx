@@ -1,11 +1,11 @@
 import axios from 'axios'
-import { Station } from '../types/station'
+import { Journey } from '../types/journey'
 
-const baseUrl = '/api/stations'
+const baseUrl = '/api/journeys'
 
-export interface StationDataWithCursor {
+export interface JourneysDataWithCursor {
   count: number
-  rows: Station[]
+  rows: Journey[]
   nextCursor: number | undefined
 }
 
@@ -15,7 +15,7 @@ export const fetchStationsByCursor = async (
   search: string,
   search_field: string
 ) => {
-  const { data } = await axios.get<StationDataWithCursor>(baseUrl, {
+  const { data } = await axios.get<JourneysDataWithCursor>(baseUrl, {
     params: { offset: cursor, limit, search, search_field },
   })
 
