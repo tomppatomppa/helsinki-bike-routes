@@ -16,18 +16,16 @@ const StationDetailsComponent = (props: Props) => {
       >
         <strong>STATION DETAILS</strong>
         <p>
-          <strong>Name:</strong> {Nimi}, {Namn},{Name}
+          <strong>Name:</strong> {Nimi}, {Namn}, {Name}
         </p>
         <p>
           <strong> Adress:</strong> {Osoite}, {Adress}
         </p>
         <p>
-          <strong>Departures from station: </strong>
-          {departures_count}
+          <strong>Departures from station: {departures_count} </strong>
         </p>
         <p>
-          <strong> Returns to station: </strong>
-          {returns_count}
+          <strong> Returns to station: {returns_count}</strong>
         </p>
       </div>
     </div>
