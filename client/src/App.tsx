@@ -4,7 +4,7 @@ import StationDetailsView from './components/StationDetailsView'
 import InfiniteScrollJourneys from './components/infiniteScrollJourneys'
 import { useState } from 'react'
 function App() {
-  const [select, setSelect] = useState<string>('journeys')
+  const [select, setSelect] = useState<string>('stations')
   const [stationID, setStationID] = useState<number | null>(null)
   return (
     <>
@@ -13,7 +13,7 @@ function App() {
         {select === 'journeys' ? (
           <InfiniteScrollJourneys />
         ) : (
-          <InfiniteScrollStations />
+          <InfiniteScrollStations setStationID={setStationID} />
         )}
         <StationDetailsView stationID={stationID} />
       </div>

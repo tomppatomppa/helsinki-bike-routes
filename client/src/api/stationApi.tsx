@@ -21,3 +21,9 @@ export const fetchStationsByCursor = async (
 
   return data
 }
+
+export const fetchStationByID = async (ID: number) => {
+  const { data } = await axios.get<StationDataWithCursor>(`${baseUrl}/${ID}`)
+
+  return data
+}

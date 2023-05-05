@@ -11,11 +11,7 @@ const InfiniteScrollJourneys = () => {
   const { ref: loadMoreRef, inView } = useInView()
   const [search_field] = useState<string>('Departure_station_name')
   const [search, setSearch] = useState<string>('')
-  const [order, setOrder] = useState<string[]>([
-    'Departure_station_name',
-    'ASC',
-  ])
-
+  const [order] = useState<string[]>(['Departure_station_name', 'ASC'])
   const [limit] = useState<number>(20)
 
   const {
@@ -50,7 +46,7 @@ const InfiniteScrollJourneys = () => {
         Search Journey:
         <input value={search} onChange={(e) => setSearch(e.target.value)} />
       </label>
-      <div className="max-h-94 overflow-y-auto divide-y">
+      <div className="max-h-64 overflow-y-auto divide-y">
         {isError ? (
           <p className="text-red-900">
             There was a problem with fetching journeys
