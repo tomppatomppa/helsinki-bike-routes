@@ -46,7 +46,7 @@ const InfiniteScrollStations: React.FC<Props> = ({ setStationID }) => {
         Search Stations:
         <input value={search} onChange={(e) => setSearch(e.target.value)} />
       </label>
-      <div className="max-h-64 overflow-y-auto divide-y">
+      <div className="max-h-auto overflow-y-auto divide-y">
         {isError ? (
           <p className="text-red-900">
             There was a problem with fetching stations
@@ -60,7 +60,7 @@ const InfiniteScrollStations: React.FC<Props> = ({ setStationID }) => {
                 <div
                   onClick={() => setStationID(station.ID)}
                   className="relative p-4 text-xl border-l-4 bg-neutral-100
-                text-neutral-600 border-neutral-500 "
+                text-neutral-600 border-neutral-500 cursor-pointer"
                   key={station.ID}
                 >
                   {station.Name} {station.ID}

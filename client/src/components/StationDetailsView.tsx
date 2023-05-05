@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query'
 import { fetchStationByID } from '../api/stationApi'
 import Spinner from './Spinner'
-
+import { Suspense } from 'react'
 import { StationDetails } from '../types/station'
 import StationDetailsComponent from './StationDetailsComponent'
 
@@ -21,7 +21,7 @@ const StationDetailsView = (props: Props) => {
   if (isError) return <div>Cannot get station....</div>
 
   return (
-    <div className="mt-24 bg-gray-200">
+    <div className="mt-24 bg-gray-200 sticky bottom-0">
       <Spinner show={isLoading} delay={300} />
       {station && <StationDetailsComponent station={station} />}
     </div>
