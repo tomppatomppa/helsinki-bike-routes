@@ -11,6 +11,7 @@ const station = {
   departures_count: 1,
   returns_count: 0,
 }
+
 describe('StationDetailsComponent test', () => {
   test('Should show station data', () => {
     render(<StationDetailsComponent station={station} />)
