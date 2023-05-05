@@ -1,9 +1,13 @@
-const NavBar = () => {
+interface NavBarProps {
+  setSelect: (values: string) => void
+}
+
+const NavBar: React.FC<NavBarProps> = ({ setSelect }) => {
   return (
     <div className="w-full bg-blue-200">
       <div className="flex gap-4 justify-end">
-        <button>Journeys</button>
-        <button>Stations</button>
+        <button onClick={() => setSelect('journeys')}>Journeys</button>
+        <button onClick={() => setSelect('stations')}>Stations</button>
       </div>
     </div>
   )

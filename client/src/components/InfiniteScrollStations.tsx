@@ -4,7 +4,7 @@ import { useInfiniteQuery } from 'react-query'
 import { StationDataWithCursor, fetchStationsByCursor } from '../api/stationApi'
 import { useInView } from 'react-intersection-observer'
 
-const InfiniteScrollStations: React.FC = () => {
+const InfiniteScrollStations = () => {
   const { ref: loadMoreRef, inView } = useInView()
   const [search_field] = useState<string>('Name')
   const [search, setSearch] = useState<string>('')
