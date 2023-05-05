@@ -16,8 +16,12 @@ function App() {
         ) : (
           <InfiniteScrollStations setStationID={setStationID} />
         )}
-        <button onClick={() => setStationID(null)}>Close</button>
-        {stationID && <StationDetailsView stationID={stationID} />}
+        {stationID && (
+          <StationDetailsView
+            stationID={stationID}
+            setStationID={setStationID}
+          />
+        )}
       </div>
     </>
   )

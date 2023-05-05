@@ -3,14 +3,15 @@ import { StationDetails } from '../types/station'
 interface Props {
   station: StationDetails
 }
+
 const StationDetailsComponent = (props: Props) => {
   const { Nimi, Namn, Name, Osoite, Adress, departures_count, returns_count } =
     props.station
 
   return (
-    <div className="flex text-left h-full flex-1 ">
+    <div className="text-left">
       <div
-        className="relative p-4 text-xl bg-neutral-100 w-full
+        className="relative p-4 text-xl bg-neutral-100
                 text-neutral-600 border border-black"
       >
         <strong>STATION DETAILS</strong>

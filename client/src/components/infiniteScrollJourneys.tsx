@@ -46,7 +46,7 @@ const InfiniteScrollJourneys = () => {
         Search Journey:
         <input value={search} onChange={(e) => setSearch(e.target.value)} />
       </label>
-      <div className="max-h-64 overflow-y-auto divide-y">
+      <div className="max-h-auto overflow-y-auto divide-y">
         {isError ? (
           <p className="text-red-900">
             There was a problem with fetching journeys
