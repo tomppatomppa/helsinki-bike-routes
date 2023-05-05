@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Station } from '../types/station'
+import { Station, StationDetails } from '../types/station'
 
 const baseUrl = '/api/stations'
 
@@ -22,8 +22,8 @@ export const fetchStationsByCursor = async (
   return data
 }
 
-export const fetchStationByID = async (ID: number) => {
-  const { data } = await axios.get<StationDataWithCursor>(`${baseUrl}/${ID}`)
+export const fetchStationByID = async (stationID: number) => {
+  const { data } = await axios.get<StationDetails>(`${baseUrl}/${stationID}`)
 
   return data
 }

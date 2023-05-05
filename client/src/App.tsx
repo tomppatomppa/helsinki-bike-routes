@@ -2,7 +2,7 @@ import InfiniteScrollStations from './components/InfiniteScrollStations'
 import NavBar from './components/NavBar'
 import StationDetailsView from './components/StationDetailsView'
 import InfiniteScrollJourneys from './components/infiniteScrollJourneys'
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 function App() {
   const [select, setSelect] = useState<string>('stations')
   const [stationID, setStationID] = useState<number | null>(null)
@@ -15,7 +15,8 @@ function App() {
         ) : (
           <InfiniteScrollStations setStationID={setStationID} />
         )}
-        <StationDetailsView stationID={stationID} />
+
+        {stationID && <StationDetailsView stationID={stationID} />}
       </div>
     </>
   )
