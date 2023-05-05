@@ -23,7 +23,7 @@ const InfiniteScrollStations: React.FC = () => {
     ({ pageParam = 0 }) =>
       fetchStationsByCursor(pageParam, limit, search, search_field),
     {
-      getNextPageParam: (lastPage, pages) => {
+      getNextPageParam: (lastPage) => {
         return lastPage.nextCursor
       },
     }

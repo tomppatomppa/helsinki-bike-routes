@@ -1,5 +1,5 @@
 const InfiniteScrollJourneys: React.FC = () => {
-  return <div></div>
+  return <div>Journeys</div>
 }
 
 export default InfiniteScrollJourneys
