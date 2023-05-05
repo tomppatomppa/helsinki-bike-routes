@@ -10,13 +10,13 @@ export interface JourneysDataWithCursor {
 }
 
 export const fetchJourneysByCursor = async (
-  cursor: number
-  // limit: number,
+  cursor: number,
+  limit: number
   // search: string,
   // search_field: string
 ) => {
   const { data } = await axios.get<JourneysDataWithCursor>(baseUrl, {
-    params: { offset: cursor },
+    params: { offset: cursor, limit },
   })
 
   return data
