@@ -9,6 +9,12 @@ import {
 
 const InfiniteScrollJourneys = () => {
   const { ref: loadMoreRef, inView } = useInView()
+  const [search_field] = useState<string>('Departure_station_name')
+  const [search, setSearch] = useState<string>('')
+  const [order, setOrder] = useState<string[]>([
+    'Departure_station_name',
+    'ASC',
+  ])
   const [limit] = useState<number>(20)
 
   const {
@@ -20,14 +26,16 @@ const InfiniteScrollJourneys = () => {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery<JourneysDataWithCursor>(
-    ['journeys'],
-    ({ pageParam = 0 }) => fetchJourneysByCursor(pageParam, limit),
+    ['journeys', search],
+    ({ pageParam = 0 }) =>
+      fetchJourneysByCursor(pageParam, limit, search, search_field, order),
     {
       getNextPageParam: (lastPage) => {
         return lastPage.nextCursor
       },
     }
   )
+
   useEffect(() => {
     if (inView && !isFetchingNextPage && hasNextPage) {
       fetchNextPage()
@@ -37,18 +45,17 @@ const InfiniteScrollJourneys = () => {
 
   return (
     <div>
-      {/* <label>
-        Search Stations:
+      <label>
+        Search Journey:
         <input value={search} onChange={(e) => setSearch(e.target.value)} />
-      </label> */}
+      </label>
       <div className="max-h-94 overflow-y-auto divide-y">
         {isError ? (
           <p className="text-red-900">
-            There was a problem with fetching stations
+            There was a problem with fetching journeys
           </p>
         ) : null}
-        {isLoading ? <p>Fetching stations</p> : null}
-        {isLoading ? <p>Fetching stations</p> : null}
+        {isLoading ? <p>Fetching journeys</p> : null}
         {isSuccess && (
           <div>
             {journeys?.pages.map((data) => {

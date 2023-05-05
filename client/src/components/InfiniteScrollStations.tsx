@@ -49,7 +49,6 @@ const InfiniteScrollStations = () => {
           </p>
         ) : null}
         {isLoading ? <p>Fetching stations</p> : null}
-        {isLoading ? <p>Fetching stations</p> : null}
         {isSuccess && (
           <div>
             {stations?.pages.map((data) => {

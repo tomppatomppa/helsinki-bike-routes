@@ -64,6 +64,9 @@ route.get('/', journeysQueryValidator(), async (req, res) => {
     limit: limit,
     where,
     order: [order],
+    attributes: {
+      exclude: ['Departure', 'Return', 'createdAt', 'updatedAt'],
+    },
   })
 
   let cursor = 0
