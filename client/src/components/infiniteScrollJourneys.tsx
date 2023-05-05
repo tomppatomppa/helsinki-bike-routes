@@ -15,6 +15,7 @@ const InfiniteScrollJourneys = () => {
     'Departure_station_name',
     'ASC',
   ])
+
   const [limit] = useState<number>(20)
 
   const {
