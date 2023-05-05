@@ -1,14 +1,13 @@
-import { useState, useEffect, Suspense, useDeferredValue } from 'react'
+import { useState, useEffect } from 'react'
 import { useInfiniteQuery } from 'react-query'
 
 import { StationDataWithCursor, fetchStationsByCursor } from '../api/stationApi'
 import { useInView } from 'react-intersection-observer'
 
-const InfiniteScrollStations = () => {
+const InfiniteScrollStations: React.FC = () => {
   const { ref: loadMoreRef, inView } = useInView()
   const [search_field] = useState<string>('Name')
   const [search, setSearch] = useState<string>('')
-  const deferredQuery = useDeferredValue(search)
   const [limit] = useState<number>(20)
 
   const {
@@ -19,21 +18,17 @@ const InfiniteScrollStations = () => {
     isError,
     fetchNextPage,
     hasNextPage,
-    refetch,
   } = useInfiniteQuery<StationDataWithCursor>(
-    'stations',
+    ['stations', search],
     ({ pageParam = 0 }) =>
-      fetchStationsByCursor(pageParam, limit, deferredQuery, search_field),
+      fetchStationsByCursor(pageParam, limit, search, search_field),
     {
       getNextPageParam: (lastPage, pages) => {
         return lastPage.nextCursor
       },
     }
   )
-  useEffect(() => {
-    refetch()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deferredQuery])
+
   useEffect(() => {
     if (inView && !isFetchingNextPage && hasNextPage) {
       fetchNextPage()
@@ -56,22 +51,20 @@ const InfiniteScrollStations = () => {
         {isLoading ? <p>Fetching stations</p> : null}
         {isLoading ? <p>Fetching stations</p> : null}
         {isSuccess && (
-          <Suspense fallback={<h2>Loading...</h2>}>
-            <div>
-              {stations?.pages.map((data) => {
-                return data.rows.map((station) => (
-                  <div
-                    className="relative p-4 text-xl border-l-4 bg-neutral-100
+          <div>
+            {stations?.pages.map((data) => {
+              return data.rows.map((station) => (
+                <div
+                  className="relative p-4 text-xl border-l-4 bg-neutral-100
                 text-neutral-600 border-neutral-500 "
-                    key={station.ID}
-                  >
-                    {station.Name}
-                  </div>
-                ))
-              })}
-              <div ref={loadMoreRef}></div>
-            </div>
-          </Suspense>
+                  key={station.ID}
+                >
+                  {station.Name}
+                </div>
+              ))
+            })}
+            <div ref={loadMoreRef}></div>
+          </div>
         )}
       </div>
     </div>
