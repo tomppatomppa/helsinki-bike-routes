@@ -182,25 +182,25 @@ describe('Test /api/journeys', () => {
   describe('Test all query params', () => {
     test('Endpoint counts total of 5 journeys in the database', async () => {
       const response = await request(app).get('/api/journeys')
-      expect(response.body.allJourneys.count).toBe(journeys.length)
+      expect(response.body.count).toBe(journeys.length)
     })
 
     describe('Testing query param <limit>', () => {
       test('Expect rows length to be 1 without query params limit', async () => {
         const response = await request(app).get('/api/journeys')
-        expect(response.body.allJourneys.rows.length).toBe(1)
+        expect(response.body.rows.length).toBe(1)
       })
       test('Expect rows length to be 2 with query limit=2', async () => {
         const response = await request(app)
           .get('/api/journeys')
           .query({ limit: 2 })
-        expect(response.body.allJourneys.rows.length).toBe(2)
+        expect(response.body.rows.length).toBe(2)
       })
       test('Expect rows length to be 5 with query limit=5', async () => {
         const response = await request(app)
           .get('/api/journeys')
           .query({ limit: 5 })
-        expect(response.body.allJourneys.rows.length).toBe(5)
+        expect(response.body.rows.length).toBe(5)
       })
     })
     describe('Testing query param <offset>', () => {
@@ -228,25 +228,25 @@ describe('Test /api/journeys', () => {
           .get('/api/journeys')
           .query({ limit: 5 })
 
-        expect(response.body.allJourneys.rows[0].id).toEqual(journeys[0].id)
-        expect(response.body.allJourneys.rows[2].id).toEqual(journeys[2].id)
-        expect(response.body.allJourneys.rows[4].id).toEqual(journeys[4].id)
+        expect(response.body.rows[0].id).toEqual(journeys[0].id)
+        expect(response.body.rows[2].id).toEqual(journeys[2].id)
+        expect(response.body.rows[4].id).toEqual(journeys[4].id)
       })
       test('returns Journeys in descending order by id', async () => {
         const response = await request(app)
           .get('/api/journeys')
           .query({ limit: 5, order: ['id', 'DESC'] })
 
-        expect(response.body.allJourneys.rows[0].id).toEqual(journeys[4].id)
-        expect(response.body.allJourneys.rows[2].id).toEqual(journeys[2].id)
-        expect(response.body.allJourneys.rows[4].id).toEqual(journeys[0].id)
+        expect(response.body.rows[0].id).toEqual(journeys[4].id)
+        expect(response.body.rows[2].id).toEqual(journeys[2].id)
+        expect(response.body.rows[4].id).toEqual(journeys[0].id)
       })
       test('returns Journeys in descending order by Covered_distance_m', async () => {
         const { body } = await request(app)
           .get('/api/journeys')
           .query({ limit: 5, order: ['Covered_distance_m', 'DESC'] })
 
-        const { rows } = body.allJourneys
+        const { rows } = body
 
         let currentDistance = rows[0].Covered_distance_m
 
@@ -262,7 +262,7 @@ describe('Test /api/journeys', () => {
           .get('/api/journeys')
           .query({ limit: 5, order: ['Covered_distance_m', 'ASC'] })
 
-        const { rows } = body.allJourneys
+        const { rows } = body
 
         let currentDistance = rows[0].Covered_distance_m
         for (let i = 1; i < rows.length; i++) {
@@ -280,7 +280,7 @@ describe('Test /api/journeys', () => {
           search: 'doesnotexist',
           search_field: 'Departure_station_name',
         })
-        expect(body.allJourneys.rows.length).toBe(0)
+        expect(body.rows.length).toBe(0)
       })
       test('Endpoint should find one journey where departure station has "Hana"', async () => {
         const { body } = await request(app).get('/api/journeys').query({
@@ -288,7 +288,7 @@ describe('Test /api/journeys', () => {
           search: 'Hana',
           search_field: 'Departure_station_name',
         })
-        expect(body.allJourneys.rows.length).toBe(1)
+        expect(body.rows.length).toBe(1)
         expect(body.nextCursor).toBe(undefined)
       })
       test('Endpoint should find three journeys where departure station has "h"', async () => {
@@ -297,7 +297,7 @@ describe('Test /api/journeys', () => {
           search: 'h',
           search_field: 'Departure_station_name',
         })
-        expect(body.allJourneys.rows.length).toBe(3)
+        expect(body.rows.length).toBe(3)
         expect(body.nextCursor).toBe(undefined)
       })
       test('Test pagination with search, nextCursor should be 1', async () => {
@@ -306,7 +306,7 @@ describe('Test /api/journeys', () => {
           search: 'h',
           search_field: 'Departure_station_name',
         })
-        expect(body.allJourneys.rows.length).toBe(1)
+        expect(body.rows.length).toBe(1)
         expect(body.nextCursor).toBe(1)
       })
     })

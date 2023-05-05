@@ -74,7 +74,7 @@ route.get('/', journeysQueryValidator(), async (req, res) => {
     cursor = undefined
   }
 
-  res.status(200).json({ allJourneys, nextCursor: cursor })
+  res.status(200).json({ ...allJourneys, nextCursor: cursor })
 })
 
 module.exports = route

@@ -9,7 +9,7 @@ export interface JourneysDataWithCursor {
   nextCursor: number | undefined
 }
 
-export const fetchStationsByCursor = async (
+export const fetchJourneysByCursor = async (
   cursor: number,
   limit: number,
   search: string,
