@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from './Components/Header'
 import Sidebar from './Components/Sidebar'
 import { Outlet } from 'react-router-dom'
 import Footer from './Components/Footer'
 const MainLayout = () => {
+  const [showSidebar, setShowSidebar] = useState<boolean>(false)
+  const handleSetSidebar = () => {
+    setShowSidebar(!showSidebar)
+  }
   return (
     <div
       style={{
@@ -14,10 +18,10 @@ const MainLayout = () => {
       }}
     >
       <div className="col-span-2 row-span-auto">
-        <Header />
+        <Header handleSetSidebar={handleSetSidebar} />
       </div>
       <aside className="md:row-start-2 row-span-auto">
-        <Sidebar />
+        {showSidebar && <Sidebar />}
       </aside>
       <main className="col-start-auto col-span-auto">
         <Outlet />
