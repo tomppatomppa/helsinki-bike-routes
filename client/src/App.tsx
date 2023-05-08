@@ -14,7 +14,7 @@ function App() {
     <div className="App mx-auto text-center ">
       <Routes>
         <Route element={<MainLayout />}>
-          <Route path="/journeys" element={<div>journeys</div>} />
+          <Route path="/journeys" element={<InfiniteScrollJourneys />} />
           <Route
             path="/stations"
             element={<InfiniteScrollStations setStationID={setStationID} />}
