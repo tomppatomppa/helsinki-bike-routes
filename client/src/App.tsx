@@ -3,28 +3,26 @@ import NavBar from './components/NavBar'
 import StationDetailsView from './components/StationDetailsView'
 import InfiniteScrollJourneys from './components/infiniteScrollJourneys'
 import { useState } from 'react'
+import { Routes, Route } from 'react-router-dom'
+import MainLayout from './components/layout/MainLayout'
 
 function App() {
   const [select, setSelect] = useState<string>('stations')
   const [stationID, setStationID] = useState<number | null>(null)
 
   return (
-    <>
-      <div className="text-center">
-        <NavBar setSelect={setSelect} />
-        {select === 'journeys' ? (
-          <InfiniteScrollJourneys />
-        ) : (
-          <InfiniteScrollStations setStationID={setStationID} />
-        )}
-        {stationID && (
-          <StationDetailsView
-            stationID={stationID}
-            setStationID={setStationID}
+    <div className="App mx-auto text-center ">
+      <Routes>
+        <Route element={<MainLayout />}>
+          <Route path="/journeys" element={<div>journeys</div>} />
+          <Route
+            path="/stations"
+            element={<InfiniteScrollStations setStationID={setStationID} />}
           />
-        )}
-      </div>
-    </>
+          <Route path="/" element={<div>stations</div>} />
+        </Route>
+      </Routes>
+    </div>
   )
 }
 
