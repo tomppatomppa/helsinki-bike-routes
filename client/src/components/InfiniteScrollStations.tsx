@@ -4,6 +4,7 @@ import { useInfiniteQuery } from 'react-query'
 import { StationDataWithCursor, fetchStationsByCursor } from '../api/stationApi'
 import { useInView } from 'react-intersection-observer'
 import StationListItem from './StationListItem'
+import StationTable from './StationTable'
 
 interface Props {
   setStationID: (values: number) => void
@@ -41,6 +42,8 @@ const InfiniteScrollStations: React.FC<Props> = ({ setStationID }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView])
 
+  const rows = stations?.pages.flatMap((page) => page.rows) ?? []
+
   return (
     <div>
       <label>
@@ -56,7 +59,8 @@ const InfiniteScrollStations: React.FC<Props> = ({ setStationID }) => {
         {isLoading ? <p>Fetching stations</p> : null}
         {isSuccess && (
           <div>
-            {stations?.pages.map((data) => {
+            <StationTable data={rows} />
+            {/* {stations?.pages.map((data) => {
               return data.rows.map((station) => (
                 <StationListItem
                   key={station.ID}
@@ -64,7 +68,7 @@ const InfiniteScrollStations: React.FC<Props> = ({ setStationID }) => {
                   onClick={setStationID}
                 />
               ))
-            })}
+            })} */}
             <div ref={loadMoreRef}></div>
           </div>
         )}
