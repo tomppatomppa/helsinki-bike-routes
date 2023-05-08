@@ -14,9 +14,8 @@ interface TableProps {
   x: string
   y: string
 }
-
-const StationTable = ({ data }: Props) => {
-  const columns = useMemo<Column<TableProps>[]>(
+function CreateColumns() {
+  return useMemo<Column<TableProps>[]>(
     () => [
       {
         Header: 'Nimi',
@@ -49,6 +48,9 @@ const StationTable = ({ data }: Props) => {
     ],
     []
   )
+}
+const StationTable = ({ data }: Props) => {
+  const columns = CreateColumns()
   const tableInstance = useTable<TableProps>(
     {
       columns,

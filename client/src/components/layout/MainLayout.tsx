@@ -3,6 +3,7 @@ import Header from './Components/Header'
 import Sidebar from './Components/Sidebar'
 import { Outlet } from 'react-router-dom'
 import Footer from './Components/Footer'
+import ScrollWrapper from './Components/ScrollWrapper'
 
 const MainLayout = () => {
   const [showSidebar, setShowSidebar] = useState<boolean>(false)
@@ -27,7 +28,9 @@ const MainLayout = () => {
         {showSidebar && <Sidebar />}
       </aside>
       <main className="col-start-auto col-span-auto">
-        <Outlet />
+        <ScrollWrapper>
+          <Outlet />
+        </ScrollWrapper>
       </main>
       <div className="col-span-2">
         <Footer />
