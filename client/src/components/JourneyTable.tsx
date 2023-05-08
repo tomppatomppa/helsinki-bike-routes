@@ -7,6 +7,7 @@ interface Props {
   data: Journey[]
   orderByColumn: (value: string) => void
 }
+
 interface TableProps {
   id: number
   Departure_station_name: string
