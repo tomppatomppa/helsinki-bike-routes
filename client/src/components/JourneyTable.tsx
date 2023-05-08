@@ -23,20 +23,22 @@ const JourneyTable = ({ data, orderByColumn }: Props) => {
       {
         Header: 'Departure Station',
         accessor: 'Departure_station_name',
+        width: 150,
       },
       {
         Header: 'Return Station',
         accessor: 'Return_station_name',
+        width: 150,
       },
       {
         Header: 'Distance',
         accessor: 'Covered_distance_m',
-        width: 100,
+        width: 50,
       },
       {
         Header: 'Duration',
         accessor: 'Duration_sec',
-        width: 100,
+        width: 50,
       },
     ],
     []
@@ -63,6 +65,7 @@ const JourneyTable = ({ data, orderByColumn }: Props) => {
             >
               {headerGroup.headers.map((column) => (
                 <th
+                  style={{ width: column.width }}
                   {...column.getHeaderProps()}
                   onClick={() => orderByColumn(column.id?.toString())}
                 >

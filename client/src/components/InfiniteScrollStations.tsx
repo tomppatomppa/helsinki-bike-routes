@@ -26,6 +26,7 @@ const InfiniteScrollStations: React.FC<Props> = ({ setStationID }) => {
     hasNextPage,
   } = useInfiniteQuery<StationDataWithCursor>(
     ['stations', search],
+
     ({ pageParam = 0 }) =>
       fetchStationsByCursor(pageParam, limit, search, search_field),
     {
