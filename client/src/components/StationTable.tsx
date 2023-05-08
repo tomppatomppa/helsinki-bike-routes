@@ -1,6 +1,7 @@
 import { useTable, Column, useRowState } from 'react-table'
 import { Station } from '../types/station'
 import { useMemo } from 'react'
+
 interface Props {
   data: Station[]
 }
@@ -92,7 +93,7 @@ const StationTable = ({ data }: Props) => {
             </tr>
           ))}
         </thead>
-        <tbody {...getTableBodyProps()}>
+        <tbody data-testid="table-rows" {...getTableBodyProps()}>
           {rows.map((row) => {
             prepareRow(row)
             return (

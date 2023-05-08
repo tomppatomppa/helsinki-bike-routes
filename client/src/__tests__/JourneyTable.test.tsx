@@ -1,19 +1,24 @@
 import { describe, expect, test } from 'vitest'
 import { screen, render, within } from '@testing-library/react'
 import JourneyTable from '../components/JourneyTable'
+import { Journey } from '../types/journey'
 
-const journeys = [
+const journeys: Journey[] = [
   {
     id: 1,
     Departure_station_name: 'Hanasaari',
+    Departure_station_id: 2,
     Return_station_name: 'Keilalahti',
+    Return_station_id: 2,
     Covered_distance_m: 2043,
     Duration_sec: 600,
   },
   {
     id: 2,
     Departure_station_name: 'Hanasaari',
+    Departure_station_id: 2,
     Return_station_name: 'Keilalahti',
+    Return_station_id: 2,
     Covered_distance_m: 2043,
     Duration_sec: 600,
   },
@@ -25,6 +30,7 @@ describe('JourneyTable', () => {
     const headers = screen.getAllByRole('columnheader')
     expect(headers).toHaveLength(4)
   })
+
   test('renders correct headers', () => {
     render(<JourneyTable data={journeys} />)
 

@@ -50,7 +50,14 @@ route.get('/', async (req, res) => {
     limit: limit,
     where,
     attributes: {
-      exclude: ['FID', 'createdAt', 'updatedAt'],
+      exclude: [
+        'FID',
+        'createdAt',
+        'updatedAt',
+        'Kaupunki',
+        'Operaattor',
+        'Kapasiteet',
+      ],
     },
   })
 

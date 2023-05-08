@@ -5,9 +5,6 @@ export interface Station {
   Name: string
   Osoite: string
   Adress: string
-  Kaupunki: string
-  Operaattor: string
-  Kapasiteet: string
   x: number
   y: number
 }
