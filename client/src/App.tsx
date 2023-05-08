@@ -3,6 +3,7 @@ import NavBar from './components/NavBar'
 import StationDetailsView from './components/StationDetailsView'
 import InfiniteScrollJourneys from './components/infiniteScrollJourneys'
 import { useState } from 'react'
+
 function App() {
   const [select, setSelect] = useState<string>('stations')
   const [stationID, setStationID] = useState<number | null>(null)

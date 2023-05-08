@@ -3,6 +3,7 @@ import { useInfiniteQuery } from 'react-query'
 
 import { StationDataWithCursor, fetchStationsByCursor } from '../api/stationApi'
 import { useInView } from 'react-intersection-observer'
+import StationListItem from './StationListItem'
 
 interface Props {
   setStationID: (values: number) => void
@@ -46,7 +47,7 @@ const InfiniteScrollStations: React.FC<Props> = ({ setStationID }) => {
         Search Stations:
         <input value={search} onChange={(e) => setSearch(e.target.value)} />
       </label>
-      <div className="max-h-auto overflow-y-auto divide-y">
+      <div className="max-h-[80vh] w-full overflow-auto divide-y p-6">
         {isError ? (
           <p className="text-red-900">
             There was a problem with fetching stations
@@ -57,14 +58,11 @@ const InfiniteScrollStations: React.FC<Props> = ({ setStationID }) => {
           <div>
             {stations?.pages.map((data) => {
               return data.rows.map((station) => (
-                <div
-                  onClick={() => setStationID(station.ID)}
-                  className="relative p-4 text-xl border-l-4 bg-neutral-100
-                text-neutral-600 border-neutral-500 cursor-pointer"
+                <StationListItem
                   key={station.ID}
-                >
-                  {station.Name} {station.ID}
-                </div>
+                  station={station}
+                  onClick={setStationID}
+                />
               ))
             })}
             <div ref={loadMoreRef}></div>
