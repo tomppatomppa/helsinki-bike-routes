@@ -7,14 +7,16 @@ import {
   fetchJourneysByCursor,
 } from '../api/journeysApi'
 import JourneyTable from './JourneyTable'
+import useQueryParams from '../hooks/useQueryParams'
 
 const InfiniteScrollJourneys = () => {
+  const { queryParams } = useQueryParams()
   const { ref: loadMoreRef, inView } = useInView()
   const [search_field] = useState<string>('Departure_station_name')
   const [search, setSearch] = useState<string>('')
-  const [order] = useState<string[]>(['Departure_station_name', 'ASC'])
-  const [limit] = useState<number>(20)
-
+  //const [order] = useState<string[]>(['Departure_station_name', 'ASC'])
+  // const [limit] = useState<number>(20)
+  console.log(queryParams)
   const {
     data: journeys,
     isLoading,
@@ -24,9 +26,15 @@ const InfiniteScrollJourneys = () => {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery<JourneysDataWithCursor>(
-    ['journeys', search],
+    ['journeys', queryParams.search],
     ({ pageParam = 0 }) =>
-      fetchJourneysByCursor(pageParam, limit, search, search_field, order),
+      fetchJourneysByCursor(
+        pageParam,
+        queryParams.limit,
+        search,
+        search_field,
+        queryParams.order
+      ),
     {
       getNextPageParam: (lastPage) => {
         return lastPage.nextCursor

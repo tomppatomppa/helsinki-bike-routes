@@ -8,14 +8,10 @@ describe('useQueryParams hook', () => {
     const { result } = renderHook(() => useQueryParams())
     expect(result.current.queryParams.limit).toBe(20)
   })
-  test('Should start with offset 0 by default', () => {
+
+  test('Should start with order [] by default', () => {
     const { result } = renderHook(() => useQueryParams())
-    expect(result.current.queryParams.offset).toBe(0)
-  })
-  test('Should start with order ["",""] by default', () => {
-    const { result } = renderHook(() => useQueryParams())
-    expect(result.current.queryParams.order[0]).toBe('')
-    expect(result.current.queryParams.order[1]).toBe('')
+    expect(result.current.queryParams.order).toHaveLength(0)
   })
   test('Should start with search "" by default', () => {
     const { result } = renderHook(() => useQueryParams())

@@ -1,8 +1,7 @@
 import { useState } from 'react'
 const useQueryParams = () => {
-  const [offset, setOffset] = useState<number>(0)
-  const [limit, setLimit] = useState<number>(20)
-  const [order, setOrder] = useState<string[]>(['', ''])
+  const [limit] = useState<number>(20)
+  const [order, setOrder] = useState<string[]>([])
   const [search, setSearch] = useState<string>('')
   const [search_field, setSearchField] = useState('')
 
@@ -19,7 +18,7 @@ const useQueryParams = () => {
     setSearchField(value)
   }
 
-  const queryParams = { limit, offset, order, search, search_field }
+  const queryParams = { limit, order, search, search_field }
   return { queryParams, orderByColumn, findByField, setSearch }
 }
 
