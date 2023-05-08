@@ -1,58 +1,39 @@
 import { useTable, Column, useRowState } from 'react-table'
-import { Station } from '../types/station'
+
 import { useMemo } from 'react'
+import { Journey } from '../types/journey'
+
 interface Props {
-  data: Station[]
+  data: Journey[]
 }
 interface TableProps {
-  ID: number
-  Nimi: string
-  Name: string
-  Namn: string
-  Osoite: string
-  Adress: string
-  x: string
-  y: string
+  id: number
+  Departure_station_name: string
+  Departure_station_id: number
+  Return_station_name: string
+  Return_station_id: number
+  Covered_distance_m: number
+  Duration_sec: number
 }
 
 const StationTable = ({ data }: Props) => {
   const columns = useMemo<Column<TableProps>[]>(
     () => [
       {
-        Header: 'Nimi',
-        accessor: 'Nimi',
+        Header: 'Departure Station',
+        accessor: 'Departure_station_name',
       },
       {
-        Header: 'Name',
-        accessor: 'Name',
+        Header: 'Return Station',
+        accessor: 'Return_station_name',
       },
       {
-        Header: 'Namn',
-        accessor: 'Namn',
+        Header: 'Distance',
+        accessor: 'Covered_distance_m',
       },
       {
-        Header: 'Osoite',
-        accessor: 'Osoite',
-      },
-      {
-        Header: 'Adress',
-        accessor: 'Adress',
-      },
-      {
-        Header: 'X',
-        accessor: 'x',
-      },
-      {
-        Header: 'Y',
-        accessor: 'y',
-      },
-      {
-        Header: 'Map',
-        disableSortBy: true,
-        accessor: 'ID',
-        Cell: ({ row }: any) => (
-          <button onClick={() => handleButtonClick(row)}>On Map</button>
-        ),
+        Header: 'Duration',
+        accessor: 'Duration_sec',
       },
     ],
     []
@@ -61,19 +42,11 @@ const StationTable = ({ data }: Props) => {
     {
       columns,
       data: useMemo<any[]>(() => data, [data]),
-      initialState: {
-        hiddenColumns: ['x', 'y'],
-      },
     },
     useRowState
   )
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance
-
-  const handleButtonClick = (row: any) => {
-    const { ID, Nimi } = row.values
-    console.log(`Clicked Station with ID ${ID}, and name ${Nimi}`, row.values)
-  }
 
   return (
     <div>
