@@ -5,6 +5,7 @@ import { Journey } from '../types/journey'
 
 interface Props {
   data: Journey[]
+  orderByColumn: (value: string) => void
 }
 interface TableProps {
   id: number
@@ -16,7 +17,7 @@ interface TableProps {
   Duration_sec: number
 }
 
-const JourneyTable = ({ data }: Props) => {
+const JourneyTable = ({ data, orderByColumn }: Props) => {
   const columns = useMemo<Column<TableProps>[]>(
     () => [
       {
@@ -30,10 +31,12 @@ const JourneyTable = ({ data }: Props) => {
       {
         Header: 'Distance',
         accessor: 'Covered_distance_m',
+        width: 100,
       },
       {
         Header: 'Duration',
         accessor: 'Duration_sec',
+        width: 100,
       },
     ],
     []
@@ -59,7 +62,10 @@ const JourneyTable = ({ data }: Props) => {
               {...headerGroup.getHeaderGroupProps()}
             >
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>
+                <th
+                  {...column.getHeaderProps()}
+                  onClick={() => orderByColumn(column.id?.toString())}
+                >
                   {column.render('Header') as React.ReactNode}
                 </th>
               ))}
