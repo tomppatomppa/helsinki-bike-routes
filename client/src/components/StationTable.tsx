@@ -14,8 +14,9 @@ interface TableProps {
   x: string
   y: string
 }
-function CreateColumns() {
-  return useMemo<Column<TableProps>[]>(
+
+const StationTable = ({ data }: Props) => {
+  const columns = useMemo<Column<TableProps>[]>(
     () => [
       {
         Header: 'Nimi',
@@ -45,12 +46,17 @@ function CreateColumns() {
         Header: 'Y',
         accessor: 'y',
       },
+      {
+        Header: 'Map',
+        disableSortBy: true,
+        accessor: 'ID',
+        Cell: ({ row }: any) => (
+          <button onClick={() => handleButtonClick(row)}>On Map</button>
+        ),
+      },
     ],
     []
   )
-}
-const StationTable = ({ data }: Props) => {
-  const columns = CreateColumns()
   const tableInstance = useTable<TableProps>(
     {
       columns,
@@ -64,6 +70,12 @@ const StationTable = ({ data }: Props) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance
 
+  const handleButtonClick = (row: any) => {
+    const { ID, Nimi } = row.values
+
+    console.log(`Clicked Station with ID ${ID}, and name ${Nimi}`)
+    // You can perform any other actions with the ID and Nimi values here
+  }
   return (
     <div>
       <table {...getTableProps()} className="w-full text-sm text-left">
@@ -86,7 +98,7 @@ const StationTable = ({ data }: Props) => {
             prepareRow(row)
             return (
               <tr
-                // onClick={() => handleRowClick(row)}
+                //onClick={() => handleRowClick(row)}
                 className="cursor-pointer hover:text-gray-600"
                 {...row.getRowProps()}
               >

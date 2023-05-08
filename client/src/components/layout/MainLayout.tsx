@@ -17,7 +17,7 @@ const MainLayout = () => {
       style={{
         display: 'grid',
         gridTemplateRows: '4rem 1fr 4rem',
-        gridTemplateColumns: '1fr',
+        gridTemplateColumns: showSidebar ? '15rem 1fr' : '1fr',
         minHeight: '100vh',
       }}
     >
