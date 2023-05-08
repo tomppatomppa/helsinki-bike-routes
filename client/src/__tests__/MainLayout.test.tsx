@@ -1,9 +1,9 @@
 import { describe, expect, test, vi } from 'vitest'
 import { screen, render, fireEvent } from '@testing-library/react'
-import { BrowserRouter as Router } from 'react-router-dom'
 
 import MainLayout from '../components/layout/MainLayout'
 import Header from '../components/layout/Components/Header'
+
 describe('MainLayout', () => {
   test('Renders Header and Footer by default and sidebar is hidden', () => {
     render(<MainLayout />)

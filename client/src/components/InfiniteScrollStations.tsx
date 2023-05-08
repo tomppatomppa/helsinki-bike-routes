@@ -3,7 +3,7 @@ import { useInfiniteQuery } from 'react-query'
 
 import { StationDataWithCursor, fetchStationsByCursor } from '../api/stationApi'
 import { useInView } from 'react-intersection-observer'
-import StationListItem from './StationListItem'
+
 import StationTable from './StationTable'
 
 interface Props {
@@ -60,15 +60,6 @@ const InfiniteScrollStations: React.FC<Props> = ({ setStationID }) => {
         {isSuccess && (
           <div>
             <StationTable data={rows} />
-            {/* {stations?.pages.map((data) => {
-              return data.rows.map((station) => (
-                <StationListItem
-                  key={station.ID}
-                  station={station}
-                  onClick={setStationID}
-                />
-              ))
-            })} */}
             <div ref={loadMoreRef}></div>
           </div>
         )}

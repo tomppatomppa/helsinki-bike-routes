@@ -1,0 +1,58 @@
+import { describe, expect, test } from 'vitest'
+import { screen, render, within } from '@testing-library/react'
+import JourneyTable from '../components/JourneyTable'
+
+const journeys = [
+  {
+    id: 1,
+    Departure_station_name: 'Hanasaari',
+    Return_station_name: 'Keilalahti',
+    Covered_distance_m: 2043,
+    Duration_sec: 600,
+  },
+  {
+    id: 2,
+    Departure_station_name: 'Hanasaari',
+    Return_station_name: 'Keilalahti',
+    Covered_distance_m: 2043,
+    Duration_sec: 600,
+  },
+]
+
+describe('JourneyTable', () => {
+  test('renders correct number of headers', () => {
+    render(<JourneyTable data={journeys} />)
+    const headers = screen.getAllByRole('columnheader')
+    expect(headers).toHaveLength(4)
+  })
+  test('renders correct headers', () => {
+    render(<JourneyTable data={journeys} />)
+
+    const departureStationHeader = screen.getByRole('columnheader', {
+      name: /Departure Station/i,
+    })
+    const returnStationHeader = screen.getByRole('columnheader', {
+      name: /Return Station/i,
+    })
+    const distanceHeader = screen.getByRole('columnheader', {
+      name: /Distance/i,
+    })
+    const duratinHeader = screen.getByRole('columnheader', {
+      name: /Duration/i,
+    })
+
+    expect(departureStationHeader).toBeDefined()
+    expect(returnStationHeader).toBeDefined()
+    expect(distanceHeader).toBeDefined()
+    expect(duratinHeader).toBeDefined()
+  })
+
+  test('renders correct number of table rows', () => {
+    render(<JourneyTable data={journeys} />)
+
+    const tbody = screen.getByTestId('table-rows')
+    const rows = within(tbody).getAllByRole('row')
+
+    expect(rows).toHaveLength(journeys.length)
+  })
+})

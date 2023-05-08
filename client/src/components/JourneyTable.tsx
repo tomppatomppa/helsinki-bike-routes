@@ -16,7 +16,7 @@ interface TableProps {
   Duration_sec: number
 }
 
-const StationTable = ({ data }: Props) => {
+const JourneyTable = ({ data }: Props) => {
   const columns = useMemo<Column<TableProps>[]>(
     () => [
       {
@@ -45,12 +45,13 @@ const StationTable = ({ data }: Props) => {
     },
     useRowState
   )
+
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance
 
   return (
     <div>
-      <table {...getTableProps()} className="w-full text-sm text-left">
+      <table {...getTableProps()} className="w-full text-sm text-left mx-auto">
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr
@@ -65,7 +66,7 @@ const StationTable = ({ data }: Props) => {
             </tr>
           ))}
         </thead>
-        <tbody {...getTableBodyProps()}>
+        <tbody data-testid="table-rows" {...getTableBodyProps()}>
           {rows.map((row) => {
             prepareRow(row)
             return (
@@ -85,4 +86,4 @@ const StationTable = ({ data }: Props) => {
   )
 }
 
-export default StationTable
+export default JourneyTable

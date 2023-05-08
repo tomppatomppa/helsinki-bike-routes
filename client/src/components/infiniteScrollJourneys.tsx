@@ -6,6 +6,7 @@ import {
   JourneysDataWithCursor,
   fetchJourneysByCursor,
 } from '../api/journeysApi'
+import JourneyTable from './JourneyTable'
 
 const InfiniteScrollJourneys = () => {
   const { ref: loadMoreRef, inView } = useInView()
@@ -39,7 +40,7 @@ const InfiniteScrollJourneys = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView])
-
+  const rows = journeys?.pages.flatMap((page) => page.rows) ?? []
   return (
     <div>
       <label>
@@ -55,18 +56,7 @@ const InfiniteScrollJourneys = () => {
         {isLoading ? <p>Fetching journeys</p> : null}
         {isSuccess && (
           <div>
-            {journeys?.pages.map((data) => {
-              return data.rows.map((journey) => (
-                <div
-                  className="relative p-4 text-xl border-l-4 bg-neutral-100
-                text-neutral-600 border-neutral-500 "
-                  key={journey.id}
-                >
-                  {journey.Departure_station_name}
-                </div>
-              ))
-            })}
-            <div ref={loadMoreRef}></div>
+            <JourneyTable data={rows} /> <div ref={loadMoreRef}></div>
           </div>
         )}
       </div>
