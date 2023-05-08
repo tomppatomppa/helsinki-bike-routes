@@ -16,6 +16,7 @@ describe('MainLayout', () => {
     expect(footer).toBeDefined()
     expect(sidebar).toBeNull()
   })
+
   test('Header handleSetSidebar prop is called once', () => {
     const handleSetSidebar = vi.fn()
     render(<Header handleSetSidebar={handleSetSidebar} />)
