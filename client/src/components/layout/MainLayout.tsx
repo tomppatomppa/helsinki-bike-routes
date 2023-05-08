@@ -1,13 +1,16 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Header from './Components/Header'
 import Sidebar from './Components/Sidebar'
 import { Outlet } from 'react-router-dom'
 import Footer from './Components/Footer'
+
 const MainLayout = () => {
   const [showSidebar, setShowSidebar] = useState<boolean>(false)
+
   const handleSetSidebar = () => {
     setShowSidebar(!showSidebar)
   }
+
   return (
     <div
       style={{
