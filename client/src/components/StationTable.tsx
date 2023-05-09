@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 
 interface Props {
   data: Station[]
+  onClick: (value: Station) => void
 }
 interface TableProps {
   ID: number
@@ -16,7 +17,7 @@ interface TableProps {
   y: string
 }
 
-const StationTable = ({ data }: Props) => {
+const StationTable = ({ data, onClick }: Props) => {
   const columns = useMemo<Column<TableProps>[]>(
     () => [
       {
@@ -72,8 +73,7 @@ const StationTable = ({ data }: Props) => {
     tableInstance
 
   const handleButtonClick = (row: any) => {
-    const { ID, Nimi } = row.values
-    console.log(`Clicked Station with ID ${ID}, and name ${Nimi}`, row.values)
+    onClick(row.values)
   }
 
   return (

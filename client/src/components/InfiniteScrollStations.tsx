@@ -8,9 +8,11 @@ import useQueryParams from '../hooks/useQueryParams'
 import Dropdown from './common/Dropdown'
 import Map from './Map'
 import { LatLngTuple } from 'leaflet'
+import { Station } from '../types/station'
 
 const InfiniteScrollStations = () => {
   const [showMap, setShowMap] = useState<boolean>(true)
+  const [station, setStation] = useState<Station | null>(null)
   //TODO: set initial search field to something
   const { queryParams, setSearch, findByField } = useQueryParams()
   const { ref: loadMoreRef, inView } = useInView()
@@ -55,7 +57,9 @@ const InfiniteScrollStations = () => {
 
   return (
     <div className="flex flex-col">
-      {showMap && <Map allStationCoordinates={allStationCoordinates} />}
+      {showMap && (
+        <Map allStationCoordinates={allStationCoordinates} station={station} />
+      )}
       <button
         onClick={() => setShowMap(!showMap)}
         className="self-start border p-2 bg-orange-300"
@@ -86,7 +90,7 @@ const InfiniteScrollStations = () => {
         {isLoading ? <p>Fetching stations</p> : null}
         {isSuccess && (
           <div>
-            <StationTable data={rows} />
+            <StationTable data={rows} onClick={setStation} />
             <div ref={loadMoreRef}></div>
           </div>
         )}
