@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import { useInfiniteQuery } from 'react-query'
-
 import { StationDataWithCursor, fetchStationsByCursor } from '../api/stationApi'
 import { useInView } from 'react-intersection-observer'
 import { useState } from 'react'
@@ -8,6 +7,7 @@ import StationTable from './StationTable'
 import useQueryParams from '../hooks/useQueryParams'
 import Dropdown from './common/Dropdown'
 import Map from './Map'
+import { LatLngTuple } from 'leaflet'
 
 const InfiniteScrollStations = () => {
   const [showMap, setShowMap] = useState<boolean>(true)
@@ -49,9 +49,13 @@ const InfiniteScrollStations = () => {
 
   const rows = stations?.pages.flatMap((page) => page.rows) ?? []
 
+  const allStationCoordinates: LatLngTuple[] = rows.map((station) => {
+    return [station.y, station.x]
+  })
+
   return (
     <div className="flex flex-col">
-      {showMap && <Map />}
+      {showMap && <Map allStationCoordinates={allStationCoordinates} />}
       <button
         onClick={() => setShowMap(!showMap)}
         className="self-start border p-2 bg-orange-300"
