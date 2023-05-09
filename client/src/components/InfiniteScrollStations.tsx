@@ -3,12 +3,14 @@ import { useInfiniteQuery } from 'react-query'
 
 import { StationDataWithCursor, fetchStationsByCursor } from '../api/stationApi'
 import { useInView } from 'react-intersection-observer'
-
+import { useState } from 'react'
 import StationTable from './StationTable'
 import useQueryParams from '../hooks/useQueryParams'
 import Dropdown from './common/Dropdown'
+import Map from './Map'
 
 const InfiniteScrollStations = () => {
+  const [showMap, setShowMap] = useState<boolean>(true)
   //TODO: set initial search field to something
   const { queryParams, setSearch, findByField } = useQueryParams()
   const { ref: loadMoreRef, inView } = useInView()
@@ -48,7 +50,14 @@ const InfiniteScrollStations = () => {
   const rows = stations?.pages.flatMap((page) => page.rows) ?? []
 
   return (
-    <div>
+    <div className="flex flex-col">
+      {showMap && <Map />}
+      <button
+        onClick={() => setShowMap(!showMap)}
+        className="self-start border p-2 bg-orange-300"
+      >
+        {showMap ? 'Hide Map' : 'Show Map'}
+      </button>
       <Dropdown
         title="Search by"
         options={['Nimi', 'Name', 'Namn', 'Osoite', 'Adress']}
@@ -62,6 +71,7 @@ const InfiniteScrollStations = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
       </label>
+
       <div className="max-h-[80vh] w-full overflow-auto divide-y p-6">
         {isError ? (
           <p className="text-red-900">
