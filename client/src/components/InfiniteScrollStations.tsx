@@ -42,6 +42,11 @@ const InfiniteScrollStations = () => {
     }
   )
 
+  const handleSelectStation = (station: Station) => {
+    setShowMap(true)
+    setStation(station)
+  }
+
   useEffect(() => {
     if (inView && !isFetchingNextPage && hasNextPage) {
       fetchNextPage()
@@ -90,7 +95,7 @@ const InfiniteScrollStations = () => {
         {isLoading ? <p>Fetching stations</p> : null}
         {isSuccess && (
           <div>
-            <StationTable data={rows} onClick={setStation} />
+            <StationTable data={rows} onClick={handleSelectStation} />
             <div ref={loadMoreRef}></div>
           </div>
         )}
