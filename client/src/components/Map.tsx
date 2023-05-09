@@ -33,7 +33,7 @@ const Map = (props: MapProps) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Overlay name="All station">
+        <Overlay checked={true} name="All stations">
           <LayerGroup id="lg1" ref={allStationsOverlayRef}>
             {allStationCoordinates?.map((coord, index) => (
               <Marker key={index} position={coord}>
