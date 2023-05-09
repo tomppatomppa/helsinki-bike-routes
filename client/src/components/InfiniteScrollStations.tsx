@@ -9,6 +9,7 @@ import useQueryParams from '../hooks/useQueryParams'
 import Dropdown from './common/Dropdown'
 
 const InfiniteScrollStations = () => {
+  //TODO: set initial search field to something
   const { queryParams, setSearch, findByField } = useQueryParams()
   const { ref: loadMoreRef, inView } = useInView()
 

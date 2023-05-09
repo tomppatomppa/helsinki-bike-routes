@@ -13,7 +13,7 @@ const Dropdown = (props: DropdownProps) => {
   }
   return (
     <div>
-      <label htmlFor="dropdown">{title}:</label>
+      <label htmlFor="dropdown">{title}</label>
       <select id="dropdown" value={value} onChange={handleOnChange}>
         {options?.map((item, index) => (
           <option key={index} value={item}>
