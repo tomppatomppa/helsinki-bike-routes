@@ -10,8 +10,6 @@ import useQueryParams from '../hooks/useQueryParams'
 const InfiniteScrollStations = () => {
   const { queryParams, setSearch } = useQueryParams()
   const { ref: loadMoreRef, inView } = useInView()
-  //const [search_field] = useState<string>('Name')
-  //const [search, setSearch] = useState<string>('')
 
   const {
     data: stations,
