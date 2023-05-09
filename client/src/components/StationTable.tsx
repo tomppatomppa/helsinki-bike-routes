@@ -1,11 +1,12 @@
-import { useTable, Column, useRowState } from 'react-table'
+import { useTable, Column, useExpanded, Row } from 'react-table'
 import { Station } from '../types/station'
 import { useMemo } from 'react'
-
+import React, { Fragment } from 'react'
 interface Props {
   data: Station[]
   onClick: (value: Station) => void
 }
+
 interface TableProps {
   ID: number
   Nimi: string
@@ -20,6 +21,19 @@ interface TableProps {
 const StationTable = ({ data, onClick }: Props) => {
   const columns = useMemo<Column<TableProps>[]>(
     () => [
+      {
+        // Make an expander cell
+        Header: () => null, // No header
+        id: 'expander', // It needs an ID
+        Cell: ({ row }: any) => (
+          // Use Cell to render an expander for each row.
+          // We can use the getToggleRowExpandedProps prop-getter
+          // to build the expander.
+          <span {...row.getToggleRowExpandedProps()}>
+            {row.isExpanded ? '👇' : '👉'}
+          </span>
+        ),
+      },
       {
         Header: 'Nimi',
         accessor: 'Nimi',
@@ -67,14 +81,32 @@ const StationTable = ({ data, onClick }: Props) => {
         hiddenColumns: ['x', 'y'],
       },
     },
-    useRowState
+    useExpanded
   )
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    tableInstance
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    visibleColumns,
+  } = tableInstance
 
   const handleButtonClick = (row: any) => {
     onClick(row.values)
   }
+  const renderRowSubComponent = React.useCallback(
+    ({ row }) => (
+      <pre
+        style={{
+          fontSize: '10px',
+        }}
+      >
+        <code>{JSON.stringify({ values: row.values }, null, 2)}</code>
+      </pre>
+    ),
+    []
+  )
 
   return (
     <div>
@@ -97,14 +129,30 @@ const StationTable = ({ data, onClick }: Props) => {
           {rows.map((row) => {
             prepareRow(row)
             return (
-              <tr
-                className="cursor-pointer hover:text-gray-600"
-                {...row.getRowProps()}
-              >
-                {row.cells.map((cell) => (
-                  <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                ))}
-              </tr>
+              <Fragment key={row.getRowProps().key}>
+                <tr
+                  className="cursor-pointer hover:text-gray-600"
+                  {...row.getRowProps()}
+                >
+                  {row.cells.map((cell) => (
+                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  ))}
+                </tr>
+                {row.isExpanded ? (
+                  <tr>
+                    <td colSpan={visibleColumns?.length}>
+                      {/*
+                          Inside it, call our renderRowSubComponent function. In reality,
+                          you could pass whatever you want as props to
+                          a component like this, including the entire
+                          table instance. But for this example, we'll just
+                          pass the row
+                        */}
+                      {renderRowSubComponent({ row })}
+                    </td>
+                  </tr>
+                ) : null}
+              </Fragment>
             )
           })}
         </tbody>
