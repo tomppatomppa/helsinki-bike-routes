@@ -6,11 +6,10 @@ import StationDetailsComponent from './StationDetailsComponent'
 
 interface Props {
   stationID: number
-  setStationID: (value: null) => void
 }
 
 const StationDetailsView = (props: Props) => {
-  const { stationID, setStationID } = props
+  const { stationID } = props
   const {
     data: station,
     isLoading,
@@ -20,17 +19,12 @@ const StationDetailsView = (props: Props) => {
   )
 
   return (
-    <div className="bg-gray-200 sticky bottom-0 w-full">
+    <div className="bg-gray-200 sticky bottom-0 ">
       {isError ? (
         <p className="text-red-900">
           There was a problem with fetching station
         </p>
       ) : null}
-      {stationID && (
-        <button className="text-xl" onClick={() => setStationID(null)}>
-          Close
-        </button>
-      )}
       <Spinner show={isLoading} delay={300} />
       {station && <StationDetailsComponent station={station} />}
     </div>

@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import {
   MapContainer,
   TileLayer,
@@ -9,15 +10,20 @@ import {
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 const { Overlay } = LayersControl
+
 import { LatLngExpression, LatLngTuple } from 'leaflet'
-import { useRef } from 'react'
+
 import { Station } from '../types/station'
+import StationDetailsView from './StationDetailsView'
 
 interface MapProps {
   allStationCoordinates: LatLngExpression[]
   station: Station | null
 }
-
+export interface CustomMarkerProps {
+  position: LatLngTuple
+  open?: boolean
+}
 const initialPosition: LatLngTuple = [60.192059, 24.945831]
 
 const Map = (props: MapProps) => {
@@ -70,8 +76,8 @@ const Map = (props: MapProps) => {
                 icon={greenIcon}
                 position={[station.y, station.x]}
               >
-                <Popup>
-                  <span>{station.Name}</span>
+                <Popup minWidth={200}>
+                  <StationDetailsView stationID={station.ID} />
                 </Popup>
               </Marker>
             )}
