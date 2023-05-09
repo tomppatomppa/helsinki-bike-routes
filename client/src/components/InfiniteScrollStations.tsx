@@ -5,12 +5,13 @@ import { StationDataWithCursor, fetchStationsByCursor } from '../api/stationApi'
 import { useInView } from 'react-intersection-observer'
 
 import StationTable from './StationTable'
+import useQueryParams from '../hooks/useQueryParams'
 
 const InfiniteScrollStations = () => {
+  const { queryParams, setSearch } = useQueryParams()
   const { ref: loadMoreRef, inView } = useInView()
-  const [search_field] = useState<string>('Name')
-  const [search, setSearch] = useState<string>('')
-  const [limit] = useState<number>(20)
+  //const [search_field] = useState<string>('Name')
+  //const [search, setSearch] = useState<string>('')
 
   const {
     data: stations,
@@ -21,10 +22,15 @@ const InfiniteScrollStations = () => {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery<StationDataWithCursor>(
-    ['stations', search],
+    ['stations', queryParams.search],
 
     ({ pageParam = 0 }) =>
-      fetchStationsByCursor(pageParam, limit, search, search_field),
+      fetchStationsByCursor(
+        pageParam,
+        queryParams.limit,
+        queryParams.search,
+        queryParams.search_field
+      ),
     {
       getNextPageParam: (lastPage) => {
         return lastPage.nextCursor
@@ -45,7 +51,10 @@ const InfiniteScrollStations = () => {
     <div>
       <label>
         Search Stations:
-        <input value={search} onChange={(e) => setSearch(e.target.value)} />
+        <input
+          value={queryParams.search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
       </label>
       <div className="max-h-[80vh] w-full overflow-auto divide-y p-6">
         {isError ? (

@@ -8,8 +8,8 @@ const useQueryParams = () => {
   const orderByColumn = (value: string | undefined) => {
     if (!value) return
     setOrder((prev) => {
-      const isNew = value === prev[0] ? false : true
-      if (isNew) return [value, 'ASC']
+      const isNewColumn = value === prev[0] ? false : true
+      if (isNewColumn) return [value, 'ASC']
       return [value, prev[1] === 'ASC' ? 'DESC' : 'ASC']
     })
   }
