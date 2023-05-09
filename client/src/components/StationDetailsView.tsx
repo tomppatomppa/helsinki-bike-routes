@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query'
 import { fetchStationByID } from '../api/stationApi'
-import Spinner from './Spinner'
+import Spinner from './common/Spinner'
 import { StationDetails } from '../types/station'
 import StationDetailsComponent from './StationDetailsComponent'
 

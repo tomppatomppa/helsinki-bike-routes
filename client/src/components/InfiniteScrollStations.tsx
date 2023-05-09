@@ -6,11 +6,7 @@ import { useInView } from 'react-intersection-observer'
 
 import StationTable from './StationTable'
 
-interface Props {
-  setStationID: (values: number) => void
-}
-
-const InfiniteScrollStations: React.FC<Props> = ({ setStationID }) => {
+const InfiniteScrollStations = () => {
   const { ref: loadMoreRef, inView } = useInView()
   const [search_field] = useState<string>('Name')
   const [search, setSearch] = useState<string>('')
