@@ -11,10 +11,12 @@ const Dropdown = (props: DropdownProps) => {
   const handleOnChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     onSelect(event.target.value.toString())
   }
+
   return (
     <div>
       <label htmlFor="dropdown">{title}</label>
       <select id="dropdown" value={value} onChange={handleOnChange}>
+        <option value="">--Please select an option--</option>
         {options?.map((item, index) => (
           <option key={index} value={item}>
             {item}

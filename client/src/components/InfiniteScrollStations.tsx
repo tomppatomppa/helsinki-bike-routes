@@ -71,6 +71,7 @@ const InfiniteScrollStations = () => {
       <label>
         Search Stations:
         <input
+          disabled={!queryParams.search_field}
           value={queryParams.search}
           onChange={(e) => setSearch(e.target.value)}
         />

@@ -31,11 +31,16 @@ describe('Dropdown.tsx', () => {
     expect(Name).toBeDefined()
     expect(Osoite).toBeDefined()
   })
-  test('Should render 2 option components', () => {
+  test('Should render default value ', () => {
+    render(<Dropdown {...props} />)
+    const defaultValue = screen.getByText('--Please select an option--')
+    expect(defaultValue).toBeDefined()
+  })
+  test('Should render 3 option components', () => {
     const { getAllByRole } = render(<Dropdown {...props} />)
     const selectElements = getAllByRole('option')
 
-    expect(selectElements).toHaveLength(2)
+    expect(selectElements).toHaveLength(3)
   })
   test('Should onSelect should receive selected value', async () => {
     const onSelect = vi.fn()
