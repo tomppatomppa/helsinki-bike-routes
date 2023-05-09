@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useInfiniteQuery } from 'react-query'
 
 import { StationDataWithCursor, fetchStationsByCursor } from '../api/stationApi'
@@ -6,9 +6,10 @@ import { useInView } from 'react-intersection-observer'
 
 import StationTable from './StationTable'
 import useQueryParams from '../hooks/useQueryParams'
+import Dropdown from './common/Dropdown'
 
 const InfiniteScrollStations = () => {
-  const { queryParams, setSearch } = useQueryParams()
+  const { queryParams, setSearch, findByField } = useQueryParams()
   const { ref: loadMoreRef, inView } = useInView()
 
   const {
@@ -47,6 +48,12 @@ const InfiniteScrollStations = () => {
 
   return (
     <div>
+      <Dropdown
+        title="Search by"
+        options={['Nimi', 'Name', 'Namn', 'Osoite', 'Adress']}
+        value={queryParams.search_field}
+        onSelect={findByField}
+      />
       <label>
         Search Stations:
         <input
