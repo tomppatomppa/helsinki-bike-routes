@@ -17,7 +17,7 @@ route.post(
   async (req, res) => {
     const filePath = path.resolve(__dirname, `../${req.file.path}`)
     const result = await parseCSV(filePath, validateStation)
-
+    console.log(result)
     const savedStations = await Station.bulkCreate(result, {
       ignoreDuplicates: true,
     })
@@ -55,6 +55,7 @@ route.get('/', async (req, res) => {
         'createdAt',
         'updatedAt',
         'Kaupunki',
+        'Stad',
         'Operaattor',
         'Kapasiteet',
       ],

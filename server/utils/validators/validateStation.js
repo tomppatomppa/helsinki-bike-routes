@@ -83,25 +83,25 @@ function validateStation(row) {
     return false
   }
 
-  //Kaupunki can be empty but if not expect a string
-  if (
-    trimmedRow[CITY_NAME_FIN] !== '' &&
-    !isString(trimmedRow[CITY_NAME_FIN])
-  ) {
-    return false
-  }
-  //Stad can be empty but if not expect a string
-  if (
-    trimmedRow[CITY_NAME_SWE] !== '' &&
-    !isString(trimmedRow[CITY_NAME_SWE])
-  ) {
-    return false
-  }
+  // //Kaupunki can be empty but if not expect a string
+  // if (
+  //   isFloat(trimmedRow[CITY_NAME_FIN]) ||
+  //   !isString(trimmedRow[CITY_NAME_FIN])
+  // ) {
+  //   return false
+  // }
+  // // Stad can be empty but if not expect a string
+  // if (
+  //   isFloat(trimmedRow[CITY_NAME_SWE]) ||
+  //   !isString(trimmedRow[CITY_NAME_SWE])
+  // ) {
+  //   return false
+  // }
 
-  //Operaattor
-  if (trimmedRow[OPERAATTOR] !== '' && !isString(trimmedRow[OPERAATTOR])) {
-    return false
-  }
+  // //Operaattor
+  // if (trimmedRow[OPERAATTOR] !== '' && !isString(trimmedRow[OPERAATTOR])) {
+  //   return false
+  // }
 
   //Kapasiteet should be a positive Integer
   if (!trimmedRow[KAPASITEET] || !isPositiveInteger(trimmedRow[KAPASITEET])) {

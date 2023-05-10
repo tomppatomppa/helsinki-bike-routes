@@ -31,9 +31,15 @@ Station.init(
     },
     Kaupunki: {
       type: DataTypes.STRING,
+      allowNull: true,
+    },
+    Stad: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     Operaattor: {
       type: DataTypes.STRING,
+      allowNull: true,
     },
     Kapasiteet: {
       type: DataTypes.STRING,
