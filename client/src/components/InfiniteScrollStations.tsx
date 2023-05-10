@@ -15,8 +15,6 @@ const InfiniteScrollStations = () => {
   const [station, setStation] = useState<Station | null>(null)
   //TODO: set initial search field to something
   const { queryParams, setSearch, findByField } = useQueryParams()
-  const { ref: loadMoreRef, inView } = useInView()
-
   const {
     data: stations,
     isLoading,
@@ -41,6 +39,9 @@ const InfiniteScrollStations = () => {
       },
     }
   )
+  const { ref: loadMoreRef, inView } = useInView({
+    skip: !hasNextPage,
+  })
 
   const handleSelectStation = (station: Station) => {
     setShowMap(true)
@@ -96,7 +97,7 @@ const InfiniteScrollStations = () => {
         {isSuccess && (
           <div>
             <StationTable data={rows} onClick={handleSelectStation} />
-            <div ref={loadMoreRef}></div>
+            {hasNextPage && <div ref={loadMoreRef}></div>}
           </div>
         )}
       </div>

@@ -68,7 +68,7 @@ const Map = (props: MapProps) => {
             ))}
           </LayerGroup>
         </Overlay>
-        <Overlay checked={true} name="Selected Station">
+        <Overlay checked={station !== null} name="Selected Station">
           <LayerGroup id="single" ref={singleStationOverlayRef}>
             {station && (
               <Marker
