@@ -14,7 +14,6 @@ const { Overlay } = LayersControl
 import { LatLngExpression, LatLngTuple } from 'leaflet'
 
 import { Station } from '../types/station'
-import StationDetailsView from './StationDetailsView'
 
 interface MapProps {
   allStationCoordinates: LatLngExpression[]
@@ -77,8 +76,8 @@ const Map = (props: MapProps) => {
                 icon={greenIcon}
                 position={[station.y, station.x]}
               >
-                <Popup minWidth={200}>
-                  <StationDetailsView stationID={station.ID} />
+                <Popup>
+                  <span>{station.Name}</span>
                 </Popup>
               </Marker>
             )}
