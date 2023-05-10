@@ -92,6 +92,13 @@ function validateStation(row) {
   ) {
     return false
   }
+  //Stad can be empty but if not expect a string
+  if (
+    trimmedRow[CITY_NAME_SWE] !== '' &&
+    !isString(trimmedRow[CITY_NAME_SWE])
+  ) {
+    return false
+  }
 
   //Operaattor
   if (

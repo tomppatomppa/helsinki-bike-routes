@@ -169,9 +169,38 @@ describe('Test for validateStation', () => {
   })
 
   describe('Validate City names, FIN, SWE ', () => {
-    test('Should allow empty Kaupunki field', () => {
-      expect(validateStation({ ...validCsvRow, Kaupunki: '' })).toBe(true)
+    describe('Kaupunki field', () => {
+      test('Should allow empty Kaupunki field', () => {
+        expect(validateStation({ ...validCsvRow, Kaupunki: '' })).toBe(true)
+      })
+      test('Should return false if Kapunki is a number', () => {
+        expect(validateStation({ ...validCsvRow, Kaupunki: 0 })).toBe(false)
+      })
+      test('Should not allow kaupunki field to be null', () => {
+        expect(validateStation({ ...validCsvRow, Kaupunki: null })).toBe(false)
+      })
+      test('Should not allow kaupunki field to be undefined', () => {
+        expect(validateStation({ ...validCsvRow, Kaupunki: undefined })).toBe(
+          false
+        )
+      })
     })
+
+    describe('Stad field', () => {
+      test('Should allow empty Stad field', () => {
+        expect(validateStation({ ...validCsvRow, Stad: '' })).toBe(true)
+      })
+      test('Should return false if Kapunki is a number', () => {
+        expect(validateStation({ ...validCsvRow, Stad: 0 })).toBe(false)
+      })
+      test('Should not allow Stad field to be null', () => {
+        expect(validateStation({ ...validCsvRow, Stad: null })).toBe(false)
+      })
+      test('Should not allow Stad field to be undefined', () => {
+        expect(validateStation({ ...validCsvRow, Stad: undefined })).toBe(false)
+      })
+    })
+
     // describe('Finnish city name', () => {
     //   test('returns false if not a string', () => {
     //     expect(validateStation({ ...validCsvRow, Kaupunki: 23 })).toBe(false)
