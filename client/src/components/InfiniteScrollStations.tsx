@@ -66,12 +66,22 @@ const InfiniteScrollStations = () => {
       {showMap && (
         <Map allStationCoordinates={allStationCoordinates} station={station} />
       )}
-      <button
-        onClick={() => setShowMap(!showMap)}
-        className="self-start border p-2 bg-orange-300"
-      >
-        {showMap ? 'Hide Map' : 'Show Map'}
-      </button>
+      <div className="self-start">
+        <button
+          onClick={() => setShowMap(!showMap)}
+          className="border p-2 bg-orange-300"
+        >
+          {showMap ? 'Hide Map' : 'Show Map'}
+        </button>
+        {station && (
+          <button
+            onClick={() => setStation(null)}
+            className="border p-2 bg-red-300"
+          >
+            Deselect
+          </button>
+        )}
+      </div>
       <Dropdown
         title="Search by"
         options={['Nimi', 'Name', 'Namn', 'Osoite', 'Adress']}
