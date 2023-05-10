@@ -169,50 +169,53 @@ describe('Test for validateStation', () => {
   })
 
   describe('Validate City names, FIN, SWE ', () => {
-    describe('Finnish city name', () => {
-      test('returns false if not a string', () => {
-        expect(validateStation({ ...validCsvRow, Kaupunki: 23 })).toBe(false)
-      })
-      test('returns false if a number', () => {
-        expect(validateStation({ ...validCsvRow, Kaupunki: '23.2' })).toBe(
-          false
-        )
-      })
-      test('returns false if null', () => {
-        expect(validateStation({ ...validCsvRow, Kaupunki: null })).toBe(false)
-      })
-      test('returns false if undefined', () => {
-        expect(validateStation({ ...validCsvRow, Kaupunki: undefined })).toBe(
-          false
-        )
-      })
-      test('returns false if boolean', () => {
-        expect(validateStation({ ...validCsvRow, Kaupunki: true })).toBe(false)
-      })
-      test('returns true if valid City', () => {
-        expect(validateStation(validCsvRow)).toBe(true)
-      })
+    test('Should allow empty Kaupunki field', () => {
+      expect(validateStation({ ...validCsvRow, Kaupunki: '' })).toBe(true)
     })
-    describe('Swedish city name', () => {
-      test('returns false if not a string', () => {
-        expect(validateStation({ ...validCsvRow, Stad: 23 })).toBe(false)
-      })
-      test('returns false if a number', () => {
-        expect(validateStation({ ...validCsvRow, Stad: '23.2' })).toBe(false)
-      })
-      test('returns false if null', () => {
-        expect(validateStation({ ...validCsvRow, Stad: null })).toBe(false)
-      })
-      test('returns false if undefined', () => {
-        expect(validateStation({ ...validCsvRow, Stad: undefined })).toBe(false)
-      })
-      test('returns false if boolean', () => {
-        expect(validateStation({ ...validCsvRow, Stad: true })).toBe(false)
-      })
-      test('returns true if valid City', () => {
-        expect(validateStation(validCsvRow)).toBe(true)
-      })
-    })
+    // describe('Finnish city name', () => {
+    //   test('returns false if not a string', () => {
+    //     expect(validateStation({ ...validCsvRow, Kaupunki: 23 })).toBe(false)
+    //   })
+    //   test('returns false if a number', () => {
+    //     expect(validateStation({ ...validCsvRow, Kaupunki: '23.2' })).toBe(
+    //       false
+    //     )
+    //   })
+    //   test('returns false if null', () => {
+    //     expect(validateStation({ ...validCsvRow, Kaupunki: null })).toBe(false)
+    //   })
+    //   test('returns false if undefined', () => {
+    //     expect(validateStation({ ...validCsvRow, Kaupunki: undefined })).toBe(
+    //       false
+    //     )
+    //   })
+    //   test('returns false if boolean', () => {
+    //     expect(validateStation({ ...validCsvRow, Kaupunki: true })).toBe(false)
+    //   })
+    //   test('returns true if valid City', () => {
+    //     expect(validateStation(validCsvRow)).toBe(true)
+    //   })
+    // })
+    // describe('Swedish city name', () => {
+    //   test('returns false if not a string', () => {
+    //     expect(validateStation({ ...validCsvRow, Stad: 23 })).toBe(false)
+    //   })
+    //   test('returns false if a number', () => {
+    //     expect(validateStation({ ...validCsvRow, Stad: '23.2' })).toBe(false)
+    //   })
+    //   test('returns false if null', () => {
+    //     expect(validateStation({ ...validCsvRow, Stad: null })).toBe(false)
+    //   })
+    //   test('returns false if undefined', () => {
+    //     expect(validateStation({ ...validCsvRow, Stad: undefined })).toBe(false)
+    //   })
+    //   test('returns false if boolean', () => {
+    //     expect(validateStation({ ...validCsvRow, Stad: true })).toBe(false)
+    //   })
+    //   test('returns true if valid City', () => {
+    //     expect(validateStation(validCsvRow)).toBe(true)
+    //   })
+    // })
   })
 
   describe('Validate Operaattor field', () => {

@@ -2,7 +2,14 @@ import { render } from '@testing-library/react'
 import { QueryCache, QueryClient, QueryClientProvider } from 'react-query'
 
 const queryCache = new QueryCache()
-const queryClient = new QueryClient({ queryCache })
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+  queryCache,
+})
 
 export function renderWithClient(ui: React.ReactElement) {
   const { rerender, ...result } = render(

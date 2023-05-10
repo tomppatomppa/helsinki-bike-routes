@@ -8,8 +8,10 @@ const useUploadFile = (setFile: (value: null) => void) => {
     mutate: sendFile,
     isError,
     isLoading,
+    isSuccess,
   } = useMutation(uploadStationsFromCSV, {
     onError: (err) => {
+      setMessage(JSON.stringify(err))
       console.log(err)
     },
     onSuccess: (data) => {
@@ -19,7 +21,7 @@ const useUploadFile = (setFile: (value: null) => void) => {
     },
   })
 
-  return { sendFile, isError, isLoading, message }
+  return { sendFile, isError, isLoading, message, isSuccess }
 }
 
 export default useUploadFile

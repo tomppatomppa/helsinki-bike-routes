@@ -85,10 +85,10 @@ function validateStation(row) {
     return false
   }
 
-  //Kaupunki, Stad
+  //Kaupunki can be empty but if not expect a string
   if (
-    !isString(trimmedRow[CITY_NAME_FIN]) ||
-    !isString(trimmedRow[CITY_NAME_SWE])
+    trimmedRow[CITY_NAME_FIN] !== '' &&
+    !isString(trimmedRow[CITY_NAME_FIN])
   ) {
     return false
   }
