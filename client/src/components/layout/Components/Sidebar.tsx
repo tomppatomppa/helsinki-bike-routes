@@ -1,10 +1,8 @@
 import { Link } from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
+
 import UploadFile from '../../UploadFile'
 
 const Sidebar = () => {
-  const location = useLocation()
-
   return (
     <div
       data-testid="sidebar-element"
