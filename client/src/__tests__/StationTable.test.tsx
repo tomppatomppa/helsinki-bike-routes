@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test, vi } from 'vitest'
 import { screen, render, within } from '@testing-library/react'
 
 import { Station } from '../types/station'
@@ -29,13 +29,15 @@ const stations: Station[] = [
 
 describe('JourneyTable', () => {
   test('renders correct number of headers + expand row column', () => {
-    render(<StationTable data={stations} />)
+    const onClick = vi.fn()
+    render(<StationTable data={stations} onClick={onClick} />)
     const headers = screen.getAllByRole('columnheader')
     expect(headers).toHaveLength(7)
   })
 
   test('Headers have correct text content', () => {
-    render(<StationTable data={stations} />)
+    const onClick = vi.fn()
+    render(<StationTable data={stations} onClick={onClick} />)
     const headerColumns = screen.getAllByRole('columnheader')
 
     const expectedHeaders = [
@@ -49,12 +51,13 @@ describe('JourneyTable', () => {
     ]
 
     headerColumns.forEach((column) =>
-      expect(expectedHeaders.includes(column?.textContent)).toBeTruthy()
+      expect(expectedHeaders.includes(column?.textContent ?? '')).toBeTruthy()
     )
   })
 
   test('renders correct number of table rows', () => {
-    render(<StationTable data={stations} />)
+    const onClick = vi.fn()
+    render(<StationTable data={stations} onClick={onClick} />)
     const tbody = screen.getByTestId('table-rows')
     const rows = within(tbody).getAllByRole('row')
 

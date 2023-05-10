@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test, vi } from 'vitest'
 import { screen, render, within } from '@testing-library/react'
 import JourneyTable from '../components/JourneyTable'
 import { Journey } from '../types/journey'
@@ -26,13 +26,15 @@ const journeys: Journey[] = [
 
 describe('JourneyTable', () => {
   test('renders correct number of headers', () => {
-    render(<JourneyTable data={journeys} />)
+    const orderByColumn = vi.fn()
+    render(<JourneyTable data={journeys} orderByColumn={orderByColumn} />)
     const headers = screen.getAllByRole('columnheader')
     expect(headers).toHaveLength(4)
   })
 
   test('renders correct headers', () => {
-    render(<JourneyTable data={journeys} />)
+    const orderByColumn = vi.fn()
+    render(<JourneyTable data={journeys} orderByColumn={orderByColumn} />)
 
     const departureStationHeader = screen.getByRole('columnheader', {
       name: /Departure Station/i,
@@ -54,7 +56,8 @@ describe('JourneyTable', () => {
   })
 
   test('renders correct number of table rows', () => {
-    render(<JourneyTable data={journeys} />)
+    const orderByColumn = vi.fn()
+    render(<JourneyTable data={journeys} orderByColumn={orderByColumn} />)
 
     const tbody = screen.getByTestId('table-rows')
     const rows = within(tbody).getAllByRole('row')

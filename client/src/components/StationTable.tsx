@@ -18,19 +18,16 @@ interface TableProps {
   Adress: string
   x: string
   y: string
+  isExpanded?: boolean
 }
 
 const StationTable = ({ data, onClick }: Props) => {
   const columns = useMemo<Column<TableProps>[]>(
     () => [
       {
-        // Make an expander cell
         Header: () => <span>Expand</span>, // No header
         id: 'expander', // It needs an ID
         Cell: ({ row }: any) => (
-          // Use Cell to render an expander for each row.
-          // We can use the getToggleRowExpandedProps prop-getter
-          // to build the expander.
           <span {...row.getToggleRowExpandedProps()}>
             {row.isExpanded ? '👇' : '👉'}
           </span>
@@ -83,7 +80,7 @@ const StationTable = ({ data, onClick }: Props) => {
         hiddenColumns: ['x', 'y'],
       },
     },
-    useExpanded
+    useExpanded<TableProps>
   )
   const {
     getTableProps,
@@ -94,11 +91,11 @@ const StationTable = ({ data, onClick }: Props) => {
     visibleColumns,
   } = tableInstance
 
-  const handleButtonClick = (row: any) => {
+  const handleButtonClick = (row: { values: Station }) => {
     onClick(row.values)
   }
   const renderRowSubComponent = React.useCallback(
-    ({ row }) => (
+    ({ row }: { row: Row<TableProps> }) => (
       <pre>
         <StationDetailsView stationID={row.original.ID} />
       </pre>
@@ -123,10 +120,10 @@ const StationTable = ({ data, onClick }: Props) => {
             </tr>
           ))}
         </thead>
-        <tbody data-testid="table-rows" {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row)
 
+        <tbody data-testid="table-rows" {...getTableBodyProps()}>
+          {rows.map((row: Row<TableProps>) => {
+            prepareRow(row)
             return (
               <Fragment key={row.getRowProps().key}>
                 <tr
@@ -137,6 +134,7 @@ const StationTable = ({ data, onClick }: Props) => {
                     <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                   ))}
                 </tr>
+                {/* @ts-ignore */}
                 {row.isExpanded ? (
                   <tr>
                     <td colSpan={visibleColumns?.length}>

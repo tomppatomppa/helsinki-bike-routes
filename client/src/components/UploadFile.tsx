@@ -2,11 +2,8 @@ import { useRef, useState } from 'react'
 import useUploadFile from '../hooks/useUploadFile'
 import useUploadJourneys from '../hooks/useUploadJourneys'
 
-interface Props {
-  location: string
-}
-
-const UploadFile = ({ location }: Props) => {
+const UploadFile = () => {
+  const [location, setLocation] = useState<string>('stations')
   const [file, setFile] = useState<File | null>(null)
   const { sendFile, isError, isLoading, message } = useUploadFile(setFile)
   const { sendJourneys } = useUploadJourneys(setFile)
@@ -43,10 +40,19 @@ const UploadFile = ({ location }: Props) => {
         onChange={handleChange}
       />
       {!file && (
-        <button data-testid="upload-button" onClick={onButtonClick}>
-          Add File
-        </button>
+        <>
+          <button data-testid="upload-button" onClick={onButtonClick}>
+            Add File
+          </button>
+        </>
       )}
+      <button
+        onClick={() =>
+          setLocation(location === 'stations' ? 'journeys' : 'stations')
+        }
+      >
+        Uploading to {location}
+      </button>
       {isError ? (
         <p className="text-red-900">
           There was a problem with uploading station

@@ -21,8 +21,8 @@ describe('UploadFile.tsx', () => {
 
     await userEvent.upload(fileInput, file)
 
-    expect(fileInput.files[0]).toBe(file)
-    expect(fileInput.files.item(0)).toBe(file)
+    expect(fileInput.files?.[0]).toBe(file)
+    expect(fileInput.files?.item(0)).toBe(file)
     expect(fileInput.files).toHaveLength(1)
   })
 
@@ -34,7 +34,9 @@ describe('UploadFile.tsx', () => {
     const file = new File(['hello'], 'hello.png', { type: 'image/png' })
 
     await userEvent.upload(fileInput, file)
-    expect(fileInput.files[0]).toBeFalsy()
+
+    expect(fileInput.files).toBeTruthy()
+    expect(fileInput.files?.[0]).toBeFalsy()
   })
 
   test('Should not show upload or remove button', () => {

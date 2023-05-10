@@ -56,7 +56,7 @@ const Map = (props: MapProps) => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <Overlay checked={!station} name="All stations">
-          <LayerGroup id="lg1" ref={allStationsOverlayRef}>
+          <LayerGroup attribution="lg1" ref={allStationsOverlayRef}>
             {allStationCoordinates?.map((coord, index) => (
               <Marker key={index} position={coord}>
                 <Popup>
@@ -69,7 +69,7 @@ const Map = (props: MapProps) => {
           </LayerGroup>
         </Overlay>
         <Overlay checked={station !== null} name="Selected Station">
-          <LayerGroup id="single" ref={singleStationOverlayRef}>
+          <LayerGroup attribution="single" ref={singleStationOverlayRef}>
             {station && (
               <Marker
                 key={station.ID}

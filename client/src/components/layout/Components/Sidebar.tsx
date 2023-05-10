@@ -21,7 +21,7 @@ const Sidebar = () => {
       </nav>
       <div className="flex flex-col items-start">
         <strong>{location?.pathname.replace('/', '')}</strong>
-        <UploadFile location={location?.pathname.replace('/', '')} />
+        <UploadFile />
       </div>
     </div>
   )
