@@ -20,6 +20,7 @@ interface MapProps {
   allStationCoordinates: LatLngExpression[]
   station: Station | null
 }
+
 export interface CustomMarkerProps {
   position: LatLngTuple
   open?: boolean

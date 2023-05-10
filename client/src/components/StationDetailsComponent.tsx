@@ -19,13 +19,13 @@ const StationDetailsComponent = (props: Props) => {
           <strong>Names:</strong> {Nimi}, {Namn}, {Name}
         </p>
         <p>
-          <strong> Adress:</strong> {Osoite}, {Adress}
+          <strong>Adress:</strong> {Osoite}, {Adress}
         </p>
         <p>
           <strong>Departures from station: {departures_count} </strong>
         </p>
         <p>
-          <strong> Returns to station: {returns_count}</strong>
+          <strong>Returns to station: {returns_count}</strong>
         </p>
       </div>
     </div>

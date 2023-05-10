@@ -2,6 +2,8 @@ import { useTable, Column, useExpanded, Row } from 'react-table'
 import { Station } from '../types/station'
 import { useMemo } from 'react'
 import React, { Fragment } from 'react'
+
+import StationDetailsView from './StationDetailsView'
 interface Props {
   data: Station[]
   onClick: (value: Station) => void
@@ -23,7 +25,7 @@ const StationTable = ({ data, onClick }: Props) => {
     () => [
       {
         // Make an expander cell
-        Header: () => null, // No header
+        Header: () => <span>Expand</span>, // No header
         id: 'expander', // It needs an ID
         Cell: ({ row }: any) => (
           // Use Cell to render an expander for each row.
@@ -66,7 +68,7 @@ const StationTable = ({ data, onClick }: Props) => {
         Header: 'Map',
         disableSortBy: true,
         accessor: 'ID',
-        Cell: ({ row }: any) => (
+        Cell: ({ row }: any | JSX.Element) => (
           <button onClick={() => handleButtonClick(row)}>On Map</button>
         ),
       },
@@ -97,12 +99,8 @@ const StationTable = ({ data, onClick }: Props) => {
   }
   const renderRowSubComponent = React.useCallback(
     ({ row }) => (
-      <pre
-        style={{
-          fontSize: '10px',
-        }}
-      >
-        <code>{JSON.stringify({ values: row.values }, null, 2)}</code>
+      <pre>
+        <StationDetailsView stationID={row.original.ID} />
       </pre>
     ),
     []
@@ -128,6 +126,7 @@ const StationTable = ({ data, onClick }: Props) => {
         <tbody data-testid="table-rows" {...getTableBodyProps()}>
           {rows.map((row) => {
             prepareRow(row)
+
             return (
               <Fragment key={row.getRowProps().key}>
                 <tr
@@ -141,13 +140,6 @@ const StationTable = ({ data, onClick }: Props) => {
                 {row.isExpanded ? (
                   <tr>
                     <td colSpan={visibleColumns?.length}>
-                      {/*
-                          Inside it, call our renderRowSubComponent function. In reality,
-                          you could pass whatever you want as props to
-                          a component like this, including the entire
-                          table instance. But for this example, we'll just
-                          pass the row
-                        */}
                       {renderRowSubComponent({ row })}
                     </td>
                   </tr>

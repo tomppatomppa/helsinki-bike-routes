@@ -28,17 +28,25 @@ const stations: Station[] = [
 ]
 
 describe('JourneyTable', () => {
-  test('renders correct number of headers', () => {
+  test('renders correct number of headers + expand row column', () => {
     render(<StationTable data={stations} />)
     const headers = screen.getAllByRole('columnheader')
-    expect(headers).toHaveLength(6)
+    expect(headers).toHaveLength(7)
   })
 
   test('Headers have correct text content', () => {
     render(<StationTable data={stations} />)
     const headerColumns = screen.getAllByRole('columnheader')
 
-    const expectedHeaders = ['Nimi', 'Namn', 'Name', 'Osoite', 'Adress', 'Map']
+    const expectedHeaders = [
+      'Expand',
+      'Nimi',
+      'Namn',
+      'Name',
+      'Osoite',
+      'Adress',
+      'Map',
+    ]
 
     headerColumns.forEach((column) =>
       expect(expectedHeaders.includes(column?.textContent)).toBeTruthy()
