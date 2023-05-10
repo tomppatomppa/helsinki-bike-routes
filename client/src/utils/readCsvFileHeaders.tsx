@@ -10,6 +10,7 @@ const journeyHeaders = [
   'Covered distance (m)',
   'Duration (sec.)\r',
 ]
+
 const stationHeaders = [
   'FID',
   'ID',
@@ -26,21 +27,27 @@ const stationHeaders = [
   'y',
 ]
 
-export function readCsvFileHeaders(
-  event: React.ChangeEvent<HTMLInputElement>
-): string {
-  const file = event.target.files?.[0]
-  if (!file) return 'invalid'
+export function readCsvFileHeaders(file: File): Promise<string | null> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
 
-  const reader = new FileReader()
-  reader.readAsText(file)
+    reader.onload = () => {
+      const csvText = reader.result as string
+      const [headers] = csvText.split('\n')
 
-  reader.onload = () => {
-    const csvText = reader.result as string
-    const [headers] = csvText.split('\n')
+      if (arraysEqual(headers.split(','), journeyHeaders)) {
+        resolve('journeys')
+      } else if (arraysEqual(headers.split(','), stationHeaders)) {
+        resolve('stations')
+      } else {
+        resolve(null)
+      }
+    }
 
-    if (arraysEqual(headers.split(','), journeyHeaders)) return 'journeys'
-    if (arraysEqual(headers.split(','), stationHeaders)) return 'stations'
-  }
-  return 'invalid'
+    reader.onerror = () => {
+      reject(reader.error)
+    }
+
+    reader.readAsText(file)
+  })
 }

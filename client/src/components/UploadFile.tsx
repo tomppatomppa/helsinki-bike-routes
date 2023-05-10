@@ -4,7 +4,7 @@ import useUploadJourneys from '../hooks/useUploadJourneys'
 import { readCsvFileHeaders } from '../utils/readCsvFileHeaders'
 
 const UploadFile = () => {
-  const [location, setLocation] = useState<string>('stations')
+  const [fileType, setFileType] = useState<string | null>(null)
   const [file, setFile] = useState<File | null>(null)
   const { sendFile, isError, isLoading, message } = useUploadFile(setFile)
   const { sendJourneys } = useUploadJourneys(setFile)
@@ -15,22 +15,30 @@ const UploadFile = () => {
       inputRef.current.click()
     }
   }
+
   const handleSend = (file: File) => {
-    if (location === 'stations') {
+    if (fileType === 'stations') {
       sendFile(file)
-    } else {
+    }
+    if (fileType === 'journeys') {
       sendJourneys(file)
     }
   }
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files?.length) return
     const fileObj = event.target.files && event.target.files[0]
+    const filetype = await readCsvFileHeaders(fileObj)
+    if (!fileObj && !filetype) return
 
-    if (!fileObj) return
-    console.log(readCsvFileHeaders(event))
     setFile(fileObj)
+    setFileType(filetype)
   }
 
+  const handleRemove = () => {
+    setFile(null)
+    setFileType(null)
+  }
   return (
     <div className="max-w-full">
       <input
@@ -42,31 +50,31 @@ const UploadFile = () => {
         accept={'.csv'}
         onChange={handleChange}
       />
-      {!file && (
+      {!fileType && (
         <>
           <button data-testid="upload-button" onClick={onButtonClick}>
             Add File
           </button>
         </>
       )}
-      <button
-        onClick={() =>
-          setLocation(location === 'stations' ? 'journeys' : 'stations')
-        }
-      >
-        Uploading to {location}
-      </button>
+      {fileType && (
+        <span>
+          Detected filetype <strong>{fileType}</strong>
+        </span>
+      )}
       {isError ? (
         <p className="text-red-900">
           There was a problem with uploading station
         </p>
       ) : null}
-      {isLoading ? <p>Uploading Stations</p> : null}
+      {isLoading ? <p>Uploading {fileType}</p> : null}
 
-      {file && !isLoading && (
+      {file && fileType && !isLoading && (
         <div className="text-left" data-testid="file-state">
-          <strong>Filename</strong>
-          <p className="break-all"> {file.name}</p>
+          <p className="break-all">
+            {' '}
+            <strong>Filename</strong> {file.name}
+          </p>
           <div className="flex justify-between">
             <button
               onClick={() => handleSend(file)}
@@ -76,7 +84,7 @@ const UploadFile = () => {
             </button>
             <button
               className="border rounded-md bg-red-400 p-2"
-              onClick={() => setFile(null)}
+              onClick={handleRemove}
             >
               Remove
             </button>

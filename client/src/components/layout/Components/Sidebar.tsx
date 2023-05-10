@@ -20,7 +20,6 @@ const Sidebar = () => {
         <p className="border border-black w-full"></p>
       </nav>
       <div className="flex flex-col items-start">
-        <strong>{location?.pathname.replace('/', '')}</strong>
         <UploadFile />
       </div>
     </div>

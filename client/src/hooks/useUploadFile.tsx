@@ -19,7 +19,7 @@ const useUploadFile = (setFile: (value: null) => void) => {
     onSuccess: (data) => {
       setFile(null)
       setMessage(JSON.stringify(data))
-      queryClient.invalidateQueries({ queryKey: ['stations'] })
+      queryClient.invalidateQueries()
     },
   })
 
