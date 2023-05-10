@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import useUploadFile from '../hooks/useUploadFile'
 import useUploadJourneys from '../hooks/useUploadJourneys'
+import { readCsvFileHeaders } from '../utils/readCsvFileHeaders'
 
 const UploadFile = () => {
   const [location, setLocation] = useState<string>('stations')
@@ -24,7 +25,9 @@ const UploadFile = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files?.length) return
     const fileObj = event.target.files && event.target.files[0]
+
     if (!fileObj) return
+    console.log(readCsvFileHeaders(event))
     setFile(fileObj)
   }
 
