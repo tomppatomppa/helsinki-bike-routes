@@ -7,8 +7,6 @@ const MIN_X_COORDINATE = -180
 const MAX_Y_COORDINATE = 90
 const MIN_Y_COORDINATE = -90
 
-const VALID_OPERAATTORS = ['CityBike Finland']
-
 const MIN_FID = 1
 const MIN_ID = 1
 const FID = 'FID'
@@ -101,10 +99,7 @@ function validateStation(row) {
   }
 
   //Operaattor
-  if (
-    !isString(trimmedRow[OPERAATTOR]) ||
-    !VALID_OPERAATTORS.includes(trimmedRow[OPERAATTOR])
-  ) {
+  if (trimmedRow[OPERAATTOR] !== '' && !isString(trimmedRow[OPERAATTOR])) {
     return false
   }
 
