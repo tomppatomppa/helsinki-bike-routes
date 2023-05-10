@@ -1,13 +1,5 @@
 import { describe, expect, test, vi } from 'vitest'
-import {
-  screen,
-  render,
-  within,
-  getAllByRole,
-  fireEvent,
-  getByRole,
-  getByDisplayValue,
-} from '@testing-library/react'
+import { screen, render, fireEvent } from '@testing-library/react'
 import Dropdown from '../components/common/Dropdown'
 
 const props = {

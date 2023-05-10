@@ -5,27 +5,54 @@ const UploadFile = () => {
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const onButtonClick = () => {
-    inputRef.current.click()
+    if (inputRef.current) {
+      inputRef.current.click()
+    }
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files?.length) return
     const fileObj = event.target.files && event.target.files[0]
     if (!fileObj) return
-
     setFile(fileObj)
   }
+
   return (
-    <div>
+    <div className="max-w-full">
       <input
+        data-testid="file-input"
         id="file"
         style={{ display: 'none' }}
         ref={inputRef}
         type="file"
+        accept={'.csv'}
         onChange={handleChange}
       />
-      <button className="self-center text-4xl" onClick={onButtonClick}>
-        +
-      </button>
+      {!file && (
+        <button data-testid="upload-button" onClick={onButtonClick}>
+          Add File
+        </button>
+      )}
+      {file && (
+        <div className="text-left" data-testid="file-state">
+          <strong>Filename</strong>
+          <p className="break-all"> {file.name}</p>
+          <div className="flex justify-between">
+            <button
+              onClick={() => console.log('start upload')}
+              className="border rounded-md bg-green-400 p-2"
+            >
+              Upload
+            </button>
+            <button
+              className="border rounded-md bg-red-400 p-2"
+              onClick={() => setFile(null)}
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
