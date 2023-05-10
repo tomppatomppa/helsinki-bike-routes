@@ -1,9 +1,15 @@
 import { useRef, useState } from 'react'
 import useUploadFile from '../hooks/useUploadFile'
+import useUploadJourneys from '../hooks/useUploadJourneys'
 
-const UploadFile = () => {
+interface Props {
+  location: string
+}
+
+const UploadFile = ({ location }: Props) => {
   const [file, setFile] = useState<File | null>(null)
   const { sendFile, isError, isLoading, message } = useUploadFile(setFile)
+  const { sendJourneys } = useUploadJourneys(setFile)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const onButtonClick = () => {
@@ -11,7 +17,13 @@ const UploadFile = () => {
       inputRef.current.click()
     }
   }
-
+  const handleSend = (file: File) => {
+    if (location === 'stations') {
+      sendFile(file)
+    } else {
+      sendJourneys(file)
+    }
+  }
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event.target.files?.length) return
     const fileObj = event.target.files && event.target.files[0]
@@ -48,7 +60,7 @@ const UploadFile = () => {
           <p className="break-all"> {file.name}</p>
           <div className="flex justify-between">
             <button
-              onClick={() => sendFile(file)}
+              onClick={() => handleSend(file)}
               className="border rounded-md bg-green-400 p-2"
             >
               Upload

@@ -1,29 +1,28 @@
 import { useMutation, useQueryClient } from 'react-query'
-import { uploadStationsFromCSV } from '../api/stationApi'
 import { useState } from 'react'
+import { uploadJourneysFromCSV } from '../api/journeysApi'
 
-const useUploadFile = (setFile: (value: null) => void) => {
+const useUploadJourneys = (setFile: (value: null) => void) => {
   const queryClient = useQueryClient()
   const [message, setMessage] = useState('')
 
   const {
-    mutate: sendFile,
+    mutate: sendJourneys,
     isError,
     isLoading,
     isSuccess,
-  } = useMutation(uploadStationsFromCSV, {
+  } = useMutation(uploadJourneysFromCSV, {
     onError: (err) => {
       setMessage(JSON.stringify(err))
-      console.log(err)
     },
     onSuccess: (data) => {
       setFile(null)
       setMessage(JSON.stringify(data))
-      queryClient.invalidateQueries({ queryKey: ['stations'] })
+      queryClient.invalidateQueries({ queryKey: ['journeys'] })
     },
   })
 
-  return { sendFile, isError, isLoading, message, isSuccess }
+  return { sendJourneys, isError, isLoading, message, isSuccess }
 }
 
-export default useUploadFile
+export default useUploadJourneys
