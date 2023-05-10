@@ -28,6 +28,9 @@ describe('IsNullOrEmpty.js', () => {
   test('Returns false for empty object', () => {
     expect(isNullOrEmpty({})).toEqual(false)
   })
+  // test('Returns true for space', () => {
+  //   expect(isNullOrEmpty(' ')).toEqual(true)
+  // })
   test('Returns true for empty string', () => {
     expect(isNullOrEmpty('')).toEqual(true)
   })

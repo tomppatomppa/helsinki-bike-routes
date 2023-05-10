@@ -1,8 +1,9 @@
-import { useMutation } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import { uploadStationsFromCSV } from '../api/stationApi'
 import { useState } from 'react'
 
 const useUploadFile = (setFile: (value: null) => void) => {
+  const queryClient = useQueryClient()
   const [message, setMessage] = useState('')
   const {
     mutate: sendFile,
@@ -17,7 +18,7 @@ const useUploadFile = (setFile: (value: null) => void) => {
     onSuccess: (data) => {
       setFile(null)
       setMessage(JSON.stringify(data))
-      console.log(data)
+      queryClient.invalidateQueries({ queryKey: ['stations'] })
     },
   })
 

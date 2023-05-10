@@ -168,62 +168,58 @@ describe('Test for validateStation', () => {
     })
   })
 
-  // describe('Validate City names, FIN, SWE', () => {
-  //   describe('Kaupunki field', () => {
-  //     test('Should allow empty Kaupunki field', () => {
-  //       expect(validateStation({ ...validCsvRow, Kaupunki: '' })).toBe(true)
-  //     })
-  //     test('Should return false if Kapunki is a number', () => {
-  //       expect(validateStation({ ...validCsvRow, Kaupunki: 0 })).toBe(false)
-  //     })
-  //     test('Should allow kaupunki field to be null', () => {
-  //       expect(validateStation({ ...validCsvRow, Kaupunki: null })).toBe(true)
-  //     })
-  //     test('Should  allow kaupunki field to be undefined', () => {
-  //       expect(validateStation({ ...validCsvRow, Kaupunki: undefined })).toBe(
-  //         true
-  //       )
-  //     })
-  //   })
+  describe('Validate City names, FIN, SWE', () => {
+    describe('Kaupunki field', () => {
+      test('Should return false if Kapunki is a number', () => {
+        expect(validateStation({ ...validCsvRow, Kaupunki: 0 })).toBe(false)
+      })
 
-  //   describe('Stad field', () => {
-  //     test('Should allow empty Stad field', () => {
-  //       expect(validateStation({ ...validCsvRow, Stad: '' })).toBe(true)
-  //     })
-  //     test('Should return false if Kapunki is a number', () => {
-  //       expect(validateStation({ ...validCsvRow, Stad: 0 })).toBe(false)
-  //     })
-  //     test('Should not allow Stad field to be null', () => {
-  //       expect(validateStation({ ...validCsvRow, Stad: null })).toBe(true)
-  //     })
-  //     test('Should not allow Stad field to be undefined', () => {
-  //       expect(validateStation({ ...validCsvRow, Stad: undefined })).toBe(true)
-  //     })
-  //   })
-  // })
+      test('Should allow empty Kaupunki field', () => {
+        expect(validateStation({ ...validCsvRow, Kaupunki: '' })).toBe(true)
+      })
+      test('Should allow kaupunki field to be null', () => {
+        expect(validateStation({ ...validCsvRow, Kaupunki: null })).toBe(true)
+      })
+      test('Should allow kaupunki field to be string', () => {
+        expect(validateStation({ ...validCsvRow, Kaupunki: 'kaupunki' })).toBe(
+          true
+        )
+      })
+    })
 
-  // describe('Validate Operaattor field', () => {
-  //   test('return false if empty string', () => {
-  //     expect(validateStation({ ...validCsvRow, Operaattor: '' })).toBe(true)
-  //   })
+    describe('Stad field', () => {
+      test('Should return false if Kapunki is a number', () => {
+        expect(validateStation({ ...validCsvRow, Stad: 0 })).toBe(false)
+      })
 
-  //   test('return false if value is null', () => {
-  //     expect(validateStation({ ...validCsvRow, Operaattor: null })).toBe(false)
-  //   })
-  //   test('return false if value is undefined', () => {
-  //     expect(validateStation({ ...validCsvRow, Operaattor: undefined })).toBe(
-  //       false
-  //     )
-  //   })
-  //   test('return false if value is boolean', () => {
-  //     expect(validateStation({ ...validCsvRow, Operaattor: true })).toBe(false)
-  //   })
-  //   test('return false if value is number', () => {
-  //     expect(validateStation({ ...validCsvRow, Operaattor: 200.3 })).toBe(false)
-  //   })
-  //   test('return false if value is a valid operaattor', () => {
-  //     expect(validateStation(validCsvRow)).toBe(true)
-  //   })
+      test('Should allow empty Stad field', () => {
+        expect(validateStation({ ...validCsvRow, Stad: '' })).toBe(true)
+      })
+      test('Should allow Stad field to be null', () => {
+        expect(validateStation({ ...validCsvRow, Stad: null })).toBe(true)
+      })
+      test('Should allow Stad field to be string', () => {
+        expect(validateStation({ ...validCsvRow, Stad: 'kaupunki' })).toBe(true)
+      })
+    })
+  })
+})
+describe('Operaattor field', () => {
+  test('Should return false if Kapunki is a number', () => {
+    expect(validateStation({ ...validCsvRow, Operaattor: 0 })).toBe(false)
+  })
+
+  test('Should allow empty Operaattor field', () => {
+    expect(validateStation({ ...validCsvRow, Operaattor: '' })).toBe(true)
+  })
+  test('Should allow Operaattor field to be null', () => {
+    expect(validateStation({ ...validCsvRow, Operaattor: null })).toBe(true)
+  })
+  test('Should allow Operaattor field to be string', () => {
+    expect(validateStation({ ...validCsvRow, Operaattor: 'operaattor' })).toBe(
+      true
+    )
+  })
 })
 
 describe('Validate Kapasiteet field', () => {

@@ -1,6 +1,7 @@
 const isFloat = require('./isFloat')
 const isString = require('./isString')
 const isPositiveInteger = require('./isPositiveInteger')
+const isNullOrEmpty = require('./isNullOrEmpty')
 
 const MAX_X_COORDINATE = 180
 const MIN_X_COORDINATE = -180
@@ -83,23 +84,27 @@ function validateStation(row) {
     return false
   }
 
-  // //Kaupunki can be empty but if not expect a string
+  //Kaupunki can be empty string or null, but if not expect a string
   // if (
-  //   isFloat(trimmedRow[CITY_NAME_FIN]) ||
+  //   !isNullOrEmpty(trimmedRow[CITY_NAME_FIN]) ||
   //   !isString(trimmedRow[CITY_NAME_FIN])
   // ) {
   //   return false
   // }
-  // // Stad can be empty but if not expect a string
+
+  // //Stad can be empty string or null, but if not expect a string
   // if (
-  //   isFloat(trimmedRow[CITY_NAME_SWE]) ||
+  //   !isNullOrEmpty(trimmedRow[CITY_NAME_SWE]) &&
   //   !isString(trimmedRow[CITY_NAME_SWE])
   // ) {
   //   return false
   // }
 
-  // //Operaattor
-  // if (trimmedRow[OPERAATTOR] !== '' && !isString(trimmedRow[OPERAATTOR])) {
+  // //Operaattor can be empty string or null, but if not expect a string
+  // if (
+  //   !isNullOrEmpty(trimmedRow[OPERAATTOR]) &&
+  //   !isString(trimmedRow[OPERAATTOR])
+  // ) {
   //   return false
   // }
 

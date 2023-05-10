@@ -8,6 +8,10 @@ const { connectToDatabase, sequelize } = require('../utils/database')
 
 const journeys = require('./config').journeys
 const { Journey, Station } = require('../models/index')
+const stationsWithEmptyFields = path.join(
+  __dirname,
+  './files/testfile_emptyFields.csv'
+)
 const stationsCsvFile = path.join(__dirname, './files/testfile_stations.csv')
 const invalidStationCsvFile = path.join(
   __dirname,
@@ -29,6 +33,7 @@ describe('Test api/stations endpoint', () => {
       test('expect testfile to exist', () => {
         expect(stationsCsvFile).toBeDefined()
         expect(invalidStationCsvFile).toBeDefined()
+        expect(stationsWithEmptyFields).toBeDefined()
       })
       test('expect stations to be empty before tests', async () => {
         const result = await Station.findAll()
@@ -67,6 +72,7 @@ describe('Test api/stations endpoint', () => {
         expect(result.length).toEqual(9)
       })
     })
+
     describe('Adding an existing station', () => {
       test('Should not throw error when duplicate FID', async () => {
         await request(app)
@@ -207,6 +213,25 @@ describe('Test api/stations endpoint', () => {
         expect(body.returns_count).toBeDefined()
         expect(parseInt(body.returns_count)).toBe(0)
       })
+    })
+  })
+  describe('Adding stations with empty Kaupunki, Stad, Operaattor fields', () => {
+    test('Empty all stations', async () => {
+      await Station.truncate({ cascade: true, restartIdentity: true })
+      const allStations = await Station.findAll()
+      expect(allStations).toHaveLength(0)
+    })
+    test('Should return 200 add 6 stations added message', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-many')
+        .attach(
+          'file',
+          fs.readFileSync(stationsWithEmptyFields),
+          'stations.csv'
+        )
+        .set('Content-Type', 'multipart/form-data')
+        .expect(200)
+      expect(response.body.stationsAdded).toEqual(6)
     })
   })
 })
