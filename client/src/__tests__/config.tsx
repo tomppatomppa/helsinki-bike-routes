@@ -18,3 +18,7 @@ export function renderWithClient(ui: React.ReactElement) {
       ),
   }
 }
+
+export const wrapper = ({ children }: any) => (
+  <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+)

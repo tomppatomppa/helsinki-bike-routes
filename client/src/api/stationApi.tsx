@@ -21,9 +21,13 @@ export const fetchStationsByCursor = async (
 
   return data
 }
-
+export const uploadStationsFromCSV = async (file: File) => {
+  const formData = new FormData()
+  formData.append('file', file)
+  const { data } = await axios.post<FormData>(`${baseUrl}/add-many`, formData)
+  return data
+}
 export const fetchStationByID = async (stationID: number) => {
   const { data } = await axios.get<StationDetails>(`${baseUrl}/${stationID}`)
-
   return data
 }

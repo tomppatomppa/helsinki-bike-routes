@@ -1,16 +1,17 @@
-import { assertType, describe, expect, test } from 'vitest'
-import { screen, render, fireEvent, act, waitFor } from '@testing-library/react'
+import { describe, expect, test } from 'vitest'
+import { screen } from '@testing-library/react'
 import UploadFile from '../components/UploadFile'
 import userEvent from '@testing-library/user-event'
+import { renderWithClient } from './config'
 
 describe('UploadFile.tsx', () => {
   test('Renders upload button', async () => {
-    render(<UploadFile />)
+    renderWithClient(<UploadFile />)
     const uploadButton = await screen.findByTestId('upload-button')
     expect(uploadButton).toBeDefined()
   })
   test('upload csv file', async () => {
-    render(<UploadFile />)
+    renderWithClient(<UploadFile />)
 
     const fileInput = (await screen.findByTestId(
       'file-input'
@@ -26,7 +27,7 @@ describe('UploadFile.tsx', () => {
   })
 
   test('input should not accept wrong type ', async () => {
-    render(<UploadFile />)
+    renderWithClient(<UploadFile />)
     const fileInput = (await screen.findByTestId(
       'file-input'
     )) as HTMLInputElement
@@ -37,7 +38,7 @@ describe('UploadFile.tsx', () => {
   })
 
   test('Should not show upload or remove button', () => {
-    render(<UploadFile />)
+    renderWithClient(<UploadFile />)
     const uploadButton = screen.queryByText('Upload')
     const removeButton = screen.queryByText('Remove')
     expect(uploadButton).toBeNull()
@@ -45,7 +46,7 @@ describe('UploadFile.tsx', () => {
   })
 
   test('Should show upload button and remove button', async () => {
-    render(<UploadFile />)
+    renderWithClient(<UploadFile />)
 
     const fileInput = (await screen.findByTestId(
       'file-input'

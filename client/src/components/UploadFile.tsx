@@ -1,7 +1,9 @@
 import { useRef, useState } from 'react'
+import useUploadFile from '../hooks/useUploadFile'
 
 const UploadFile = () => {
   const [file, setFile] = useState<File | null>(null)
+  const { sendFile, isError, isLoading, message } = useUploadFile(setFile)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const onButtonClick = () => {
@@ -33,13 +35,20 @@ const UploadFile = () => {
           Add File
         </button>
       )}
-      {file && (
+      {isError ? (
+        <p className="text-red-900">
+          There was a problem with uploading station
+        </p>
+      ) : null}
+      {isLoading ? <p>Uploading Stations</p> : null}
+
+      {file && !isLoading && (
         <div className="text-left" data-testid="file-state">
           <strong>Filename</strong>
           <p className="break-all"> {file.name}</p>
           <div className="flex justify-between">
             <button
-              onClick={() => console.log('start upload')}
+              onClick={() => sendFile(file)}
               className="border rounded-md bg-green-400 p-2"
             >
               Upload
@@ -53,6 +62,7 @@ const UploadFile = () => {
           </div>
         </div>
       )}
+      <span className="text-xl">{message}</span>
     </div>
   )
 }
