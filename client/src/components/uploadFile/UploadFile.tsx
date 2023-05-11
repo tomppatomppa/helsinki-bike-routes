@@ -25,6 +25,7 @@ const UploadFile = () => {
     if (fileType === 'journeys') {
       sendJourneys(file)
     }
+    setFileType(null)
   }
 
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,14 +54,13 @@ const UploadFile = () => {
         accept={'.csv'}
         onChange={handleChange}
       />
-      {!fileType && (
+      {!file && (
         <>
           <button data-testid="upload-button" onClick={onButtonClick}>
             Upload File
           </button>
         </>
       )}
-
       {isError ? (
         <p className="text-red-900">
           There was a problem with uploading {fileType}
