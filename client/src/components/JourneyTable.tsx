@@ -80,7 +80,7 @@ const JourneyTable = ({ data, orderByColumn }: Props) => {
             prepareRow(row)
             return (
               <tr
-                className="cursor-pointer border-b hover:text-gray-600 h-8"
+                className="cursor-pointer border-b hover:bg-gray-200 hover:text-gray-600 h-8"
                 {...row.getRowProps()}
               >
                 {row.cells.map((cell) => (

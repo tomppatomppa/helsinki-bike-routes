@@ -214,7 +214,24 @@ describe('Test api/stations endpoint', () => {
         expect(parseInt(body.returns_count)).toBe(0)
       })
     })
+    describe('Should only include calculation for a specific month', () => {
+      test('Should not include journey in calculation that happened before startdate', async () => {
+        const { body } = await request(app)
+          .get('/api/stations/501')
+          .query({ startDate: '2021-06-01' }) //when the journey started 2021-05-31T23:57:25
+          .expect(200)
+        expect(parseInt(body.departures_count)).toBe(0)
+      })
+      test('Should not include journey in calcualtion that happened after endDate', async () => {
+        const { body } = await request(app)
+          .get('/api/stations/501')
+          .query({ endDate: '2021-05-30' }) //when the journey started 2021-05-31T23:57:25
+          .expect(200)
+        expect(parseInt(body.departures_count)).toBe(0)
+      })
+    })
   })
+
   describe('Adding stations with empty Kaupunki, Stad, Operaattor fields', () => {
     test('Empty all stations', async () => {
       await Station.truncate({ cascade: true, restartIdentity: true })

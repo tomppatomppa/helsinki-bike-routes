@@ -17,7 +17,7 @@ route.post(
   async (req, res) => {
     const filePath = path.resolve(__dirname, `../${req.file.path}`)
     const result = await parseCSV(filePath, validateStation)
-    console.log(result)
+
     const savedStations = await Station.bulkCreate(result, {
       ignoreDuplicates: true,
     })
@@ -74,6 +74,7 @@ route.get('/', async (req, res) => {
 })
 
 route.get('/:id', async (req, res) => {
+  const { startDate = '2000-01-01', endDate = '2100-12-31' } = req.query
   const stationExists = await Station.findOne({
     where: {
       ID: req.params.id,
@@ -93,6 +94,9 @@ route.get('/:id', async (req, res) => {
         as: 'departures',
         where: {
           Departure_station_id: req.params.id,
+          Departure: {
+            [Sequelize.Op.between]: [startDate, endDate],
+          },
         },
         attributes: [],
         required: false,
@@ -102,6 +106,9 @@ route.get('/:id', async (req, res) => {
         as: 'returns',
         where: {
           Return_station_id: req.params.id,
+          Return: {
+            [Sequelize.Op.between]: [startDate, endDate],
+          },
         },
         attributes: [],
         required: false,

@@ -121,7 +121,7 @@ const StationTable = ({ data, onClick }: Props) => {
             return (
               <Fragment key={row.getRowProps().key}>
                 <tr
-                  className="cursor-pointer border-b hover:text-gray-600 h-8"
+                  className="cursor-pointer hover:bg-gray-200 border-b hover:text-gray-600 h-8"
                   {...row.getRowProps()}
                 >
                   {row.cells.map((cell) => (
