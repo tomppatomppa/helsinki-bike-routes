@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 import { screen } from '@testing-library/react'
-import UploadFile from '../components/UploadFile'
+import UploadFile from '../components/uploadFile/UploadFile'
 import userEvent from '@testing-library/user-event'
 import { renderWithClient } from './config'
 

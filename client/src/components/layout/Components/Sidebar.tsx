@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-import UploadFile from '../../UploadFile'
+import UploadFile from '../../uploadFile/UploadFile'
 import CloseButton from '../../common/CloseButton'
 
 interface Props {
@@ -20,7 +20,11 @@ const Sidebar = ({ handleSetSidebar }: Props) => {
         >
           Menu
         </h5>
-        <CloseButton onClick={handleSetSidebar} />
+        <div className=" absolute top-0 right-2.5">
+          {' '}
+          <CloseButton onClick={handleSetSidebar} />
+        </div>
+
         <Link className="hover:text-teal-700 flex-1" to={'/journeys'}>
           Journeys
         </Link>
