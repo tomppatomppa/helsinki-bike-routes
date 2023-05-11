@@ -2,6 +2,7 @@ import { useRef, useState } from 'react'
 import useUploadFile from './hooks/useUploadFile'
 import { readCsvFileHeaders } from '../../utils/readCsvFileHeaders'
 import FileDetails from './FileDetails'
+import UploadResults from './UploadResults'
 
 const UploadFile = () => {
   const [filetype, setFileType] = useState<string | null>(null)
@@ -38,6 +39,7 @@ const UploadFile = () => {
     setFile(null)
     setFileType(null)
   }
+
   return (
     <div className="max-w-full">
       <input
@@ -70,7 +72,7 @@ const UploadFile = () => {
           handleRemove={handleRemove}
         />
       )}
-      <span className="text-xl">{JSON.stringify(data)}</span>
+      {data && <UploadResults data={data} />}
     </div>
   )
 }
