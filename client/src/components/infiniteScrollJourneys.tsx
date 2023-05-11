@@ -9,9 +9,11 @@ import {
 
 import JourneyTable from './JourneyTable'
 import useQueryParams from '../hooks/useQueryParams'
+import Dropdown from './common/Dropdown'
 
 const InfiniteScrollJourneys = () => {
-  const { queryParams, orderByColumn } = useQueryParams()
+  const { queryParams, orderByColumn, findByField, setSearch } =
+    useQueryParams()
   const { ref: loadMoreRef, inView } = useInView()
 
   const {
@@ -23,7 +25,7 @@ const InfiniteScrollJourneys = () => {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery<JourneysDataWithCursor>(
-    ['journeys', queryParams.order],
+    ['journeys', queryParams],
     ({ pageParam = 0 }) =>
       fetchJourneysByCursor(
         pageParam,
@@ -57,6 +59,25 @@ const InfiniteScrollJourneys = () => {
           </p>
         ) : null}
         {isLoading ? <p>Fetching journeys</p> : null}
+        <Dropdown
+          title="Search by"
+          options={[
+            'Departure_station_name',
+            'Return_station_name',
+            'Covered_distance_m',
+            'Duration_sec',
+          ]}
+          value={queryParams.search_field}
+          onSelect={findByField}
+        />
+        <label>
+          Search Stations:
+          <input
+            disabled={!queryParams.search_field}
+            value={queryParams.search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </label>
         {isSuccess && (
           <div>
             <JourneyTable data={rows} orderByColumn={orderByColumn} />{' '}
