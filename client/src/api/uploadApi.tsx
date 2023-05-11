@@ -1,9 +1,13 @@
 import axios from 'axios'
 
 const baseUrl = '/api/'
-
-export const uploadFile = async (file: File, filetype: string) => {
-  if (filetype !== 'stations' && filetype !== 'journeys')
+interface Props {
+  file: File
+  filetype: string
+}
+export const uploadFile = async (props: Props) => {
+  const { filetype, file } = props
+  if (filetype !== 'stations' && filetype !== 'journeys' && !file)
     throw new Error('Filetype is invalid')
 
   const formData = new FormData()

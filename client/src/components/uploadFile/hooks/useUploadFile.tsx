@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from 'react-query'
-import { uploadStationsFromCSV } from '../../../api/stationApi'
+
 import { useState } from 'react'
+import { uploadFile } from '../../../api/uploadApi'
 
 const useUploadFile = (setFile: (value: null) => void) => {
   const queryClient = useQueryClient()
@@ -11,7 +12,7 @@ const useUploadFile = (setFile: (value: null) => void) => {
     isError,
     isLoading,
     isSuccess,
-  } = useMutation(uploadStationsFromCSV, {
+  } = useMutation(uploadFile, {
     onError: (err) => {
       setMessage(JSON.stringify(err))
       console.log(err)

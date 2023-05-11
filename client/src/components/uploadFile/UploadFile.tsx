@@ -1,14 +1,12 @@
 import { useRef, useState } from 'react'
 import useUploadFile from './hooks/useUploadFile'
-import useUploadJourneys from './hooks/useUploadJourneys'
 import { readCsvFileHeaders } from '../../utils/readCsvFileHeaders'
 import FileDetails from './FileDetails'
 
 const UploadFile = () => {
-  const [fileType, setFileType] = useState<string | null>(null)
+  const [filetype, setFileType] = useState<string | null>(null)
   const [file, setFile] = useState<File | null>(null)
   const { sendFile, isError, isLoading, message } = useUploadFile(setFile)
-  const { sendJourneys } = useUploadJourneys(setFile)
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const onButtonClick = () => {
@@ -18,13 +16,10 @@ const UploadFile = () => {
   }
 
   const handleSend = () => {
-    if (!file) return
-    if (fileType === 'stations') {
-      sendFile(file)
-    }
-    if (fileType === 'journeys') {
-      sendJourneys(file)
-    }
+    if (!file || !filetype) return
+
+    sendFile({ file, filetype: filetype })
+
     setFileType(null)
   }
 
@@ -63,13 +58,13 @@ const UploadFile = () => {
       )}
       {isError ? (
         <p className="text-red-900">
-          There was a problem with uploading {fileType}
+          There was a problem with uploading {filetype}
         </p>
       ) : null}
-      {isLoading ? <p>Uploading {fileType}</p> : null}
+      {isLoading ? <p>Uploading {filetype}</p> : null}
       {file && !isLoading && (
         <FileDetails
-          fileType={fileType}
+          fileType={filetype}
           file={file}
           handleSend={handleSend}
           handleRemove={handleRemove}
