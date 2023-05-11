@@ -42,6 +42,7 @@ const JourneyTable = ({ data, orderByColumn }: Props) => {
         width: 50,
       },
     ],
+
     []
   )
   const tableInstance = useTable<TableProps>(
@@ -57,7 +58,7 @@ const JourneyTable = ({ data, orderByColumn }: Props) => {
 
   return (
     <div>
-      <table {...getTableProps()} className="w-full text-sm text-left mx-auto">
+      <table {...getTableProps()} className="w-full text-sm text-left">
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr

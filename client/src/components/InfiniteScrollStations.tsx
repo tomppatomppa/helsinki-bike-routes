@@ -64,7 +64,12 @@ const InfiniteScrollStations = () => {
   return (
     <div className="flex flex-col">
       {showMap && (
-        <Map allStationCoordinates={allStationCoordinates} station={station} />
+        <div className="z-0">
+          <Map
+            allStationCoordinates={allStationCoordinates}
+            station={station}
+          />
+        </div>
       )}
       <div className="self-start">
         <button

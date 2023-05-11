@@ -17,15 +17,15 @@ const MainLayout = () => {
       style={{
         display: 'grid',
         gridTemplateRows: '4rem 1fr 4rem',
-        gridTemplateColumns: showSidebar ? '15rem 1fr' : '1fr',
+        gridTemplateColumns: '1fr',
         minHeight: '100vh',
       }}
     >
       <div className="col-span-2 row-span-auto">
         <Header handleSetSidebar={handleSetSidebar} />
       </div>
-      <aside className=" md:col-auto md:row-start-2 row-span-auto">
-        {showSidebar && <Sidebar />}
+      <aside className="fixed z-10 bottom-0 h-full">
+        {showSidebar && <Sidebar handleSetSidebar={handleSetSidebar} />}
       </aside>
       <main className="col-start-auto col-span-auto">
         <ScrollWrapper>
