@@ -218,16 +218,80 @@ describe('Test api/stations endpoint', () => {
       test('Should not include journey in calculation that happened before startdate', async () => {
         const { body } = await request(app)
           .get('/api/stations/501')
-          .query({ startDate: '2021-06-01' }) //when the journey started 2021-05-31T23:57:25
+          .query({ startDate: '2021-06-01' }) //journey started 2021-05-31T23:57:25
           .expect(200)
         expect(parseInt(body.departures_count)).toBe(0)
       })
-      test('Should not include journey in calcualtion that happened after endDate', async () => {
-        const { body } = await request(app)
-          .get('/api/stations/501')
-          .query({ endDate: '2021-05-30' }) //when the journey started 2021-05-31T23:57:25
-          .expect(200)
-        expect(parseInt(body.departures_count)).toBe(0)
+      describe('Filtering Departures_count by date', () => {
+        test('Should not include journey in calculation that happened after endDate', async () => {
+          const { body } = await request(app)
+            .get('/api/stations/501')
+            .query({ endDate: '2021-05-30' }) //journey started 2021-05-31T23:57:25
+            .expect(200)
+          expect(parseInt(body.departures_count)).toBe(0)
+        })
+        test('Should not include journey in calculation', async () => {
+          const { body } = await request(app)
+            .get('/api/stations/501')
+            //journey started 2021-05-31T23:57:25 and ended 2021-06-01T00:05:46
+            .query({ startDate: '2021-05-29', endDate: '2021-05-30' })
+            .expect(200)
+          expect(parseInt(body.departures_count)).toBe(0)
+        })
+        test('Should include journey in calculation that happened during the interval', async () => {
+          const { body } = await request(app)
+            .get('/api/stations/501')
+            //journey started 2021-05-31T23:57:25 and ended 2021-06-01T00:05:46
+            .query({ startDate: '2021-05-01', endDate: '2021-05-31' })
+            .expect(200)
+          expect(parseInt(body.departures_count)).toBe(1)
+        })
+      })
+      describe('Filtering returns_count by date', () => {
+        test('Station 503 has 1 return', async () => {
+          const station = await Journey.findAll({
+            where: {
+              Return_station_id: 503,
+            },
+          })
+          expect(station).toHaveLength(1)
+          expect(station[0].Departure.toISOString()).toEqual(
+            '2021-05-31T20:57:25.000Z'
+          )
+          expect(station[0].Return.toISOString()).toEqual(
+            '2021-05-31T21:05:46.000Z'
+          )
+        })
+        test('Should have 1 return journey', async () => {
+          const { body } = await request(app)
+            .get('/api/stations/503')
+            .expect(200)
+          expect(parseInt(body.returns_count)).toBe(1)
+        })
+        test('Should have 0 return_count', async () => {
+          const { body } = await request(app)
+            .get('/api/stations/503')
+            //journey started 2021-05-31T23:57:25 and ended 2021-05-31T21:05:46.000Z
+            .query({ startDate: '2021-05-01', endDate: '2021-05-30' })
+            .expect(200)
+          expect(parseInt(body.returns_count)).toBe(0)
+        })
+        test('Should have 0 return_count', async () => {
+          const { body } = await request(app)
+            .get('/api/stations/503')
+            //journey started 2021-05-31T23:57:25 and ended 2021-05-31T21:05:46.000Z
+            .query({ startDate: '2021-04-01', endDate: '2021-04-30' })
+            .expect(200)
+          expect(parseInt(body.returns_count)).toBe(0)
+        })
+        test('Should have 1 return_count', async () => {
+          const { body } = await request(app)
+            .get('/api/stations/503')
+            //journey started 2021-05-31T23:57:25 and ended 2021-05-31T21:05:46.000Z
+            .query({ startDate: '2021-05-01', endDate: '2021-05-31' })
+            .expect(200)
+          expect(parseInt(body.returns_count)).toBe(1)
+        })
       })
     })
   })

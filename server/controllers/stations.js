@@ -75,6 +75,13 @@ route.get('/', async (req, res) => {
 
 route.get('/:id', async (req, res) => {
   const { startDate = '2000-01-01', endDate = '2100-12-31' } = req.query
+
+  const formattedStartDate = startDate ? new Date(startDate) : new Date()
+
+  const formattedEndDate = endDate
+    ? new Date(new Date(endDate).getTime() + 24 * 60 * 60 * 1000)
+    : new Date()
+  console.log(formattedEndDate)
   const stationExists = await Station.findOne({
     where: {
       ID: req.params.id,
@@ -95,7 +102,7 @@ route.get('/:id', async (req, res) => {
         where: {
           Departure_station_id: req.params.id,
           Departure: {
-            [Sequelize.Op.between]: [startDate, endDate],
+            [Sequelize.Op.between]: [formattedStartDate, formattedEndDate],
           },
         },
         attributes: [],
@@ -107,7 +114,7 @@ route.get('/:id', async (req, res) => {
         where: {
           Return_station_id: req.params.id,
           Return: {
-            [Sequelize.Op.between]: [startDate, endDate],
+            [Sequelize.Op.between]: [formattedStartDate, formattedEndDate],
           },
         },
         attributes: [],
