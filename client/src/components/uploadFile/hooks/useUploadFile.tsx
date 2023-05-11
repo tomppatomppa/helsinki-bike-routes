@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from 'react-query'
-import { uploadStationsFromCSV } from '../api/stationApi'
+import { uploadStationsFromCSV } from '../../../api/stationApi'
 import { useState } from 'react'
 
 const useUploadFile = (setFile: (value: null) => void) => {

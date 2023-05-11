@@ -21,7 +21,6 @@ const Sidebar = ({ handleSetSidebar }: Props) => {
           Menu
         </h5>
         <div className=" absolute top-0 right-2.5">
-          {' '}
           <CloseButton onClick={handleSetSidebar} />
         </div>
 

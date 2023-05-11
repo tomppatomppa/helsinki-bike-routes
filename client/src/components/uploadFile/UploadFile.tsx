@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
-import useUploadFile from '../../hooks/useUploadFile'
-import useUploadJourneys from '../../hooks/useUploadJourneys'
+import useUploadFile from './hooks/useUploadFile'
+import useUploadJourneys from './hooks/useUploadJourneys'
 import { readCsvFileHeaders } from '../../utils/readCsvFileHeaders'
 import FileDetails from './FileDetails'
 

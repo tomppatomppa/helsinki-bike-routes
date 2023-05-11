@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks'
 import { describe, expect, test, vi } from 'vitest'
-import useUploadFile from '../hooks/useUploadFile'
+import useUploadFile from '../components/uploadFile/hooks/useUploadFile'
 
 import { wrapper } from './config'
 

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from 'react-query'
 import { useState } from 'react'
-import { uploadJourneysFromCSV } from '../api/journeysApi'
+import { uploadJourneysFromCSV } from '../../../api/journeysApi'
 
 const useUploadJourneys = (setFile: (value: null) => void) => {
   const queryClient = useQueryClient()

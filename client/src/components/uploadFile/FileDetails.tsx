@@ -6,6 +6,7 @@ interface FileDetailsProps {
   handleSend: () => void
   handleRemove: () => void
 }
+
 const FileDetails = (props: FileDetailsProps) => {
   const { file, handleSend, handleRemove, fileType } = props
 
@@ -19,17 +20,19 @@ const FileDetails = (props: FileDetailsProps) => {
   }
 
   return (
-    <div className="text-left" data-testid="file-state">
+    <div
+      className="text-left flex-col flex gap-2 text-sm"
+      data-testid="file-state"
+    >
       <h5 className="text-base font-semibold text-gray-500 uppercase">
         File Details
       </h5>
-      <p className="break-all">Filtetype: {fileType}</p>
+      <p className="break-all">
+        Filtetype: <strong className="uppercase">{fileType}</strong>
+      </p>
       <p className="break-all">Filename: {file.name}</p>
       <div className="flex justify-between">
-        <button
-          onClick={handleSend}
-          className="border rounded-md bg-green-400 p-2"
-        >
+        <button onClick={handleSend} className="border bg-green-300 p-2">
           Upload
         </button>
         <CloseButton onClick={handleRemove} />
