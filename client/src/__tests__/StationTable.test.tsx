@@ -32,7 +32,7 @@ describe('JourneyTable', () => {
     const onClick = vi.fn()
     render(<StationTable data={stations} onClick={onClick} />)
     const headers = screen.getAllByRole('columnheader')
-    expect(headers).toHaveLength(7)
+    expect(headers).toHaveLength(6)
   })
 
   test('Headers have correct text content', () => {
@@ -47,7 +47,6 @@ describe('JourneyTable', () => {
       'Name',
       'Osoite',
       'Adress',
-      'Map',
     ]
 
     headerColumns.forEach((column) =>

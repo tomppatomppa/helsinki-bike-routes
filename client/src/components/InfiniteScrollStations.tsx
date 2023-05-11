@@ -25,7 +25,6 @@ const InfiniteScrollStations = () => {
     hasNextPage,
   } = useInfiniteQuery<StationDataWithCursor>(
     ['stations', queryParams.search, queryParams.search_field],
-
     ({ pageParam = 0 }) =>
       fetchStationsByCursor(
         pageParam,
@@ -39,6 +38,7 @@ const InfiniteScrollStations = () => {
       },
     }
   )
+
   const { ref: loadMoreRef, inView } = useInView({
     skip: !hasNextPage,
   })

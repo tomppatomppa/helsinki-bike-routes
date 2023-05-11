@@ -61,14 +61,6 @@ const StationTable = ({ data, onClick }: Props) => {
         Header: 'Y',
         accessor: 'y',
       },
-      {
-        Header: 'Map',
-        disableSortBy: true,
-        accessor: 'ID',
-        Cell: ({ row }: any | JSX.Element) => (
-          <button onClick={() => handleButtonClick(row)}>On Map</button>
-        ),
-      },
     ],
     []
   )
@@ -91,7 +83,7 @@ const StationTable = ({ data, onClick }: Props) => {
     visibleColumns,
   } = tableInstance
 
-  const handleButtonClick = (row: { values: Station }) => {
+  const handleButtonClick = (row: any) => {
     onClick(row.values)
   }
   const renderRowSubComponent = React.useCallback(
@@ -127,6 +119,7 @@ const StationTable = ({ data, onClick }: Props) => {
             return (
               <Fragment key={row.getRowProps().key}>
                 <tr
+                  onClick={() => handleButtonClick(row)}
                   className="cursor-pointer hover:text-gray-600"
                   {...row.getRowProps()}
                 >
