@@ -3,11 +3,13 @@ interface Props {
 }
 const Header = ({ handleSetSidebar }: Props) => {
   return (
-    <div className="h-full bg-red-200 flex">
-      <div className="bg-blue-200 flex-1 text-left flex">
-        <button onClick={handleSetSidebar}>Toggle Sidebar</button>
-      </div>
-      <label className="flex-1"> Header</label>
+    <div className="h-full  bg-neutral-400 p-2 shadow-lg flex items-center">
+      <button className="md:absolute" onClick={handleSetSidebar}>
+        Toggle Sidebar
+      </button>
+      <label className="flex-1 uppercase font-semibold text-xl">
+        Helsinki city bike app
+      </label>
     </div>
   )
 }

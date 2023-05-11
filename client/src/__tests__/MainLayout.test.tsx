@@ -8,7 +8,7 @@ describe('MainLayout', () => {
   test('Renders Header and Footer by default and sidebar is hidden', () => {
     render(<MainLayout />)
 
-    const header = screen.getByText(/Header/i)
+    const header = screen.getByText(/Helsinki city bike app/i)
     const footer = screen.getByText(/Footer/i)
     const sidebar = screen.queryByTestId('sidebar-element')
 

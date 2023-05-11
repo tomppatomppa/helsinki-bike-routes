@@ -13,7 +13,9 @@ const FileDetails = (props: FileDetailsProps) => {
   if (!fileType) {
     return (
       <div className="relative">
-        <p className="text-red-900">The file doesn't have required headers</p>
+        <p className="text-red-900">
+          The file doesn't contain required headers
+        </p>
         <CloseButton onClick={handleRemove} />
       </div>
     )

@@ -18,10 +18,8 @@ const UploadFile = () => {
 
   const handleSend = () => {
     if (!file || !filetype) return
-
     sendFile({ file, filetype: filetype })
-    setFileType(null)
-    setFile(null)
+    handleRemove()
   }
 
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,7 +28,6 @@ const UploadFile = () => {
     const filetype = await readCsvFileHeaders(fileObj)
 
     if (!fileObj && !filetype) return
-
     setFile(fileObj)
     setFileType(filetype)
   }
@@ -53,7 +50,11 @@ const UploadFile = () => {
       />
       {!file && (
         <>
-          <button data-testid="upload-button" onClick={onButtonClick}>
+          <button
+            className="border p-2 mt-2 bg-gray-300"
+            data-testid="upload-button"
+            onClick={onButtonClick}
+          >
             Upload File
           </button>
         </>

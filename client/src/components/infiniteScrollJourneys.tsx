@@ -53,7 +53,7 @@ const InfiniteScrollJourneys = () => {
 
   return (
     <div>
-      <div className="max-h-auto overflow-y-auto divide-y">
+      <div className="min-h-auto overflow-y-auto divide-y">
         {isError ? (
           <p className="text-red-900">
             There was a problem with fetching journeys

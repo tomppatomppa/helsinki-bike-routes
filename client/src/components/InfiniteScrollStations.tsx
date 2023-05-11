@@ -94,7 +94,7 @@ const InfiniteScrollStations = () => {
         setSearch={setSearch}
       />
 
-      <div className="max-h-[80vh] w-full overflow-auto divide-y p-6">
+      <div className="min-h-[80vh] w-full overflow-auto divide-y p-6">
         {isError ? (
           <p className="text-red-900">
             There was a problem with fetching stations

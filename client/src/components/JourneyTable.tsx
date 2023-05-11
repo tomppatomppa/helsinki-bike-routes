@@ -61,12 +61,10 @@ const JourneyTable = ({ data, orderByColumn }: Props) => {
       <table {...getTableProps()} className="w-full text-sm text-left">
         <thead>
           {headerGroups.map((headerGroup) => (
-            <tr
-              className="cursor-pointer"
-              {...headerGroup.getHeaderGroupProps()}
-            >
+            <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
                 <th
+                  className="cursor-pointer"
                   style={{ width: column.width }}
                   {...column.getHeaderProps()}
                   onClick={() => orderByColumn(column.id?.toString())}
@@ -82,7 +80,7 @@ const JourneyTable = ({ data, orderByColumn }: Props) => {
             prepareRow(row)
             return (
               <tr
-                className="cursor-pointer hover:text-gray-600"
+                className="cursor-pointer border-b hover:text-gray-600 h-8"
                 {...row.getRowProps()}
               >
                 {row.cells.map((cell) => (
