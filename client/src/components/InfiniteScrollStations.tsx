@@ -5,15 +5,15 @@ import { useInView } from 'react-intersection-observer'
 import { useState } from 'react'
 import StationTable from './StationTable'
 import useQueryParams from '../hooks/useQueryParams'
-import Dropdown from './common/Dropdown'
 import Map from './Map'
 import { LatLngTuple } from 'leaflet'
 import { Station } from '../types/station'
+import SearchBar from './common/SearchBar'
 
 const InfiniteScrollStations = () => {
   const [showMap, setShowMap] = useState<boolean>(true)
   const [station, setStation] = useState<Station | null>(null)
-  //TODO: set initial search field to something
+
   const { queryParams, setSearch, findByField } = useQueryParams()
   const {
     data: stations,
@@ -87,20 +87,12 @@ const InfiniteScrollStations = () => {
           </button>
         )}
       </div>
-      <Dropdown
-        title="Search by"
+      <SearchBar
         options={['Nimi', 'Name', 'Namn', 'Osoite', 'Adress']}
-        value={queryParams.search_field}
-        onSelect={findByField}
+        {...queryParams}
+        findByField={findByField}
+        setSearch={setSearch}
       />
-      <label>
-        Search Stations:
-        <input
-          disabled={!queryParams.search_field}
-          value={queryParams.search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </label>
 
       <div className="max-h-[80vh] w-full overflow-auto divide-y p-6">
         {isError ? (
