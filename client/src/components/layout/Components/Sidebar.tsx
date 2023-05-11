@@ -23,7 +23,6 @@ const Sidebar = ({ handleSetSidebar }: Props) => {
         <div className=" absolute top-0 right-2.5">
           <CloseButton onClick={handleSetSidebar} />
         </div>
-
         <Link className="hover:text-teal-700 flex-1" to={'/journeys'}>
           Journeys
         </Link>

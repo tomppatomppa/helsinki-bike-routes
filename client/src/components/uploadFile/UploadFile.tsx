@@ -6,7 +6,7 @@ import FileDetails from './FileDetails'
 const UploadFile = () => {
   const [filetype, setFileType] = useState<string | null>(null)
   const [file, setFile] = useState<File | null>(null)
-  const { sendFile, isError, isLoading, message } = useUploadFile(setFile)
+  const { sendFile, isError, isLoading, data } = useUploadFile()
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const onButtonClick = () => {
@@ -19,8 +19,8 @@ const UploadFile = () => {
     if (!file || !filetype) return
 
     sendFile({ file, filetype: filetype })
-
     setFileType(null)
+    setFile(null)
   }
 
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,7 +70,7 @@ const UploadFile = () => {
           handleRemove={handleRemove}
         />
       )}
-      <span className="text-xl">{message}</span>
+      <span className="text-xl">{JSON.stringify(data)}</span>
     </div>
   )
 }

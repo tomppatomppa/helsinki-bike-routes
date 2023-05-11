@@ -1,30 +1,22 @@
 import { useMutation, useQueryClient } from 'react-query'
 
-import { useState } from 'react'
 import { uploadFile } from '../../../api/uploadApi'
 
-const useUploadFile = (setFile: (value: null) => void) => {
+const useUploadFile = () => {
   const queryClient = useQueryClient()
-  const [message, setMessage] = useState('')
-
   const {
+    data,
     mutate: sendFile,
     isError,
     isLoading,
     isSuccess,
   } = useMutation(uploadFile, {
-    onError: (err) => {
-      setMessage(JSON.stringify(err))
-      console.log(err)
-    },
-    onSuccess: (data) => {
-      setFile(null)
-      setMessage(JSON.stringify(data))
+    onSuccess: () => {
       queryClient.invalidateQueries()
     },
   })
 
-  return { sendFile, isError, isLoading, message, isSuccess }
+  return { sendFile, isError, isLoading, isSuccess, data }
 }
 
 export default useUploadFile
