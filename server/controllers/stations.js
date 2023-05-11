@@ -81,7 +81,7 @@ route.get('/:id', async (req, res) => {
   const formattedEndDate = endDate
     ? new Date(new Date(endDate).getTime() + 24 * 60 * 60 * 1000)
     : new Date()
-  console.log(formattedEndDate)
+
   const stationExists = await Station.findOne({
     where: {
       ID: req.params.id,

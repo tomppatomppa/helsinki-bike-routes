@@ -22,7 +22,12 @@ export const fetchStationsByCursor = async (
   return data
 }
 
-export const fetchStationByID = async (stationID: number) => {
-  const { data } = await axios.get<StationDetails>(`${baseUrl}/${stationID}`)
+export const fetchStationByID = async (
+  stationID: number,
+  dates: object | null
+) => {
+  const { data } = await axios.get<StationDetails>(`${baseUrl}/${stationID}`, {
+    params: { ...dates },
+  })
   return data
 }

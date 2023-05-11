@@ -28,7 +28,7 @@ const StationTable = ({ data, onClick }: Props) => {
         Header: () => <span>Expand</span>, // No header
         id: 'expander', // It needs an ID
         Cell: ({ row }: any) => (
-          <span className="" {...row.getToggleRowExpandedProps()}>
+          <span {...row.getToggleRowExpandedProps()}>
             {row.isExpanded ? '👇' : '👉'}
           </span>
         ),
@@ -136,10 +136,7 @@ const StationTable = ({ data, onClick }: Props) => {
                 {/* @ts-ignore */}
                 {row.isExpanded ? (
                   <tr>
-                    <td
-                      className="cursor-none"
-                      colSpan={visibleColumns?.length}
-                    >
+                    <td colSpan={visibleColumns?.length}>
                       {renderRowSubComponent({ row })}
                     </td>
                   </tr>
