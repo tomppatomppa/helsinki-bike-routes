@@ -28,7 +28,7 @@ const StationTable = ({ data, onClick }: Props) => {
         Header: () => <span>Expand</span>, // No header
         id: 'expander', // It needs an ID
         Cell: ({ row }: any) => (
-          <span {...row.getToggleRowExpandedProps()}>
+          <span className="" {...row.getToggleRowExpandedProps()}>
             {row.isExpanded ? '👇' : '👉'}
           </span>
         ),
@@ -83,9 +83,11 @@ const StationTable = ({ data, onClick }: Props) => {
     visibleColumns,
   } = tableInstance
 
-  const handleButtonClick = (row: any) => {
+  const handleButtonClick = (row: any, cell: any) => {
+    if (cell.column.id === 'expander') return
     onClick(row.values)
   }
+
   const renderRowSubComponent = React.useCallback(
     ({ row }: { row: Row<TableProps> }) => (
       <pre>
@@ -119,18 +121,25 @@ const StationTable = ({ data, onClick }: Props) => {
             return (
               <Fragment key={row.getRowProps().key}>
                 <tr
-                  onClick={() => handleButtonClick(row)}
                   className="cursor-pointer hover:text-gray-600"
                   {...row.getRowProps()}
                 >
                   {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                    <td
+                      onClick={() => handleButtonClick(row, cell)}
+                      {...cell.getCellProps()}
+                    >
+                      {cell.render('Cell')}
+                    </td>
                   ))}
                 </tr>
                 {/* @ts-ignore */}
                 {row.isExpanded ? (
                   <tr>
-                    <td colSpan={visibleColumns?.length}>
+                    <td
+                      className="cursor-none"
+                      colSpan={visibleColumns?.length}
+                    >
                       {renderRowSubComponent({ row })}
                     </td>
                   </tr>
