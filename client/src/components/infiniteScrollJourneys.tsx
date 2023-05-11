@@ -10,6 +10,7 @@ import {
 import JourneyTable from './JourneyTable'
 import useQueryParams from '../hooks/useQueryParams'
 import Dropdown from './common/Dropdown'
+import SearchBar from './common/SearchBar'
 
 const InfiniteScrollJourneys = () => {
   const { queryParams, orderByColumn, findByField, setSearch } =
@@ -59,25 +60,17 @@ const InfiniteScrollJourneys = () => {
           </p>
         ) : null}
         {isLoading ? <p>Fetching journeys</p> : null}
-        <Dropdown
-          title="Search by"
+        <SearchBar
           options={[
             'Departure_station_name',
             'Return_station_name',
             'Covered_distance_m',
             'Duration_sec',
           ]}
-          value={queryParams.search_field}
-          onSelect={findByField}
+          {...queryParams}
+          findByField={findByField}
+          setSearch={setSearch}
         />
-        <label>
-          Search Stations:
-          <input
-            disabled={!queryParams.search_field}
-            value={queryParams.search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </label>
         {isSuccess && (
           <div>
             <JourneyTable data={rows} orderByColumn={orderByColumn} />{' '}
