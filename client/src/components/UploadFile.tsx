@@ -72,7 +72,6 @@ const UploadFile = () => {
       {file && fileType && !isLoading && (
         <div className="text-left" data-testid="file-state">
           <p className="break-all">
-            {' '}
             <strong>Filename</strong> {file.name}
           </p>
           <div className="flex justify-between">

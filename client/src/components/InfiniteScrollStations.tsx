@@ -24,7 +24,7 @@ const InfiniteScrollStations = () => {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery<StationDataWithCursor>(
-    ['stations', queryParams.search],
+    ['stations', queryParams.search, queryParams.search_field],
 
     ({ pageParam = 0 }) =>
       fetchStationsByCursor(
