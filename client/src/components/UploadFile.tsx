@@ -64,11 +64,10 @@ const UploadFile = () => {
       )}
       {isError ? (
         <p className="text-red-900">
-          There was a problem with uploading station
+          There was a problem with uploading {fileType}
         </p>
       ) : null}
       {isLoading ? <p>Uploading {fileType}</p> : null}
-
       {file && fileType && !isLoading && (
         <div className="text-left" data-testid="file-state">
           <p className="break-all">

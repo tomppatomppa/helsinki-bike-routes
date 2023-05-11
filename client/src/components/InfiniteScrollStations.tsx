@@ -62,7 +62,7 @@ const InfiniteScrollStations = () => {
   })
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col overflow-hidden">
       {showMap && (
         <div className="z-0">
           <Map

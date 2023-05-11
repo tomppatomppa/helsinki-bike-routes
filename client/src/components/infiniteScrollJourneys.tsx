@@ -61,12 +61,7 @@ const InfiniteScrollJourneys = () => {
         ) : null}
         {isLoading ? <p>Fetching journeys</p> : null}
         <SearchBar
-          options={[
-            'Departure_station_name',
-            'Return_station_name',
-            'Covered_distance_m',
-            'Duration_sec',
-          ]}
+          options={['Departure_station_name', 'Return_station_name']}
           {...queryParams}
           findByField={findByField}
           setSearch={setSearch}

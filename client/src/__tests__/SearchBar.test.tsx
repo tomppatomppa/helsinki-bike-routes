@@ -16,7 +16,7 @@ describe('SearchBar.tsx', () => {
     const dropdownOption1 = getByText('Option 1')
     const dropdownOption2 = getByText('Option 2')
     const dropdownOption3 = getByText('Option 3')
-    const searchInput = getByLabelText('Search Stations:')
+    const searchInput = getByLabelText('Search:')
 
     expect(dropdownTitle).toBeDefined()
     expect(dropdownOption1).toBeDefined()
@@ -29,7 +29,7 @@ describe('SearchBar.tsx', () => {
   test('should call the setSearch function when the search input field is changed', () => {
     const { getByLabelText } = render(<SearchBar {...props} />)
 
-    const searchInput = getByLabelText('Search Stations:')
+    const searchInput = getByLabelText('Search:')
     fireEvent.change(searchInput, { target: { value: 'New search' } })
 
     expect(props.setSearch).toHaveBeenCalledWith('New search')
@@ -37,7 +37,7 @@ describe('SearchBar.tsx', () => {
 
   test('should disable the search input field if no search field is selected', () => {
     const { getByLabelText } = render(<SearchBar {...props} search_field="" />)
-    const searchInput = getByLabelText('Search Stations:')
+    const searchInput = getByLabelText('Search:')
     expect(searchInput).toHaveProperty('disabled', true)
   })
 })
