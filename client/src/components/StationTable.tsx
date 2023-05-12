@@ -1,4 +1,5 @@
-import { useTable, Column, useExpanded, Row } from 'react-table'
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { useTable, Column, useExpanded, Row, Cell } from 'react-table'
 import { Station } from '../types/station'
 import { useMemo } from 'react'
 import React, { Fragment } from 'react'
@@ -25,8 +26,8 @@ const StationTable = ({ data, onClick }: Props) => {
   const columns = useMemo<Column<TableProps>[]>(
     () => [
       {
-        Header: () => <span>Expand</span>, // No header
-        id: 'expander', // It needs an ID
+        Header: () => <span>Expand</span>,
+        id: 'expander',
         Cell: ({ row }: any) => (
           <span {...row.getToggleRowExpandedProps()}>
             {row.isExpanded ? '👇' : '👉'}
@@ -83,7 +84,7 @@ const StationTable = ({ data, onClick }: Props) => {
     visibleColumns,
   } = tableInstance
 
-  const handleButtonClick = (row: any, cell: any) => {
+  const handleRowClick = (row: any, cell: any) => {
     if (cell.column.id === 'expander') return
     onClick(row.values)
   }
@@ -126,7 +127,7 @@ const StationTable = ({ data, onClick }: Props) => {
                 >
                   {row.cells.map((cell) => (
                     <td
-                      onClick={() => handleButtonClick(row, cell)}
+                      onClick={() => handleRowClick(row, cell)}
                       {...cell.getCellProps()}
                     >
                       {cell.render('Cell')}

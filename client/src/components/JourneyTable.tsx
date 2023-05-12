@@ -32,12 +32,12 @@ const JourneyTable = ({ data, orderByColumn }: Props) => {
         width: 150,
       },
       {
-        Header: 'Distance',
+        Header: 'Distance (m)',
         accessor: 'Covered_distance_m',
         width: 50,
       },
       {
-        Header: 'Duration',
+        Header: 'Duration (sec.)',
         accessor: 'Duration_sec',
         width: 50,
       },
