@@ -99,7 +99,7 @@ const StationTable = ({ data, onClick }: Props) => {
   )
 
   return (
-    <div>
+    <div data-testid="station-table">
       <table {...getTableProps()} className="w-full text-sm text-left">
         <thead>
           {headerGroups.map((headerGroup) => (

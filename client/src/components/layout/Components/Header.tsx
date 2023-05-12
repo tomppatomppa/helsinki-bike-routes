@@ -3,7 +3,10 @@ interface Props {
 }
 const Header = ({ handleSetSidebar }: Props) => {
   return (
-    <div className="h-full  bg-neutral-400 p-2 shadow-lg flex items-center">
+    <div
+      data-testid="header-element"
+      className="h-full  bg-neutral-400 p-2 shadow-lg flex items-center"
+    >
       <button className="md:absolute" onClick={handleSetSidebar}>
         Toggle Sidebar
       </button>

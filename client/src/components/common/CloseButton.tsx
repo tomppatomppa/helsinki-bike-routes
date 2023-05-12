@@ -4,6 +4,7 @@ interface Props {
 const CloseButton = ({ onClick }: Props) => {
   return (
     <button
+      id="close-button"
       onClick={onClick}
       type="button"
       data-drawer-hide="drawer-navigation"
