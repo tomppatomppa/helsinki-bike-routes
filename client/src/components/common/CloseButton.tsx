@@ -7,8 +7,6 @@ const CloseButton = ({ onClick }: Props) => {
       id="close-button"
       onClick={onClick}
       type="button"
-      data-drawer-hide="drawer-navigation"
-      aria-controls="drawer-navigation"
       className="text-gray-400 bg-transparent hover:bg-gray-200 p-1.5 hover:text-gray-900 rounded-lg text-sm  inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
     >
       <svg
