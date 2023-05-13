@@ -1,5 +1,5 @@
 import { describe, expect, test, vi } from 'vitest'
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent, render, waitFor } from '@testing-library/react'
 import { MonthSelector } from '../components/common/MonthSelector'
 
 const currentMonth = new Date().getMonth() + 1
@@ -15,12 +15,16 @@ const endDate = new Date(currentYear, currentMonth, 0)
 describe('MonthSelector.tsx', () => {
   const setDates = vi.fn()
   test('Default date is current month and current year', () => {
-    const { getByText } = render(<MonthSelector setDates={setDates} />)
+    const { getByText } = render(
+      <MonthSelector dates={null} setDates={setDates} />
+    )
     const spanElement = getByText(`${currentMonth}/${currentYear}`)
     expect(spanElement).toBeDefined()
   })
   test('Clicking button "Next Month" advances month by +1', () => {
-    const { getByText } = render(<MonthSelector setDates={setDates} />)
+    const { getByText } = render(
+      <MonthSelector dates={null} setDates={setDates} />
+    )
     const nextButton = getByText(/Next Month/i)
     fireEvent.click(nextButton)
 
@@ -28,7 +32,9 @@ describe('MonthSelector.tsx', () => {
     expect(spanElement).toBeDefined()
   })
   test('Clicking button "Previous Month" decreases month by -1', () => {
-    const { getByText } = render(<MonthSelector setDates={setDates} />)
+    const { getByText } = render(
+      <MonthSelector dates={null} setDates={setDates} />
+    )
     const previoustButton = getByText(/Previous Month/i)
     fireEvent.click(previoustButton)
 
@@ -36,10 +42,19 @@ describe('MonthSelector.tsx', () => {
     expect(spanElement).toBeDefined()
   })
   test('Clicking setDates gets called with current month start and end dates', () => {
-    const { getByText } = render(<MonthSelector setDates={setDates} />)
+    const { getByText } = render(
+      <MonthSelector dates={null} setDates={setDates} />
+    )
     const applyButton = getByText(/Apply/i)
     fireEvent.click(applyButton)
 
     expect(setDates).toHaveBeenCalledWith({ startDate, endDate })
+  })
+  test('Apply button is hidden when dates match', async () => {
+    const { queryByText } = render(
+      <MonthSelector dates={{ startDate, endDate }} setDates={setDates} />
+    )
+    const applyButton = queryByText(/Apply/i)
+    expect(applyButton).toBeFalsy()
   })
 })

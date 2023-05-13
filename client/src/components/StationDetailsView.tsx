@@ -37,7 +37,7 @@ const StationDetailsView = (props: Props) => {
         </p>
       ) : null}
       <Spinner show={isLoading} delay={300} />
-      {isChecked && <MonthSelector setDates={setDates} />}
+      {isChecked && <MonthSelector dates={dates} setDates={setDates} />}
       <Checkbox
         title="Filter By Month"
         checked={isChecked}

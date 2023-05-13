@@ -1,9 +1,10 @@
 import { useState } from 'react'
 
 interface Props {
+  dates: object | null
   setDates: (value: object) => void
 }
-export const MonthSelector = ({ setDates }: Props) => {
+export const MonthSelector = ({ dates, setDates }: Props) => {
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1)
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
 
@@ -22,6 +23,9 @@ export const MonthSelector = ({ setDates }: Props) => {
     .toISOString()
     .slice(0, 10)
 
+  const currentDateApplied =
+    JSON.stringify(dates) === JSON.stringify({ startDate, endDate })
+
   const handleNextMonth = () => {
     if (currentMonth === 12) {
       setCurrentMonth(1)
@@ -33,12 +37,14 @@ export const MonthSelector = ({ setDates }: Props) => {
 
   return (
     <div>
-      <button
-        onClick={() => setDates({ startDate, endDate })}
-        className="p-2 border block bg-neutral-300"
-      >
-        Apply
-      </button>
+      {!currentDateApplied && (
+        <button
+          onClick={() => setDates({ startDate, endDate })}
+          className="p-2 border block bg-green-300"
+        >
+          Apply
+        </button>
+      )}
       <button className="p-2 border bg-neutral-300" onClick={handlePrevMonth}>
         Previous Month
       </button>
