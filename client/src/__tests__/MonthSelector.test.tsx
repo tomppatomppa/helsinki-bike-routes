@@ -1,5 +1,5 @@
 import { describe, expect, test, vi } from 'vitest'
-import { fireEvent, render, waitFor } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 import { MonthSelector } from '../components/common/MonthSelector'
 
 const currentMonth = new Date().getMonth() + 1
