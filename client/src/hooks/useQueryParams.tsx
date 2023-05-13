@@ -17,6 +17,7 @@ const useQueryParams = () => {
 
   const findByField = (value: string) => {
     setSearchField(value)
+    setSearch('')
   }
 
   const queryParams = { limit, order, search, search_field }

@@ -115,7 +115,6 @@ const StationTable = ({ data, onClick }: Props) => {
             </tr>
           ))}
         </thead>
-
         <tbody data-testid="table-rows" {...getTableBodyProps()}>
           {rows.map((row: Row<TableProps>) => {
             prepareRow(row)

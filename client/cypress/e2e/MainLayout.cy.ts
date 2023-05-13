@@ -33,7 +33,7 @@ describe('template spec', () => {
       cy.get('[id="close-button"]').click()
       cy.get('[data-testid="sidebar-element"]').should('not.exist')
     })
-    it('Sidebar should contain', () => {
+    it('Sidebar should contain menu items', () => {
       cy.visit('/')
 
       cy.contains('Toggle Sidebar').click()

@@ -13,8 +13,8 @@ import SearchBar from './common/SearchBar'
 const InfiniteScrollStations = () => {
   const [showMap, setShowMap] = useState<boolean>(true)
   const [station, setStation] = useState<Station | null>(null)
-
   const { queryParams, setSearch, findByField } = useQueryParams()
+
   const {
     data: stations,
     isLoading,
@@ -24,7 +24,7 @@ const InfiniteScrollStations = () => {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery<StationDataWithCursor>(
-    ['stations', queryParams.search, queryParams.search_field],
+    ['stations', queryParams.search],
     ({ pageParam = 0 }) =>
       fetchStationsByCursor(
         pageParam,
@@ -32,6 +32,7 @@ const InfiniteScrollStations = () => {
         queryParams.search,
         queryParams.search_field
       ),
+
     {
       getNextPageParam: (lastPage) => {
         return lastPage.nextCursor

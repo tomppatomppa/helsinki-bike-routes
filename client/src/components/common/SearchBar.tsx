@@ -21,6 +21,8 @@ const SearchBar = (props: SearchBarProps) => {
       <label>
         Search:
         <input
+          id="search-input"
+          type="text"
           disabled={!search_field}
           value={search}
           onChange={(e) => setSearch(e.target.value)}

@@ -30,19 +30,20 @@ const StationDetailsView = (props: Props) => {
   }
 
   return (
-    <div className="bg-gray-200 sticky bottom-0 ">
+    <div className="bg-gray-200 sticky bottom-0">
       {isError ? (
         <p className="text-red-900">
           There was a problem with fetching station
         </p>
       ) : null}
-      <Spinner show={isLoading} delay={300} />
+
       {isChecked && <MonthSelector dates={dates} setDates={setDates} />}
       <Checkbox
         title="Filter By Month"
         checked={isChecked}
         onChange={handleResetChecked}
       />
+      <Spinner show={isLoading} delay={300} />
       {station && <StationDetailsComponent station={station} />}
     </div>
   )

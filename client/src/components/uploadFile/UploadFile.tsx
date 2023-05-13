@@ -10,7 +10,7 @@ const UploadFile = () => {
   const { sendFile, isError, isLoading, data } = useUploadFile()
   const inputRef = useRef<HTMLInputElement | null>(null)
 
-  const onButtonClick = () => {
+  const onUploadButtonClick = () => {
     if (inputRef.current) {
       inputRef.current.click()
     }
@@ -40,6 +40,7 @@ const UploadFile = () => {
   return (
     <div className="max-w-full">
       <input
+        key={file ? file.name : 'file'}
         data-testid="file-input"
         id="file"
         style={{ display: 'none' }}
@@ -53,7 +54,7 @@ const UploadFile = () => {
           <button
             className="border p-2 mt-2 bg-gray-300"
             data-testid="upload-button"
-            onClick={onButtonClick}
+            onClick={onUploadButtonClick}
           >
             Upload File
           </button>

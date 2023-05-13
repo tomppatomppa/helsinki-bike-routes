@@ -45,10 +45,20 @@ describe('useQueryParams hook', () => {
   })
   test('Should set search_field', () => {
     const { result } = renderHook(() => useQueryParams())
+
     act(() => {
       result.current.findByField('Osoite')
     })
     expect(result.current.queryParams.search_field).toEqual('Osoite')
+  })
+  test('Setting search_field resets search value', () => {
+    const { result } = renderHook(() => useQueryParams())
+    act(() => {
+      result.current.findByField('Osoite')
+      result.current.setSearch('Haka')
+      result.current.findByField('Nimi')
+    })
+    expect(result.current.queryParams.search).toEqual('')
   })
   test('Should set search', () => {
     const { result } = renderHook(() => useQueryParams())
