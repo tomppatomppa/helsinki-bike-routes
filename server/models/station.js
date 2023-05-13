@@ -13,6 +13,10 @@ Station.init(
     ID: {
       type: DataTypes.INTEGER,
       unique: true,
+      validate: {
+        min: 1,
+        isInt: true,
+      },
     },
     Nimi: {
       type: DataTypes.STRING,
