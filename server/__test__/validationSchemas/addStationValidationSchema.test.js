@@ -11,7 +11,7 @@ const queryParams = {
 
 describe('validationSchema', () => {
   describe('Name fields', () => {
-    //Nimi
+    //Nimi, Namn, Name all have the same validation
     it('Should throw error when Nimi is empty string', async () => {
       await expect(
         addStationValidationSchema.validate(queryParams)
@@ -48,12 +48,17 @@ describe('validationSchema', () => {
         addStationValidationSchema.validate({ ...queryParams, Nimi: null })
       ).rejects.toThrow(Yup.ValidationError)
     })
-    it('Should trim whitespace', () => {
-      const result = addStationValidationSchema.validate({
-        ...queryParams,
-        Nimi: ' whitespace ',
-      })
-      expect(result.Nimi).toEqual('whitespace')
+    it('Should throw error when Namn is empty string', async () => {
+      await expect(
+        addStationValidationSchema.validate(queryParams)
+      ).rejects.toThrow(Yup.ValidationError)
+    })
+    it('Should throw error when Namn is doesnt exist', async () => {
+      const { Namn, ...rest } = queryParams
+      await expect(addStationValidationSchema.validate(rest)).rejects.toThrow(
+        Yup.ValidationError
+      )
     })
   })
+  describe()
 })

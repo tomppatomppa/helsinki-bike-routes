@@ -177,6 +177,7 @@ describe('Test api/stations endpoint', () => {
       })
     })
   })
+
   describe('Test /api/stations/:id', () => {
     describe('Test Invalid station search', () => {
       test('returns 404 when station doesnt exist', async () => {
@@ -313,6 +314,202 @@ describe('Test api/stations endpoint', () => {
         .set('Content-Type', 'multipart/form-data')
         .expect(200)
       expect(response.body.stationsAdded).toEqual(6)
+    })
+  })
+
+  describe('POST /api/stations/add-single', () => {
+    const stationRequiredFields = {
+      ID: 9999,
+      Nimi: 'station1',
+      Namn: 'station1',
+      Name: 'station1',
+      Osoite: 'station1',
+      Adress: 'station1',
+      Kapasiteet: 20,
+      x: 60.0,
+      y: 60.0,
+    }
+    describe('Name, Nimi, Namn fields', () => {
+      test('Returns 400 with stations Nimi as empty string', async () => {
+        await request(app)
+          .post('/api/stations/add-single')
+          .send({ ...stationRequiredFields, Nimi: '' })
+          .expect(400)
+      })
+      test('Returns 400 with stations Nimi as below 3 length', async () => {
+        await request(app)
+          .post('/api/stations/add-single')
+          .send({ ...stationRequiredFields, Nimi: 'ab' })
+          .expect(400)
+      })
+      test('Returns 400 with stations Nimi as above 50 length', async () => {
+        await request(app)
+          .post('/api/stations/add-single')
+          .send({
+            ...stationRequiredFields,
+            Nimi: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+          })
+          .expect(400)
+      })
+      test('Returns 400 with stations Nimi field missing', async () => {
+        const { Nimi, ...rest } = stationRequiredFields
+        await request(app)
+          .post('/api/stations/add-single')
+          .send(rest)
+          .expect(400)
+      })
+      //Namn
+      test('Returns 400 with stations Namn as empty string', async () => {
+        await request(app)
+          .post('/api/stations/add-single')
+          .send({ ...stationRequiredFields, Namn: '' })
+          .expect(400)
+      })
+      test('Returns 400 with stations Namn as below 3 length', async () => {
+        await request(app)
+          .post('/api/stations/add-single')
+          .send({ ...stationRequiredFields, Namn: 'ab' })
+          .expect(400)
+      })
+      test('Returns 400 with stations Namn as above 50 length', async () => {
+        await request(app)
+          .post('/api/stations/add-single')
+          .send({
+            ...stationRequiredFields,
+            Namn: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+          })
+          .expect(400)
+      })
+      test('Returns 400 with stations Namn field missing', async () => {
+        const { Namn, ...rest } = stationRequiredFields
+        await request(app)
+          .post('/api/stations/add-single')
+          .send(rest)
+          .expect(400)
+      })
+      //Name
+      test('Returns 400 with stations Name as empty string', async () => {
+        await request(app)
+          .post('/api/stations/add-single')
+          .send({ ...stationRequiredFields, Name: '' })
+          .expect(400)
+      })
+      test('Returns 400 with stations Name as below 3 length', async () => {
+        await request(app)
+          .post('/api/stations/add-single')
+          .send({ ...stationRequiredFields, Name: 'ab' })
+          .expect(400)
+      })
+      test('Returns 400 with stations Name as above 50 length', async () => {
+        await request(app)
+          .post('/api/stations/add-single')
+          .send({
+            ...stationRequiredFields,
+            Name: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+          })
+          .expect(400)
+      })
+      test('Returns 400 with stations Name field missing', async () => {
+        const { Name, ...rest } = stationRequiredFields
+        await request(app)
+          .post('/api/stations/add-single')
+          .send(rest)
+          .expect(400)
+      })
+    })
+
+    describe('Osoite, Adress', () => {
+      test('Returns 400 with stations Osoite as empty string', async () => {
+        await request(app)
+          .post('/api/stations/add-single')
+          .send({ ...stationRequiredFields, Osoite: '' })
+          .expect(400)
+      })
+      test('Returns 400 with stations Osoite as below 3 length', async () => {
+        await request(app)
+          .post('/api/stations/add-single')
+          .send({ ...stationRequiredFields, Osoite: 'ab' })
+          .expect(400)
+      })
+      test('Returns 400 with stations Osoite as above 50 length', async () => {
+        await request(app)
+          .post('/api/stations/add-single')
+          .send({
+            ...stationRequiredFields,
+            Osoite: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+          })
+          .expect(400)
+      })
+      test('Returns 400 with stations Osoite field missing', async () => {
+        const { Osoite, ...rest } = stationRequiredFields
+        await request(app)
+          .post('/api/stations/add-single')
+          .send(rest)
+          .expect(400)
+      })
+      //Adress
+      test('Returns 400 with stations Adress as empty string', async () => {
+        await request(app)
+          .post('/api/stations/add-single')
+          .send({ ...stationRequiredFields, Adress: '' })
+          .expect(400)
+      })
+      test('Returns 400 with stations Adress below 3 length', async () => {
+        await request(app)
+          .post('/api/stations/add-single')
+          .send({ ...stationRequiredFields, Adress: 'ab' })
+          .expect(400)
+      })
+      test('Returns 400 with stations Adress as above 50 length', async () => {
+        await request(app)
+          .post('/api/stations/add-single')
+          .send({
+            ...stationRequiredFields,
+            Adress: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+          })
+          .expect(400)
+      })
+      test('Returns 400 with stations Adress field missing', async () => {
+        const { Adress, ...rest } = stationRequiredFields
+        await request(app)
+          .post('/api/stations/add-single')
+          .send(rest)
+          .expect(400)
+      })
+    })
+
+    describe('Kaupunki, Stad, Kapasiteet', () => {
+      test('Returns 200 with stations Kaupunki field missing', async () => {
+        const { Kaupunki, ...rest } = stationRequiredFields
+        await request(app)
+          .post('/api/stations/add-single')
+          .send(rest)
+          .expect(200)
+      })
+      test('Returns 200 with stations Stad field missing', async () => {
+        await Station.destroy({
+          where: {
+            ID: stationRequiredFields.ID,
+          },
+        })
+        const { Stad, ...rest } = stationRequiredFields
+        await request(app)
+          .post('/api/stations/add-single')
+          .send(rest)
+          .expect(200)
+      })
+      test('Returns 200 with stations Operaattor field missing', async () => {
+        await Station.destroy({
+          where: {
+            ID: stationRequiredFields.ID,
+          },
+        })
+        const { Operaattor, ...rest } = stationRequiredFields
+        await request(app)
+          .post('/api/stations/add-single')
+          .send(rest)
+          .expect(200)
+      })
     })
   })
 })

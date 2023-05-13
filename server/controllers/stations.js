@@ -26,7 +26,11 @@ route.post(
     res.status(200).json({ stationsAdded: savedStations.length })
   }
 )
+route.post('/add-single', async (req, res) => {
+  const result = await Station.create({ ...req.body })
 
+  res.status(200).json(result)
+})
 route.get('/', async (req, res) => {
   let where = {}
 
