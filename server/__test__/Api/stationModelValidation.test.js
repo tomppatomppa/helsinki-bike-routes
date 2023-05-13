@@ -20,8 +20,8 @@ const station = {
   Name: 'station1',
   Osoite: 'station1',
   Adress: 'station1',
-  Kaupunki: 'station1',
-  Stad: 'station1',
+  Kaupunki: 'station',
+  Stad: 'station',
   Operaattor: 'station1',
   Kapasiteet: 20,
   x: 60.0,
@@ -214,6 +214,358 @@ describe('/api/station/add-single', () => {
       ])
     })
     test('Returns 200 when Name is valid', async () => {
+      await request(app)
+        .post('/api/stations/add-single')
+        .send(station)
+        .expect(200)
+    })
+  })
+  describe('Osoite', () => {
+    test('Returns 400 when Osoite is missing', async () => {
+      const { Osoite, ...rest } = station
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send(rest)
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'station.Osoite cannot be null',
+      ])
+    })
+    test('Returns 400 when Osoite is missing', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Osoite: '' })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation len on Osoite failed',
+      ])
+    })
+    test('Returns 400 when Osoite length is < 3', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Osoite: '12' })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation len on Osoite failed',
+      ])
+    })
+    test('Returns 400 when Osoite length is > 50', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Osoite: 'a'.repeat(51) })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation len on Osoite failed',
+      ])
+    })
+    test('Returns 200 when Osoite is valid', async () => {
+      await request(app)
+        .post('/api/stations/add-single')
+        .send(station)
+        .expect(200)
+    })
+  })
+  describe('Adress', () => {
+    test('Returns 400 when Adress is missing', async () => {
+      const { Adress, ...rest } = station
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send(rest)
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'station.Adress cannot be null',
+      ])
+    })
+    test('Returns 400 when Adress is missing', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Adress: '' })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation len on Adress failed',
+      ])
+    })
+    test('Returns 400 when Adress length is < 3', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Adress: '12' })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation len on Adress failed',
+      ])
+    })
+    test('Returns 400 when Adress length is > 50', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Adress: 'a'.repeat(51) })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation len on Adress failed',
+      ])
+    })
+    test('Returns 200 when Adress is valid', async () => {
+      await request(app)
+        .post('/api/stations/add-single')
+        .send(station)
+        .expect(200)
+    })
+  })
+  describe('Kaupunki', () => {
+    test('Returns 400 when Kaupunki is int', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Kaupunki: 121 })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation isAlpha on Kaupunki failed',
+      ])
+    })
+    test('Removes whitespace from string', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Kaupunki: ' whitespace ' })
+      expect(response.body.Kaupunki).toEqual('whitespace')
+    })
+    test('Returns 200 when Kaupunki is null', async () => {
+      await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Kaupunki: null })
+        .expect(200)
+    })
+    test('Returns 200 when Kaupunki is undefined', async () => {
+      await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Kaupunki: undefined })
+        .expect(200)
+    })
+    test('Returns 400 when Kaupunki is empty string', async () => {
+      await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Kaupunki: '' })
+        .expect(400)
+    })
+    test('Returns 200 when Kaupunki doesnt exist', async () => {
+      const { Kaupunki, ...rest } = station
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send(rest)
+      expect(response.status).toBe(200)
+      expect(response.body.Kaupunki).toBe(null)
+    })
+    test('Returns 200 when Kaupunki is valid', async () => {
+      await request(app)
+        .post('/api/stations/add-single')
+        .send(station)
+        .expect(200)
+    })
+  })
+  describe('Stad', () => {
+    test('Returns 400 when Stad is int', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Stad: 121 })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation isAlpha on Stad failed',
+      ])
+    })
+    test('Removes whitespace from string', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Stad: ' whitespace ' })
+      expect(response.body.Stad).toEqual('whitespace')
+    })
+    test('Returns 200 when Stad is null', async () => {
+      await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Stad: null })
+        .expect(200)
+    })
+    test('Returns 200 when Stad is undefined', async () => {
+      await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Stad: undefined })
+        .expect(200)
+    })
+    test('Returns 400 when Stad is empty string', async () => {
+      await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Stad: '' })
+        .expect(400)
+    })
+    test('Returns 200 when Stad doesnt exist', async () => {
+      const { Stad, ...rest } = station
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send(rest)
+      expect(response.status).toBe(200)
+      expect(response.body.Stad).toBe(null)
+    })
+    test('Returns 200 when Stad is valid', async () => {
+      await request(app)
+        .post('/api/stations/add-single')
+        .send(station)
+        .expect(200)
+    })
+  })
+  describe('Operaattor', () => {
+    test('Returns 200 when Operaattor is int', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Operaattor: 121 })
+      expect(response.status).toBe(200)
+    })
+    test('Removes whitespace from string', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Operaattor: ' whitespace ' })
+      expect(response.body.Operaattor).toEqual('whitespace')
+    })
+    test('Returns 200 when Operaattor is null', async () => {
+      await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Operaattor: null })
+        .expect(200)
+    })
+    test('Returns 200 when Operaattor is undefined', async () => {
+      await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Operaattor: undefined })
+        .expect(200)
+    })
+    test('Returns 400 when Operaattor is empty string', async () => {
+      await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Operaattor: '' })
+        .expect(400)
+    })
+    test('Returns 200 when Operaattor doesnt exist', async () => {
+      const { Operaattor, ...rest } = station
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send(rest)
+      expect(response.status).toBe(200)
+      expect(response.body.Operaattor).toBe(null)
+    })
+    test('Returns 200 when Operaattor is valid', async () => {
+      await request(app)
+        .post('/api/stations/add-single')
+        .send(station)
+        .expect(200)
+    })
+  })
+  describe('Kapasiteet', () => {
+    test('Returns 400 when field doesnt exist', async () => {
+      const { Kapasiteet, ...rest } = station
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send(rest)
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'station.Kapasiteet cannot be null',
+      ])
+    })
+    test('Returns 400 when non positive int', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Kapasiteet: -1 })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation min on Kapasiteet failed',
+      ])
+    })
+    test('Returns 400 when not int', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Kapasiteet: 1.2 })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation isInt on Kapasiteet failed',
+      ])
+    })
+    test('Returns 400 when string', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Kapasiteet: 'string' })
+      expect(response.status).toBe(400)
+    })
+    test('Returns 200 when numeric int string', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Kapasiteet: '12' })
+      expect(response.status).toBe(200)
+    })
+    test('Returns 200 when int', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send(station)
+      expect(response.status).toBe(200)
+    })
+  })
+  describe('x latitude', () => {
+    test('Returns 400 when x is < -90', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, x: -91 })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation min on x failed',
+      ])
+    })
+    test('Returns 400 when x is > 90', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, x: 91 })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation max on x failed',
+      ])
+    })
+    test('Returns 400 when x is non numeric', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, x: 'hello' })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation isNumeric on x failed',
+      ])
+    })
+    test('Returns 200 when x valid', async () => {
+      await request(app)
+        .post('/api/stations/add-single')
+        .send(station)
+        .expect(200)
+    })
+  })
+  describe('y longitude', () => {
+    test('Returns 400 when y is < -180', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, y: -181 })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation min on y failed',
+      ])
+    })
+    test('Returns 400 when y is > 180', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, y: 181 })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation max on y failed',
+      ])
+    })
+    test('Returns 400 when y is non numeric', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, y: 'hello' })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation isNumeric on y failed',
+      ])
+    })
+    test('Returns 200 when y valid', async () => {
       await request(app)
         .post('/api/stations/add-single')
         .send(station)

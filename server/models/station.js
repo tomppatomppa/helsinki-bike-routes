@@ -58,30 +58,66 @@ Station.init(
       type: DataTypes.STRING,
       allowNull: true,
       defaultValue: null,
+      validate: {
+        isAlpha: true,
+        len: [3, 50],
+      },
     },
     Stad: {
       type: DataTypes.STRING,
       allowNull: true,
       defaultValue: null,
+      validate: {
+        isAlpha: true,
+        len: [3, 50],
+      },
     },
     Operaattor: {
       type: DataTypes.STRING,
       allowNull: true,
       defaultValue: null,
+      validate: {
+        len: [1, 50],
+      },
     },
     Kapasiteet: {
       type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        min: 0,
+        isInt: true,
+        isNumeric: true,
+      },
     },
     x: {
       type: DataTypes.FLOAT,
+      validate: {
+        isNumeric: true,
+        min: -90,
+        max: 90,
+      },
     },
     y: {
       type: DataTypes.FLOAT,
+      validate: {
+        isNumeric: true,
+        min: -180,
+        max: 180,
+      },
     },
   },
   {
     sequelize,
     modelName: 'station',
+    hooks: {
+      beforeValidate: (instance) => {
+        Object.keys(instance.dataValues).forEach((key) => {
+          if (typeof instance[key] === 'string') {
+            instance[key] = instance[key].trim()
+          }
+        })
+      },
+    },
   }
 )
 
