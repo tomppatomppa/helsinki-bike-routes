@@ -3,6 +3,7 @@ interface CheckboxProps {
   checked: boolean
   onChange: () => void
 }
+
 const Checkbox = (props: CheckboxProps) => {
   const { title, checked, onChange } = props
 
