@@ -15,7 +15,8 @@ const InfiniteScrollStations = () => {
   const [showMap, setShowMap] = useState<boolean>(true)
   const [station, setStation] = useState<Station | null>(null)
   const { queryParams, setSearch, findByField } = useQueryParams()
-  const [value] = useDebounce(queryParams.search, 1000)
+  const [value] = useDebounce(queryParams.search, 500)
+
   const {
     data: stations,
     isLoading,
