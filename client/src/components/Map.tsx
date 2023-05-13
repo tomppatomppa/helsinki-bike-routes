@@ -8,12 +8,10 @@ import {
   LayerGroup,
 } from 'react-leaflet'
 import L from 'leaflet'
-
 import 'leaflet/dist/leaflet.css'
+import { LatLngExpression, LatLngTuple } from 'leaflet'
 
 const { Overlay } = LayersControl
-
-import { LatLngExpression, LatLngTuple } from 'leaflet'
 
 import { Station } from '../types/station'
 
@@ -22,10 +20,6 @@ interface MapProps {
   station: Station | null
 }
 
-export interface CustomMarkerProps {
-  position: LatLngTuple
-  open?: boolean
-}
 const initialPosition: LatLngTuple = [60.192059, 24.945831]
 
 const Map = (props: MapProps) => {
@@ -47,7 +41,7 @@ const Map = (props: MapProps) => {
 
   return (
     <MapContainer
-      className="w-screen h-96"
+      className="h-96"
       center={initialPosition}
       zoom={10}
       scrollWheelZoom={true}

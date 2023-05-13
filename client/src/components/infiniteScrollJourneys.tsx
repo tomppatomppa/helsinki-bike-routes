@@ -9,7 +9,6 @@ import {
 
 import JourneyTable from './JourneyTable'
 import useQueryParams from '../hooks/useQueryParams'
-import Dropdown from './common/Dropdown'
 import SearchBar from './common/SearchBar'
 
 const InfiniteScrollJourneys = () => {
@@ -68,7 +67,7 @@ const InfiniteScrollJourneys = () => {
         />
         {isSuccess && (
           <div>
-            <JourneyTable data={rows} orderByColumn={orderByColumn} />{' '}
+            <JourneyTable data={rows} orderByColumn={orderByColumn} />
             <div ref={loadMoreRef}></div>
           </div>
         )}
