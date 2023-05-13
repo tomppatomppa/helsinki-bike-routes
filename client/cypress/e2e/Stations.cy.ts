@@ -33,4 +33,19 @@ describe('Stations', () => {
       })
     })
   })
+  it('Default query params', () => {
+    cy.visit('/')
+    cy.intercept('GET', '/api/stations**').as('getStations')
+    cy.get('#dropdown').select('Nimi')
+
+    cy.get('#search-input').type('Hanasaari').should('have.value', 'Hanasaari')
+    cy.wait('@getStations').then(({ request }) => {
+      expect(request.query).to.deep.equal({
+        offset: '0',
+        limit: '20',
+        search: '',
+        search_field: '',
+      })
+    })
+  })
 })

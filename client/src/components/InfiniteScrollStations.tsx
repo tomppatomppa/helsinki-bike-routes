@@ -9,12 +9,13 @@ import Map from './Map'
 import { LatLngTuple } from 'leaflet'
 import { Station } from '../types/station'
 import SearchBar from './common/SearchBar'
+import { useDebounce } from 'use-debounce'
 
 const InfiniteScrollStations = () => {
   const [showMap, setShowMap] = useState<boolean>(true)
   const [station, setStation] = useState<Station | null>(null)
   const { queryParams, setSearch, findByField } = useQueryParams()
-
+  const [value] = useDebounce(queryParams.search, 1000)
   const {
     data: stations,
     isLoading,
@@ -24,7 +25,7 @@ const InfiniteScrollStations = () => {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery<StationDataWithCursor>(
-    ['stations', queryParams.search],
+    ['stations', value],
     ({ pageParam = 0 }) =>
       fetchStationsByCursor(
         pageParam,
