@@ -5,14 +5,16 @@ import { StationDetails } from '../types/station'
 import StationDetailsComponent from './StationDetailsComponent'
 import { useState } from 'react'
 import { MonthSelector } from './common/MonthSelector'
+import Checkbox from './common/Checkbox'
+
 interface Props {
   stationID: number
 }
 
 const StationDetailsView = (props: Props) => {
+  const { stationID } = props
   const [isChecked, setIsChecked] = useState<boolean>(false)
   const [dates, setDates] = useState<object | null>(null)
-  const { stationID } = props
 
   const {
     data: station,
@@ -22,7 +24,7 @@ const StationDetailsView = (props: Props) => {
     fetchStationByID(stationID, dates)
   )
 
-  const handleSetChecked = () => {
+  const handleResetChecked = () => {
     setIsChecked(() => !isChecked)
     setDates(null)
   }
@@ -36,14 +38,11 @@ const StationDetailsView = (props: Props) => {
       ) : null}
       <Spinner show={isLoading} delay={300} />
       {isChecked && <MonthSelector setDates={setDates} />}
-      <label>
-        <input
-          checked={isChecked}
-          onChange={handleSetChecked}
-          type="checkbox"
-        />
-        Filter By Month
-      </label>
+      <Checkbox
+        title="Filter By Month"
+        checked={isChecked}
+        onChange={handleResetChecked}
+      />
       {station && <StationDetailsComponent station={station} />}
     </div>
   )

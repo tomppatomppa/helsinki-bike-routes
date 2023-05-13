@@ -14,7 +14,6 @@ const StationDetailsComponent = (props: Props) => {
                 text-neutral-600 border border-black flex flex-col"
     >
       <div className="flex justify-center bg-neutral-100 w-full"></div>
-
       <div>
         <strong>STATION DETAILS</strong>
         <p>
