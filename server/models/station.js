@@ -13,6 +13,7 @@ Station.init(
     ID: {
       type: DataTypes.INTEGER,
       unique: true,
+      allowNull: false,
       validate: {
         min: 1,
         isInt: true,

@@ -58,6 +58,16 @@ describe('/api/station/add-single', () => {
         'Validation isInt on ID failed',
       ])
     })
+    test('Return 400 when ID is missing', async () => {
+      const { ID, ...rest } = station
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send(rest)
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'station.ID cannot be null',
+      ])
+    })
     test('Return 200 when ID is valid', async () => {
       await request(app)
         .post('/api/stations/add-single')
@@ -76,9 +86,138 @@ describe('/api/station/add-single', () => {
     })
   })
   describe('Nimi', () => {
-    test('empty', async () => {
-      const all = await Station.findAll()
-      expect(all).toHaveLength(0)
+    test('Returns 400 when Nimi is missing', async () => {
+      const { Nimi, ...rest } = station
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send(rest)
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'station.Nimi cannot be null',
+      ])
+    })
+    test('Returns 400 when Nimi is missing', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Nimi: '' })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation len on Nimi failed',
+      ])
+    })
+    test('Returns 400 when Nimi length is < 3', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Nimi: '12' })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation len on Nimi failed',
+      ])
+    })
+    test('Returns 400 when Nimi length is > 50', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Nimi: 'a'.repeat(51) })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation len on Nimi failed',
+      ])
+    })
+    test('Returns 200 when Nimi is valid', async () => {
+      await request(app)
+        .post('/api/stations/add-single')
+        .send(station)
+        .expect(200)
+    })
+  })
+  describe('Namn', () => {
+    test('Returns 400 when Namn is missing', async () => {
+      const { Namn, ...rest } = station
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send(rest)
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'station.Namn cannot be null',
+      ])
+    })
+    test('Returns 400 when Namn is missing', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Namn: '' })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation len on Namn failed',
+      ])
+    })
+    test('Returns 400 when Namn length is < 3', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Namn: '12' })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation len on Namn failed',
+      ])
+    })
+    test('Returns 400 when Namn length is > 50', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Namn: 'a'.repeat(51) })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation len on Namn failed',
+      ])
+    })
+    test('Returns 200 when Namn is valid', async () => {
+      await request(app)
+        .post('/api/stations/add-single')
+        .send(station)
+        .expect(200)
+    })
+  })
+  describe('Name', () => {
+    test('Returns 400 when Name is missing', async () => {
+      const { Name, ...rest } = station
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send(rest)
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'station.Name cannot be null',
+      ])
+    })
+    test('Returns 400 when Name is missing', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Name: '' })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation len on Name failed',
+      ])
+    })
+    test('Returns 400 when Name length is < 3', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Name: '12' })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation len on Name failed',
+      ])
+    })
+    test('Returns 400 when Name length is > 50', async () => {
+      const response = await request(app)
+        .post('/api/stations/add-single')
+        .send({ ...station, Name: 'a'.repeat(51) })
+      expect(response.status).toBe(400)
+      expect(response.body).toHaveProperty('error', [
+        'Validation len on Name failed',
+      ])
+    })
+    test('Returns 200 when Name is valid', async () => {
+      await request(app)
+        .post('/api/stations/add-single')
+        .send(station)
+        .expect(200)
     })
   })
 })
