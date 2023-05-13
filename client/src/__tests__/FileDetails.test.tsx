@@ -25,7 +25,7 @@ describe('FileDetails.tsx', () => {
     expect(props.handleRemove).toHaveBeenCalledOnce()
     props.handleRemove.mockReset()
   })
-  test('Component displays file name and filetype', () => {
+  test('Component displays filename and filetype', () => {
     const { getByText } = render(
       <FileDetails fileType={'stations'} {...props} />
     )

@@ -45,14 +45,14 @@ describe('JourneyTable', () => {
     const distanceHeader = screen.getByRole('columnheader', {
       name: /Distance/i,
     })
-    const duratinHeader = screen.getByRole('columnheader', {
+    const durationHeader = screen.getByRole('columnheader', {
       name: /Duration/i,
     })
 
     expect(departureStationHeader).toBeDefined()
     expect(returnStationHeader).toBeDefined()
     expect(distanceHeader).toBeDefined()
-    expect(duratinHeader).toBeDefined()
+    expect(durationHeader).toBeDefined()
   })
 
   test('renders correct number of table rows', () => {
