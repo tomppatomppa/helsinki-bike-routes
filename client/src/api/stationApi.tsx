@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Station, StationDetails } from '../types/station'
 
-const baseUrl = '/api/stations'
+const baseUrl = 'api/stations'
 
 export interface StationDataWithCursor {
   count: number
