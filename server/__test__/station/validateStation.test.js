@@ -1,6 +1,6 @@
-const validateStation = require('../utils/validators/validateStation')
+const validateStation = require('../../utils/validators/validateStation')
 
-const config = require('./config')
+const config = require('../config')
 const validCsvRow = config.validateStation.validCsvRow
 
 describe('Test for validateStation', () => {
@@ -170,10 +170,6 @@ describe('Test for validateStation', () => {
 
   describe('Validate City names, FIN, SWE', () => {
     describe('Kaupunki field', () => {
-      // test('Should return false if Kapunki is a number', () => {
-      //   expect(validateStation({ ...validCsvRow, Kaupunki: 0 })).toBe(false)
-      // })
-
       test('Should allow empty Kaupunki field', () => {
         expect(validateStation({ ...validCsvRow, Kaupunki: '' })).toBe(true)
       })

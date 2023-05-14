@@ -39,6 +39,11 @@ const stationsWithInvalidKapasiteet = `FID,ID,Nimi,Namn,Name,Osoite,Adress,Kaupu
 3,505,Westendinasema,Westendstationen,Westendinasema,Westendintie 1,Westendvägen 1,Espoo,Esbo,CityBike Finland,string,24.805758,60.168266
 `
 
+const stationsWithDuplicateFID = `FID,ID,Nimi,Namn,Name,Osoite,Adress,Kaupunki,Stad,Operaattor,Kapasiteet,x,y
+1,501,Hanasaari,Hanaholmen,Hanasaari,Hanasaarenranta 1,Hanaholmsstranden 1,Espoo,Esbo,CityBike Finland,10,24.840319,60.16582
+2,501,Keilalahti,Kägelviken,Keilalahti,Keilalahdentie 2,Kägelviksvägen 2,Espoo,Esbo,CityBike Finland,28,24.827467,60.171524
+`
+
 module.exports = {
   csvData,
   stationsWithoutOptionalFields,
@@ -46,4 +51,5 @@ module.exports = {
   stationsWithInvalidNames,
   stationsWithInvalidAddress,
   stationsWithInvalidKapasiteet,
+  stationsWithDuplicateFID,
 }

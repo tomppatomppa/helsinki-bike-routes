@@ -11,6 +11,7 @@ const {
   stationsWithInvalidNames,
   stationsWithInvalidAddress,
   stationsWithInvalidKapasiteet,
+  stationsWithDuplicateFID,
 } = require('./createData')
 
 beforeAll(async () => {
@@ -65,6 +66,18 @@ describe('/api/stations/add-many', () => {
 
     const stations = await Station.findAll()
     expect(stations).toHaveLength(0)
+  })
+  test('Adding 2 stations from csv with duplicate FID should add only the first', async () => {
+    const csvBuffer = Buffer.from(stationsWithDuplicateFID)
+    await request(app)
+      .post('/api/stations/add-many')
+      .attach('file', csvBuffer, 'stations.csv')
+      .set('Content-Type', 'multipart/form-data')
+      .expect(200)
+
+    const stations = await Station.findAll()
+    expect(stations).toHaveLength(1)
+    expect(stations[0].Name).toBe('Hanasaari')
   })
 
   test('Should return 200 and 3 stations to exist in the database', async () => {

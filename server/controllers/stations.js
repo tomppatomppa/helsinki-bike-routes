@@ -10,6 +10,9 @@ const { Station, Journey } = require('../models/index')
 const validateFileUpload = require('../middleware/validateFileUpload')
 const { Op, Sequelize } = require('sequelize')
 
+const stationsQueryValidator = require('../utils/validators/stationsQueryValidator')
+const { validationResult } = require('express-validator')
+
 route.post(
   '/add-many',
   upload.single('file'),
@@ -34,7 +37,12 @@ route.post('/add-single', async (req, res) => {
 
   res.status(200).json(result)
 })
-route.get('/', async (req, res) => {
+route.get('/', stationsQueryValidator(), async (req, res) => {
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() })
+  }
   let where = {}
 
   if (req.query.search && req.query.search_field) {
@@ -50,7 +58,7 @@ route.get('/', async (req, res) => {
     }
   }
 
-  const { offset = 0, limit = 1 } = req.query
+  const { offset = 0, limit } = req.query
 
   const allStations = await Station.findAndCountAll({
     offset: offset,

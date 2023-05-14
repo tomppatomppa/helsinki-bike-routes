@@ -12,6 +12,9 @@ function journeysQueryValidator() {
         if (value.length !== 2) {
           throw new Error('Order array must have exactly two values')
         }
+        if (value[1] !== 'ASC' && value[1] !== 'DESC') {
+          throw new Error('Order array must be either ASC or DESC')
+        }
         return true
       }),
   ]

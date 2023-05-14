@@ -1,6 +1,6 @@
 const supertest = require('supertest')
 const request = supertest
-const app = require('../app')
+const app = require('../../app')
 
 describe('journeysQueryValidator', () => {
   test('should return 200 when no params are passed', async () => {
@@ -67,6 +67,24 @@ describe('journeysQueryValidator', () => {
         .get('/api/journeys')
         .query({ order: ['id'] })
         .expect(400)
+    })
+    test('should return 400 when array has invalid order value', async () => {
+      await request(app)
+        .get('/api/journeys')
+        .query({ order: ['id', 'INVALID'] })
+        .expect(400)
+    })
+    test('should return 200 when valid order ASC', async () => {
+      const { body } = await request(app)
+        .get('/api/journeys')
+        .query({ order: ['id', 'ASC'] })
+        .expect(200)
+    })
+    test('should return 200 when valid order DESC', async () => {
+      await request(app)
+        .get('/api/journeys')
+        .query({ order: ['id', 'DESC'] })
+        .expect(200)
     })
     //TODO: test that second value is "ASC" or "DESC"
   })
