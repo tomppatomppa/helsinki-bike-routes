@@ -5,9 +5,12 @@ function isFloat(value) {
     !Number.isInteger(value)
   ) {
     return true
+  } else if (typeof value === 'string') {
+    const num = parseFloat(value)
+    return !Number.isNaN(num) && !Number.isInteger(num)
+  } else {
+    return false
   }
-
-  return false
 }
 
 module.exports = isFloat

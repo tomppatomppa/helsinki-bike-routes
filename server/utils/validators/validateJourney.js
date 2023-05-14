@@ -1,3 +1,6 @@
+const isFloat = require('./isFloat')
+const isPositiveInteger = require('./isPositiveInteger')
+
 const MIN_STATION_ID = 1
 const MIN_JOURNEY_DURATION = 600
 const MIN_COVERED_DISTANCE = 10
@@ -29,9 +32,10 @@ function validateJourney(row) {
   if (!Object.keys(trimmedRow).every((field) => VALID_KEYS.includes(field))) {
     return false
   }
-
+  //Covered_distance_m
   if (
     isNaN(trimmedRow[COVERED_DISTANCE]) ||
+    isFloat(trimmedRow[COVERED_DISTANCE]) ||
     trimmedRow[COVERED_DISTANCE] < MIN_COVERED_DISTANCE
   ) {
     return false
@@ -56,9 +60,10 @@ function validateJourney(row) {
   ) {
     return false
   }
-
+  //Duration
   if (
     isNaN(trimmedRow[JOURNEY_DURATION]) ||
+    isFloat(trimmedRow[JOURNEY_DURATION]) ||
     trimmedRow[JOURNEY_DURATION] < MIN_JOURNEY_DURATION
   )
     return false

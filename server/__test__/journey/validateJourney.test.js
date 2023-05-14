@@ -30,12 +30,22 @@ describe('Test validateJourney fucntion', () => {
         false
       )
     })
-    test('validateJourney returns false duration doesnt exists', () => {
+    test('validateJourney returns false when duration doesnt exists', () => {
       expect(validateJourney(rowWithoutDuration)).toBe(false)
+    })
+    test('validateJourney returns false when duration is a float', () => {
+      expect(
+        validateJourney({ ...validCsvRow, 'Duration (sec.)': 7791.67 })
+      ).toBe(false)
     })
   })
 
   describe('Distance', () => {
+    test('validateJourney returns false when trip distance is float', () => {
+      expect(
+        validateJourney({ ...validCsvRow, 'Covered distance (m)': 7729.09 })
+      ).toBe(false)
+    })
     test('validateJourney returns true for trip distance > 10 meters', () => {
       expect(validateJourney(validCsvRow)).toBe(true)
     })
