@@ -1,7 +1,4 @@
-/* eslint-disable no-undef */
 require('dotenv').config()
-
-const path = require('path')
 const supertest = require('supertest')
 const request = supertest
 const app = require('../../app')
@@ -59,14 +56,6 @@ afterAll(async () => {
 
 describe('Test /api/journeys', () => {
   describe('Check prerequisites before running tests', () => {
-    // test('expect neccessary testfiles and data to exist', () => {
-    //   expect(journeysCsvFile).toBeDefined()
-    //   expect(journeyWithInvalidReturnStation).toBeDefined()
-    //   expect(journeyWithValidStations).toBeDefined()
-    //   expect(journeyWithOneValidOneInvalid).toBeDefined()
-    //   expect(stations).toBeDefined()
-    //   expect(journeys).toBeDefined()
-    // })
     test('expect journeys to be empty', async () => {
       const allJourneys = await Journey.findAll()
       expect(allJourneys.length).toBe(0)
