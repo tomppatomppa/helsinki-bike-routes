@@ -150,14 +150,7 @@ describe('Test api/stations endpoint', () => {
           })
           expect(result.body.rows).toHaveLength(0)
         })
-        test('Search multiple fields at the same time', async () => {
-          const result = await request(app).get('/api/stations').query({
-            limit: 5,
-            search: 'norr',
-            search_field: 'Nimi, Namn, Name',
-          })
-          expect(result.body.rows).toHaveLength(1)
-        })
+
         test('Search multiple fields at the same time', async () => {
           const result = await request(app).get('/api/stations').query({
             limit: 5,
