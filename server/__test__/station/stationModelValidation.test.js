@@ -5,14 +5,6 @@ const app = require('../../app')
 const { connectToDatabase, sequelize } = require('../../utils/database')
 const { Station } = require('../../models')
 
-beforeAll(async () => {
-  await connectToDatabase()
-})
-
-afterAll(async () => {
-  await sequelize.close()
-})
-
 const station = {
   ID: 1,
   Nimi: 'station1',
@@ -28,11 +20,18 @@ const station = {
   y: 60.0,
 }
 
-beforeEach(async () => {
-  await Station.truncate({ cascade: true, restartIdentity: true })
+beforeAll(async () => {
+  await connectToDatabase()
+})
+
+afterAll(async () => {
+  await sequelize.close()
 })
 
 describe('/api/station/add-single', () => {
+  beforeEach(async () => {
+    await Station.truncate({ cascade: true, restartIdentity: true })
+  })
   describe('ID', () => {
     test('Return 400, and validation error when ID is not positive integer', async () => {
       const response = await request(app)
