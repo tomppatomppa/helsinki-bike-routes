@@ -7,31 +7,26 @@ const validateStation = require('../utils/validators/validateStation')
 const deleteTmpFile = require('../middleware/deleteTmpFile')
 
 const { Station, Journey } = require('../models/index')
-const validateFileUpload = require('../middleware/validateFileUpload')
+
 const { Op, Sequelize } = require('sequelize')
 
 const stationsQueryValidator = require('../utils/validators/stationsQueryValidator')
 const { validationResult } = require('express-validator')
 
-route.post(
-  '/add-many',
-  upload.single('file'),
-  validateFileUpload,
-  async (req, res) => {
-    const filePath = path.resolve(__dirname, `../${req.file.path}`)
-    const result = await parseCSV(filePath, validateStation)
+route.post('/add-many', upload.single('file'), async (req, res) => {
+  const filePath = path.resolve(__dirname, `../${req.file.path}`)
+  const result = await parseCSV(filePath, validateStation)
 
-    const errors = []
+  const errors = []
 
-    const savedStations = await Station.bulkCreate(result, {
-      ignoreDuplicates: true,
-      validate: true,
-    }).catch((error) => errors.push(error))
+  const savedStations = await Station.bulkCreate(result, {
+    ignoreDuplicates: true,
+    validate: true,
+  }).catch((error) => errors.push(error))
 
-    deleteTmpFile(filePath)
-    res.status(200).json({ stationsAdded: savedStations?.length | 0, errors })
-  }
-)
+  deleteTmpFile(filePath)
+  res.status(200).json({ stationsAdded: savedStations?.length | 0, errors })
+})
 route.post('/add-single', async (req, res) => {
   const result = await Station.create({ ...req.body })
 
