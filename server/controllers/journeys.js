@@ -8,34 +8,28 @@ const { Journey } = require('../models/index')
 
 const { validationResult } = require('express-validator')
 
-const validateFileUpload = require('../middleware/validateFileUpload')
 const journeysQueryValidator = require('../utils/validators/journeysQueryValidator')
 const validateJourney = require('../utils/validators/validateJourney')
 const deleteTmpFile = require('../middleware/deleteTmpFile')
 const parseCSV = require('../utils/parsers/parseCSV')
 const { filterJourneys } = require('../utils/helpers')
 
-route.post(
-  '/add-many',
-  upload.single('file'),
-  validateFileUpload,
-  async (req, res) => {
-    const filePath = path.resolve(__dirname, `../${req.file.path}`)
-    const parsedJourneys = await parseCSV(filePath, validateJourney)
+route.post('/add-many', upload.single('file'), async (req, res) => {
+  const filePath = path.resolve(__dirname, `../${req.file.path}`)
+  const parsedJourneys = await parseCSV(filePath, validateJourney)
 
-    const filteredJourneys = await filterJourneys(parsedJourneys)
+  const filteredJourneys = await filterJourneys(parsedJourneys)
 
-    if (filteredJourneys.length === 0) {
-      return res.status(400).json({ error: 'No valid journeys' })
-    }
-
-    const addedJourneys = await Journey.bulkCreate(filteredJourneys)
-
-    deleteTmpFile(filePath)
-
-    res.status(200).json({ addedJourneys: addedJourneys.length })
+  if (filteredJourneys.length === 0) {
+    return res.status(400).json({ error: 'No valid journeys' })
   }
-)
+
+  const addedJourneys = await Journey.bulkCreate(filteredJourneys)
+
+  deleteTmpFile(filePath)
+
+  res.status(200).json({ addedJourneys: addedJourneys.length })
+})
 
 route.get('/', journeysQueryValidator(), async (req, res) => {
   const errors = validationResult(req)
