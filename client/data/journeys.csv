@@ -1,0 +1,7 @@
+﻿Departure,Return,Departure station id,Departure station name,Return station id,Return station name,Covered distance (m),Duration (sec.)
+2021-05-31T23:57:25,2021-06-01T00:05:46,501,Hanasaari,501,Hanasaari,20143,11000
+2021-05-31T23:57:25,2021-06-01T00:05:46,501,Hanasaari,501,Hanasaari,20243,12000
+2021-05-31T23:57:25,2021-06-01T00:05:46,501,Hanasaari,501,Hanasaari,20443,13000
+2021-05-31T23:57:25,2021-06-01T00:05:46,501,Hanasaari,501,Hanasaari,20543,14000
+2021-05-31T23:57:25,2021-06-01T00:05:46,501,Hanasaari,501,Hanasaari,20643,15000
+2021-05-31T23:57:25,2021-06-01T00:05:46,501,Hanasaari,501,Hanasaari,20743,16000

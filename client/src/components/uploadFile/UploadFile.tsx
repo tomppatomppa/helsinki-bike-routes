@@ -26,12 +26,12 @@ const UploadFile = () => {
     if (!event.target.files?.length) return
     const fileObj = event.target.files && event.target.files[0]
     const filetype = await readCsvFileHeaders(fileObj)
-
+   
     if (!fileObj && !filetype) return
     setFile(fileObj)
     setFileType(filetype)
   }
-
+ 
   const handleRemove = () => {
     setFile(null)
     setFileType(null)
@@ -65,7 +65,7 @@ const UploadFile = () => {
           There was a problem with uploading {filetype}
         </p>
       ) : null}
-      {isLoading ? <p>Uploading {filetype}</p> : null}
+      {isLoading ? <p>Uploading {filetype} ...</p> : null}
       {file && !isLoading && (
         <FileDetails
           fileType={filetype}

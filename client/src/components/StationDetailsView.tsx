@@ -12,6 +12,7 @@ interface Props {
 }
 
 const StationDetailsView = (props: Props) => {
+  
   const { stationID } = props
   const [isChecked, setIsChecked] = useState<boolean>(false)
   const [dates, setDates] = useState<object | null>(null)

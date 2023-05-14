@@ -8,7 +8,7 @@ const journeyHeaders = [
   'Return station id',
   'Return station name',
   'Covered distance (m)',
-  'Duration (sec.)\r',
+  'Duration (sec.)',
 ]
 
 const stationHeaders = [
@@ -34,7 +34,7 @@ export function readCsvFileHeaders(file: File): Promise<string | null> {
     reader.onload = () => {
       const csvText = reader.result as string
       const [headers] = csvText.split('\n')
-
+      
       if (arraysEqual(headers.split(','), journeyHeaders)) {
         resolve('journeys')
       } else if (arraysEqual(headers.split(','), stationHeaders)) {
