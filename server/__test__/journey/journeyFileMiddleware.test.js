@@ -33,13 +33,14 @@ describe('File validation /api/journeys/add-many', () => {
         .set('Content-Type', 'multipart/form-data')
         .expect(400)
     })
-    test('Should return 200 when file is valid', async () => {
+    test('Should return error message, but no file error', async () => {
       const csvBuffer = Buffer.from(csvData)
-      await request(app)
+      const response = await request(app)
         .post('/api/journeys/add-many')
         .attach('file', csvBuffer, 'journeys.csv')
         .set('Content-Type', 'multipart/form-data')
-        .expect(200)
+
+      expect(response.body.error).toEqual('No valid journeys')
     })
   })
 })

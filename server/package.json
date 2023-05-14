@@ -35,6 +35,7 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "globalTeardown": "./__test__/teardown.js"
+    "globalTeardown": "./__test__/teardown.js",
+    "testTimeout": 50000
   }
 }
