@@ -84,30 +84,6 @@ function validateStation(row) {
     return false
   }
 
-  //Kaupunki can be empty string or null, but if not expect a string
-  // if (
-  //   !isNullOrEmpty(trimmedRow[CITY_NAME_FIN]) ||
-  //   !isString(trimmedRow[CITY_NAME_FIN])
-  // ) {
-  //   return false
-  // }
-
-  // //Stad can be empty string or null, but if not expect a string
-  // if (
-  //   !isNullOrEmpty(trimmedRow[CITY_NAME_SWE]) &&
-  //   !isString(trimmedRow[CITY_NAME_SWE])
-  // ) {
-  //   return false
-  // }
-
-  // //Operaattor can be empty string or null, but if not expect a string
-  // if (
-  //   !isNullOrEmpty(trimmedRow[OPERAATTOR]) &&
-  //   !isString(trimmedRow[OPERAATTOR])
-  // ) {
-  //   return false
-  // }
-
   //Kapasiteet should be a positive Integer
   if (!trimmedRow[KAPASITEET] || !isPositiveInteger(trimmedRow[KAPASITEET])) {
     return false

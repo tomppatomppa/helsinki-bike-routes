@@ -18,12 +18,15 @@ route.post(
     const filePath = path.resolve(__dirname, `../${req.file.path}`)
     const result = await parseCSV(filePath, validateStation)
 
+    const errors = []
+
     const savedStations = await Station.bulkCreate(result, {
       ignoreDuplicates: true,
-    })
+      validate: true,
+    }).catch((error) => errors.push(error))
 
     deleteTmpFile(filePath)
-    res.status(200).json({ stationsAdded: savedStations.length })
+    res.status(200).json({ stationsAdded: savedStations?.length | 0, errors })
   }
 )
 route.post('/add-single', async (req, res) => {

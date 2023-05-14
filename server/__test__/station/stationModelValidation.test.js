@@ -311,15 +311,6 @@ describe('/api/station/add-single', () => {
     })
   })
   describe('Kaupunki', () => {
-    test('Returns 400 when Kaupunki is int', async () => {
-      const response = await request(app)
-        .post('/api/stations/add-single')
-        .send({ ...station, Kaupunki: 121 })
-      expect(response.status).toBe(400)
-      expect(response.body).toHaveProperty('error', [
-        'Validation isAlpha on Kaupunki failed',
-      ])
-    })
     test('Removes whitespace from string', async () => {
       const response = await request(app)
         .post('/api/stations/add-single')
@@ -338,11 +329,11 @@ describe('/api/station/add-single', () => {
         .send({ ...station, Kaupunki: undefined })
         .expect(200)
     })
-    test('Returns 400 when Kaupunki is empty string', async () => {
+    test('Returns 200 when Kaupunki is empty string', async () => {
       await request(app)
         .post('/api/stations/add-single')
         .send({ ...station, Kaupunki: '' })
-        .expect(400)
+        .expect(200)
     })
     test('Returns 200 when Kaupunki doesnt exist', async () => {
       const { Kaupunki, ...rest } = station
@@ -360,15 +351,6 @@ describe('/api/station/add-single', () => {
     })
   })
   describe('Stad', () => {
-    test('Returns 400 when Stad is int', async () => {
-      const response = await request(app)
-        .post('/api/stations/add-single')
-        .send({ ...station, Stad: 121 })
-      expect(response.status).toBe(400)
-      expect(response.body).toHaveProperty('error', [
-        'Validation isAlpha on Stad failed',
-      ])
-    })
     test('Removes whitespace from string', async () => {
       const response = await request(app)
         .post('/api/stations/add-single')
@@ -387,11 +369,11 @@ describe('/api/station/add-single', () => {
         .send({ ...station, Stad: undefined })
         .expect(200)
     })
-    test('Returns 400 when Stad is empty string', async () => {
+    test('Returns 200 when Stad is empty string', async () => {
       await request(app)
         .post('/api/stations/add-single')
         .send({ ...station, Stad: '' })
-        .expect(400)
+        .expect(200)
     })
     test('Returns 200 when Stad doesnt exist', async () => {
       const { Stad, ...rest } = station
@@ -433,11 +415,11 @@ describe('/api/station/add-single', () => {
         .send({ ...station, Operaattor: undefined })
         .expect(200)
     })
-    test('Returns 400 when Operaattor is empty string', async () => {
+    test('Returns 200 when Operaattor is empty string', async () => {
       await request(app)
         .post('/api/stations/add-single')
         .send({ ...station, Operaattor: '' })
-        .expect(400)
+        .expect(200)
     })
     test('Returns 200 when Operaattor doesnt exist', async () => {
       const { Operaattor, ...rest } = station

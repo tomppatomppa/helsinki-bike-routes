@@ -188,10 +188,6 @@ describe('Test for validateStation', () => {
     })
 
     describe('Stad field', () => {
-      // test('Should return false if Kapunki is a number', () => {
-      //   expect(validateStation({ ...validCsvRow, Stad: 0 })).toBe(false)
-      // })
-
       test('Should allow empty Stad field', () => {
         expect(validateStation({ ...validCsvRow, Stad: '' })).toBe(true)
       })
@@ -205,10 +201,6 @@ describe('Test for validateStation', () => {
   })
 })
 describe('Operaattor field', () => {
-  test('Should return false if Kapunki is a number', () => {
-    expect(validateStation({ ...validCsvRow, Operaattor: 0 })).toBe(false)
-  })
-
   test('Should allow empty Operaattor field', () => {
     expect(validateStation({ ...validCsvRow, Operaattor: '' })).toBe(true)
   })

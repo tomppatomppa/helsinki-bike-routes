@@ -59,8 +59,7 @@ Station.init(
       allowNull: true,
       defaultValue: null,
       validate: {
-        isAlpha: true,
-        len: [3, 50],
+        len: [0, 50],
       },
     },
     Stad: {
@@ -68,8 +67,7 @@ Station.init(
       allowNull: true,
       defaultValue: null,
       validate: {
-        isAlpha: true,
-        len: [3, 50],
+        len: [0, 50],
       },
     },
     Operaattor: {
@@ -77,7 +75,7 @@ Station.init(
       allowNull: true,
       defaultValue: null,
       validate: {
-        len: [1, 50],
+        len: [0, 50],
       },
     },
     Kapasiteet: {
