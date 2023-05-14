@@ -19,13 +19,7 @@ function journeysQueryValidator() {
       }),
     query('search_field')
       .optional()
-      .isIn([
-        'Departure_station_name',
-        'Return_station_name',
-        'Covered_distance_m',
-        'Duration_sec',
-        '',
-      ]),
+      .isIn(['Departure_station_name', 'Return_station_name', '']),
   ]
 }
 

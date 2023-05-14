@@ -1,31 +1,24 @@
 /* eslint-disable no-undef */
 require('dotenv').config()
-const fs = require('fs')
+
 const path = require('path')
 const supertest = require('supertest')
 const request = supertest
-const app = require('../app')
+const app = require('../../app')
 
-const { connectToDatabase, sequelize } = require('../utils/database')
+const { connectToDatabase, sequelize } = require('../../utils/database')
 
-const { Journey, Station } = require('../models/index')
+const { Journey, Station } = require('../../models/index')
 
-const stations = require('./config').stations
-const journeys = require('./config').journeys
+const {
+  csvData,
+  journeyWithInvalidReturnStation,
+  journeyWithValidStations,
+  oneValidJourneyAndOneInvalidJourney,
+} = require('./createData')
 
-const journeysCsvFile = path.join(__dirname, './files/testfile_journeys.csv')
-const journeyWithInvalidReturnStation = path.join(
-  __dirname,
-  './files/testfile_withInvalidReturnStation.csv'
-)
-const journeyWithValidStations = path.join(
-  __dirname,
-  './files/testfile_withValidStations.csv'
-)
-const journeyWithOneValidOneInvalid = path.join(
-  __dirname,
-  './files/testfile_OneValidOneInvalidJourney.csv'
-)
+const stations = require('../config').stations
+const journeys = require('../config').journeys
 
 const station = {
   FID: 1,
@@ -33,6 +26,7 @@ const station = {
   Nimi: 'Hanasaari',
   Namn: 'Hanaholmen',
   Name: 'Hanasaari',
+  Osoite: 'Hanaholmsstranden 1',
   Adress: 'Hanaholmsstranden 1',
   Kaupunki: 'Espoo',
   Operaattor: 'CityBike Finland',
@@ -46,6 +40,7 @@ const station2 = {
   Nimi: 'Keilalahti',
   Namn: 'Kägelviken',
   Name: 'Keilalahti',
+  Osoite: 'Kägelviksvägen 2',
   Adress: 'Kägelviksvägen 2',
   Kaupunki: 'Espoo',
   Operaattor: 'CityBike Finland',
@@ -64,14 +59,14 @@ afterAll(async () => {
 
 describe('Test /api/journeys', () => {
   describe('Check prerequisites before running tests', () => {
-    test('expect neccessary testfiles and data to exist', () => {
-      expect(journeysCsvFile).toBeDefined()
-      expect(journeyWithInvalidReturnStation).toBeDefined()
-      expect(journeyWithValidStations).toBeDefined()
-      expect(journeyWithOneValidOneInvalid).toBeDefined()
-      expect(stations).toBeDefined()
-      expect(journeys).toBeDefined()
-    })
+    // test('expect neccessary testfiles and data to exist', () => {
+    //   expect(journeysCsvFile).toBeDefined()
+    //   expect(journeyWithInvalidReturnStation).toBeDefined()
+    //   expect(journeyWithValidStations).toBeDefined()
+    //   expect(journeyWithOneValidOneInvalid).toBeDefined()
+    //   expect(stations).toBeDefined()
+    //   expect(journeys).toBeDefined()
+    // })
     test('expect journeys to be empty', async () => {
       const allJourneys = await Journey.findAll()
       expect(allJourneys.length).toBe(0)
@@ -84,13 +79,14 @@ describe('Test /api/journeys', () => {
 
   describe('Adding Journeys when no Stations exist in the database', () => {
     test('should return status 400', async () => {
+      const csvBuffer = Buffer.from(csvData)
       const response = await request(app)
         .post('/api/journeys/add-many')
-        .attach('file', fs.readFileSync(journeysCsvFile), 'journeys.csv')
+        .attach('file', csvBuffer, 'journeys.csv')
         .set('Content-Type', 'multipart/form-data')
       expect(response.status).toBe(400)
     })
-    test('Added journeys should not be in the database', async () => {
+    test('No journeys should exist in the database', async () => {
       const allJourneys = await Journey.findAll()
       expect(allJourneys.length).toBe(0)
     })
@@ -113,39 +109,30 @@ describe('Test /api/journeys', () => {
     })
 
     test('Should not add Journey when Return_station_id does not exist', async () => {
+      const csvBuffer = Buffer.from(journeyWithInvalidReturnStation)
       await request(app)
         .post('/api/journeys/add-many')
-        .attach(
-          'file',
-          fs.readFileSync(journeyWithInvalidReturnStation),
-          'journeys.csv'
-        )
+        .attach('file', csvBuffer, 'journeys.csv')
         .set('Content-Type', 'multipart/form-data')
 
       const allJourneys = await Journey.findAll()
       expect(allJourneys.length).toBe(0)
     })
     test('Should add Journey when Departure and Return station ids are valid', async () => {
+      const csvBuffer = Buffer.from(journeyWithValidStations)
       await request(app)
         .post('/api/journeys/add-many')
-        .attach(
-          'file',
-          fs.readFileSync(journeyWithValidStations),
-          'journeys.csv'
-        )
+        .attach('file', csvBuffer, 'journeys.csv')
         .set('Content-Type', 'multipart/form-data')
 
       const allJourneys = await Journey.findAll()
       expect(allJourneys.length).toBe(1)
     })
     test('Should only add one Journey and ignore the invalid Journey', async () => {
+      const csvBuffer = Buffer.from(oneValidJourneyAndOneInvalidJourney)
       await request(app)
         .post('/api/journeys/add-many')
-        .attach(
-          'file',
-          fs.readFileSync(journeyWithOneValidOneInvalid),
-          'journeys.csv'
-        )
+        .attach('file', csvBuffer, 'journeys.csv')
         .set('Content-Type', 'multipart/form-data')
         .expect(200)
 
@@ -180,7 +167,7 @@ describe('Test /api/journeys', () => {
   })
 
   describe('Test all query params', () => {
-    test('Endpoint counts total of 5 journeys in the database', async () => {
+    test('5 journeys exists in the database', async () => {
       const response = await request(app).get('/api/journeys')
       expect(response.body.count).toBe(journeys.length)
     })
