@@ -86,6 +86,37 @@ describe('journeysQueryValidator', () => {
         .query({ order: ['id', 'DESC'] })
         .expect(200)
     })
-    //TODO: test that second value is "ASC" or "DESC"
+  })
+  describe('Test search_field', () => {
+    test('should return 400 when search_field is not a valid field', async () => {
+      await request(app)
+        .get('/api/journeys')
+        .query({ search_field: 'Invalid' })
+        .expect(400)
+    })
+    test('should return 400 when search_field is not a valid field', async () => {
+      await request(app)
+        .get('/api/journeys')
+        .query({ search_field: ['Invalid', 'Nimi'] })
+        .expect(400)
+    })
+    test('should return 200 when search_field empty', async () => {
+      await request(app)
+        .get('/api/journeys')
+        .query({ search_field: [] })
+        .expect(200)
+    })
+    test('should return 200 when search_field empty', async () => {
+      await request(app)
+        .get('/api/journeys')
+        .query({ search_field: '' })
+        .expect(200)
+    })
+    test('should return 200 when search_field empty', async () => {
+      await request(app)
+        .get('/api/journeys')
+        .query({ search_field: 'Departure_station_name' })
+        .expect(200)
+    })
   })
 })

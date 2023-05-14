@@ -83,5 +83,11 @@ describe('QueryValidator for Stations', () => {
         .query({ search_field: '' })
         .expect(200)
     })
+    test('should return 200 when valid search_field empty', async () => {
+      await request(app)
+        .get('/api/stations')
+        .query({ search_field: 'Name' })
+        .expect(200)
+    })
   })
 })
