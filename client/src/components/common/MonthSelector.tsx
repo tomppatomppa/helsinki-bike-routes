@@ -5,7 +5,7 @@ interface Props {
   setDates: (value: object) => void
 }
 export const MonthSelector = ({ dates, setDates }: Props) => {
-  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1)
+  const [currentMonth, setCurrentMonth] = useState(5)
   const [currentYear, setCurrentYear] = useState(2021)
 
   const handlePrevMonth = () => {

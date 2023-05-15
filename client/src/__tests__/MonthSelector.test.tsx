@@ -2,8 +2,8 @@ import { describe, expect, test, vi } from 'vitest'
 import { fireEvent, render } from '@testing-library/react'
 import { MonthSelector } from '../components/common/MonthSelector'
 
-const currentMonth = new Date().getMonth() + 1
-const currentYear = new Date().getFullYear()
+const currentMonth = 5
+const currentYear = 2021
 
 const startDate = new Date(currentYear, currentMonth - 1, 1)
   .toISOString()
