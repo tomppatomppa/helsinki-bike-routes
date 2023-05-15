@@ -33,7 +33,7 @@ describe('Stations', () => {
       })
     })
   })
-  it('Expect reuqest to have correct search and search_field params', () => {
+  it('Expect request to have correct search and search_field params', () => {
     cy.visit('/')
     cy.get('#dropdown').select('Nimi')
     cy.get('#search-input').type('Hanasaari').should('have.value', 'Hanasaari')

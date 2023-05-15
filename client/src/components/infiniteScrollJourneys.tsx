@@ -25,7 +25,7 @@ const InfiniteScrollJourneys = () => {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery<JourneysDataWithCursor>(
-    ['journeys', queryParams],
+    ['journeys', queryParams.search, queryParams.order],
     ({ pageParam = 0 }) =>
       fetchJourneysByCursor(
         pageParam,
@@ -52,9 +52,9 @@ const InfiniteScrollJourneys = () => {
 
   return (
     <div>
-      <div className="min-h-auto overflow-y-auto divide-y">
+      <div className='min-h-auto overflow-y-auto divide-y'>
         {isError ? (
-          <p className="text-red-900">
+          <p className='text-red-900'>
             There was a problem with fetching journeys
           </p>
         ) : null}
