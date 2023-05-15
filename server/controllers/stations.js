@@ -145,6 +145,22 @@ route.get('/:id', async (req, res) => {
       )`),
         'most_common_return_stations',
       ],
+      [
+        Sequelize.literal(`(
+        SELECT ARRAY_AGG(CONCAT(s."Name", ' Count: ', subquery."count"))
+        FROM (
+          SELECT j."Departure_station_id", COUNT(*) AS "count"
+          FROM Journeys AS j
+          WHERE j."Return_station_id" = "station"."ID"
+          AND j."Departure" ${between}
+          GROUP BY j."Departure_station_id"
+          ORDER BY COUNT(j."Departure_station_id") DESC
+          LIMIT 5
+        ) AS subquery
+        JOIN "stations" AS s ON s."ID" = subquery."Departure_station_id"
+      )`),
+        'most_common_departure_stations',
+      ],
     ],
   })
 
