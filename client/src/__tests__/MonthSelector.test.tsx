@@ -5,10 +5,10 @@ import { MonthSelector } from '../components/common/MonthSelector'
 const currentMonth = 5
 const currentYear = 2021
 
-const startDate = new Date(currentYear, currentMonth - 1, 1)
+const startDate = new Date(currentYear, currentMonth - 1, 2)
   .toISOString()
   .slice(0, 10)
-const endDate = new Date(currentYear, currentMonth, 0)
+const endDate = new Date(currentYear, currentMonth, 1)
   .toISOString()
   .slice(0, 10)
 

@@ -16,10 +16,10 @@ export const MonthSelector = ({ dates, setDates }: Props) => {
       setCurrentMonth(currentMonth - 1)
     }
   }
-  const startDate = new Date(currentYear, currentMonth - 1, 1)
+  const startDate = new Date(currentYear, currentMonth - 1, 2)
     .toISOString()
     .slice(0, 10)
-  const endDate = new Date(currentYear, currentMonth, 0)
+  const endDate = new Date(currentYear, currentMonth, 1)
     .toISOString()
     .slice(0, 10)
 
@@ -37,17 +37,17 @@ export const MonthSelector = ({ dates, setDates }: Props) => {
 
   return (
     <div>
-      <button className="p-2 border bg-neutral-300" onClick={handlePrevMonth}>
+      <button className='p-2 border bg-neutral-300' onClick={handlePrevMonth}>
         Previous Month
       </button>
       <span>{`${currentMonth}/${currentYear}`}</span>
-      <button className="p-2 border bg-neutral-300" onClick={handleNextMonth}>
+      <button className='p-2 border bg-neutral-300' onClick={handleNextMonth}>
         Next Month
       </button>
       {!currentDateApplied && (
         <button
           onClick={() => setDates({ startDate, endDate })}
-          className="p-2 border bg-green-300"
+          className='p-2 border bg-green-300'
         >
           Apply
         </button>
