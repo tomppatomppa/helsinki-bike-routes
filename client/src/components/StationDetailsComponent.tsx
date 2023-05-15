@@ -21,20 +21,23 @@ const StationDetailsComponent = (props: Props) => {
 
   return (
     <div
-      className="p-4 bg-neutral-100
-                text-neutral-600 border border-black flex flex-col gap-2"
+      className='p-4 bg-neutral-100
+                text-neutral-600 border border-black flex flex-col gap-2'
     >
-      <div className="self-center text-xl">
+      <div className='self-center text-xl'>
         <strong>STATION DETAILS</strong>
       </div>
-      <div className="flex flex-row w-full mx-auto gap-4 justify-evenly">
-        <div>
-          <p>
-            Names: {Nimi}, {Namn}, {Name}
-          </p>
-          <p>
-            Adress: {Osoite}, {Adress}
-          </p>
+      <div className='self-center text-xl'>
+        <p>
+          Names: {Nimi}, {Namn}, {Name}
+        </p>
+        <p>
+          Adress: {Osoite}, {Adress}
+        </p>
+      </div>
+      <div className='flex flex-row w-full mx-auto gap-4 justify-evenly'>
+        <div id='station-info'>
+          <strong>Station info:</strong>
           <p>Departures from station: {departures_count}</p>
           <p>Returns to station: {returns_count}</p>
           <p>
@@ -42,21 +45,17 @@ const StationDetailsComponent = (props: Props) => {
           </p>
           <p>Avg. distance for returns (m): {average_distance_returns | 0}</p>
         </div>
-        <div>
-          <p>
-            <strong>Top 5 return stations for journey:</strong>
-            {most_common_return_stations?.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </p>
+        <div id='station-avg-1'>
+          <strong>Top 5 return stations for journey:</strong>
+          {most_common_return_stations?.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
         </div>
-        <div>
-          <p>
-            <strong>Top 5 return stations for journey:</strong>
-            {most_common_departure_stations?.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </p>
+        <div id='station-avg-2'>
+          <strong>Top 5 departure stations for journey:</strong>
+          {most_common_departure_stations?.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
         </div>
       </div>
     </div>
