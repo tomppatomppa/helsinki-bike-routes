@@ -27,7 +27,7 @@ const StationDetailsComponent = (props: Props) => {
       <div className='self-center text-xl'>
         <strong>STATION DETAILS</strong>
       </div>
-      <div className='self-center text-xl'>
+      <div className='self-center '>
         <p>
           Names: {Nimi}, {Namn}, {Name}
         </p>
