@@ -123,6 +123,28 @@ route.get('/:id', async (req, res) => {
         ),
         'average_distance_returns',
       ],
+      [
+        Sequelize.literal(
+          `(SELECT SUM(journeys."Covered_distance_m") / COUNT(*) FROM journeys WHERE journeys."Return_station_id" = "station"."ID" AND journeys."Return" ${between})`
+        ),
+        'average_distance_returns',
+      ],
+      [
+        Sequelize.literal(`(
+        SELECT ARRAY_AGG(CONCAT(s."Name", ' ', subquery."count"))
+        FROM (
+          SELECT j."Return_station_id", COUNT(*) AS "count"
+          FROM Journeys AS j
+          WHERE j."Departure_station_id" = "station"."ID"
+          AND j."Return" ${between}
+          GROUP BY j."Return_station_id"
+          ORDER BY COUNT(j."Return_station_id") DESC
+          LIMIT 5
+        ) AS subquery
+        JOIN "stations" AS s ON s."ID" = subquery."Return_station_id"
+      )`),
+        'most_common_return_stations',
+      ],
     ],
   })
 
