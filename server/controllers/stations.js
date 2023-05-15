@@ -88,12 +88,6 @@ route.get('/', stationsQueryValidator(), async (req, res) => {
 route.get('/:id', async (req, res) => {
   const { startDate = '2000-01-01', endDate = '2100-12-31' } = req.query
 
-  const formattedStartDate = startDate ? new Date(startDate) : new Date()
-
-  // const formattedEndDate = endDate
-  //   ? new Date(new Date(endDate).getTime() + 24 * 60 * 60 * 1000)
-  //   : new Date()
-  // console.log(formattedEndDate)
   const between = `BETWEEN CAST('${startDate}' AS timestamp with time zone) AND CAST('${endDate}' AS timestamp with time zone)`
   const stationExists = await Station.findOne({
     where: {
