@@ -10,6 +10,7 @@ function errorHandler(error, req, res, next) {
       })
     }
     if (error.name === 'SequelizeDatabaseError') {
+      console.log(error)
       return res.status(400).send({
         error: 'bad data...',
       })

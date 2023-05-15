@@ -27,11 +27,13 @@ route.post('/add-many', upload.single('file'), async (req, res) => {
   deleteTmpFile(filePath)
   res.status(200).json({ stationsAdded: savedStations?.length | 0, errors })
 })
+
 route.post('/add-single', async (req, res) => {
   const result = await Station.create({ ...req.body })
 
   res.status(200).json(result)
 })
+
 route.get('/', stationsQueryValidator(), async (req, res) => {
   const errors = validationResult(req)
 
@@ -88,10 +90,11 @@ route.get('/:id', async (req, res) => {
 
   const formattedStartDate = startDate ? new Date(startDate) : new Date()
 
-  const formattedEndDate = endDate
-    ? new Date(new Date(endDate).getTime() + 24 * 60 * 60 * 1000)
-    : new Date()
-
+  // const formattedEndDate = endDate
+  //   ? new Date(new Date(endDate).getTime() + 24 * 60 * 60 * 1000)
+  //   : new Date()
+  // console.log(formattedEndDate)
+  const between = `BETWEEN CAST('${startDate}' AS timestamp with time zone) AND CAST('${endDate}' AS timestamp with time zone)`
   const stationExists = await Station.findOne({
     where: {
       ID: req.params.id,
@@ -102,36 +105,19 @@ route.get('/:id', async (req, res) => {
       'Namn',
       'Osoite',
       'Adress',
-      [Sequelize.fn('COUNT', Sequelize.col('departures')), 'departures_count'],
-      [Sequelize.fn('COUNT', Sequelize.col('returns')), 'returns_count'],
+      [
+        Sequelize.literal(
+          `(SELECT COUNT(*) FROM journeys WHERE journeys."Departure_station_id" = "station"."ID" AND journeys."Departure" ${between})`
+        ),
+        'departures_count',
+      ],
+      [
+        Sequelize.literal(
+          `(SELECT COUNT(*) FROM journeys WHERE journeys."Return_station_id" = "station"."ID" AND journeys."Return" ${between})`
+        ),
+        'returns_count',
+      ],
     ],
-    include: [
-      {
-        model: Journey,
-        as: 'departures',
-        where: {
-          Departure_station_id: req.params.id,
-          Departure: {
-            [Sequelize.Op.between]: [formattedStartDate, formattedEndDate],
-          },
-        },
-        attributes: [],
-        required: false,
-      },
-      {
-        model: Journey,
-        as: 'returns',
-        where: {
-          Return_station_id: req.params.id,
-          Return: {
-            [Sequelize.Op.between]: [formattedStartDate, formattedEndDate],
-          },
-        },
-        attributes: [],
-        required: false,
-      },
-    ],
-    group: ['station.FID'],
   })
 
   if (!stationExists)
@@ -139,4 +125,39 @@ route.get('/:id', async (req, res) => {
 
   return res.status(200).json(stationExists)
 })
+
+route.get('/hello/test', async (req, res) => {
+  const startDate = '2021-01-01'
+  const endDate = '2023-12-31'
+  const between = `BETWEEN CAST('${startDate}' AS timestamp with time zone) AND CAST('${endDate}' AS timestamp with time zone)`
+  const all = await Station.findOne({
+    where: {
+      ID: 501,
+    },
+    attributes: {
+      include: [
+        'Nimi',
+        'Name',
+        'Namn',
+        'Osoite',
+        'Adress',
+        [
+          Sequelize.literal(
+            `(SELECT COUNT(*) FROM journeys WHERE journeys."Departure_station_id" = "station"."ID" AND journeys."Departure" ${between})`
+          ),
+          'departure_count',
+        ],
+        [
+          Sequelize.literal(
+            '(SELECT COUNT(*) FROM journeys WHERE journeys."Return_station_id" = "ID")'
+          ),
+          'returns_count',
+        ],
+      ],
+    },
+  })
+
+  return res.status(200).json(all)
+})
+
 module.exports = route

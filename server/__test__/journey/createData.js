@@ -20,9 +20,34 @@ const oneValidJourneyAndOneInvalidJourney = `Departure,Return,Departure station 
 2021-05-31T23:57:25,2021-06-01T00:05:46,501,Hanasaari,100,Keilalahti,2043,700
 `
 
+//5 journeys starting in 05/2021, 3 journeys starting in 06/21
+const journeysStartingFrom501EndingIn503 = `Departure,Return,Departure station id,Departure station name,Return station id,Return station name,Covered distance (m),Duration (sec.)
+2021-05-01T23:57:25,2021-05-02T00:05:46,501,Hanasaari,503,Keilalahti,2043,700
+2021-05-01T23:57:25,2021-05-02T00:05:46,501,Hanasaari,503,Keilalahti,2043,700
+2021-05-01T23:57:25,2021-05-02T00:05:46,501,Hanasaari,503,Keilalahti,2043,700
+2021-05-01T23:57:25,2021-05-02T00:05:46,501,Hanasaari,503,Keilalahti,2043,700
+2021-05-01T23:57:25,2021-05-02T00:05:46,501,Hanasaari,503,Keilalahti,2043,700
+2021-06-01T23:57:25,2021-06-02T00:05:46,501,Hanasaari,503,Keilalahti,3000,900
+2021-06-01T23:57:25,2021-06-02T00:05:46,501,Hanasaari,503,Keilalahti,3000,900
+2021-06-01T23:57:25,2021-06-02T00:05:46,501,Hanasaari,503,Keilalahti,3000,900
+`
+//5 journeys starting in 05/2021, 3 journeys starting in 06/21
+const journeysStartingFrom503EndingIn501 = `Departure,Return,Departure station id,Departure station name,Return station id,Return station name,Covered distance (m),Duration (sec.)
+2021-05-01T23:57:25,2021-05-02T00:05:46,503,Keilalahti,501,Hanasaari,2043,700
+2021-05-01T23:57:25,2021-05-02T00:05:46,503,Keilalahti,501,Hanasaari,2043,700
+2021-05-01T23:57:25,2021-05-02T00:05:46,503,Keilalahti,501,Hanasaari,2043,700
+2021-05-01T23:57:25,2021-05-02T00:05:46,503,Keilalahti,501,Hanasaari,2043,700
+2021-05-01T23:57:25,2021-05-02T00:05:46,503,Keilalahti,501,Hanasaari,2043,700
+2021-06-01T23:57:25,2021-06-02T00:05:46,503,Keilalahti,501,Hanasaari,3000,900
+2021-06-01T23:57:25,2021-06-02T00:05:46,503,Keilalahti,501,Hanasaari,3000,900
+2021-06-01T23:57:25,2021-06-02T00:05:46,503,Keilalahti,501,Hanasaari,3000,900
+
+`
 module.exports = {
   csvData,
   journeyWithInvalidReturnStation,
   journeyWithValidStations,
   oneValidJourneyAndOneInvalidJourney,
+  journeysStartingFrom501EndingIn503,
+  journeysStartingFrom503EndingIn501,
 }
