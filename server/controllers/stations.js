@@ -126,38 +126,4 @@ route.get('/:id', async (req, res) => {
   return res.status(200).json(stationExists)
 })
 
-route.get('/hello/test', async (req, res) => {
-  const startDate = '2021-01-01'
-  const endDate = '2023-12-31'
-  const between = `BETWEEN CAST('${startDate}' AS timestamp with time zone) AND CAST('${endDate}' AS timestamp with time zone)`
-  const all = await Station.findOne({
-    where: {
-      ID: 501,
-    },
-    attributes: {
-      include: [
-        'Nimi',
-        'Name',
-        'Namn',
-        'Osoite',
-        'Adress',
-        [
-          Sequelize.literal(
-            `(SELECT COUNT(*) FROM journeys WHERE journeys."Departure_station_id" = "station"."ID" AND journeys."Departure" ${between})`
-          ),
-          'departure_count',
-        ],
-        [
-          Sequelize.literal(
-            '(SELECT COUNT(*) FROM journeys WHERE journeys."Return_station_id" = "ID")'
-          ),
-          'returns_count',
-        ],
-      ],
-    },
-  })
-
-  return res.status(200).json(all)
-})
-
 module.exports = route
