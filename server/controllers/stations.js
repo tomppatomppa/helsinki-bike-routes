@@ -131,7 +131,7 @@ route.get('/:id', async (req, res) => {
       ],
       [
         Sequelize.literal(`(
-        SELECT ARRAY_AGG(CONCAT(s."Name", ' ', subquery."count"))
+        SELECT ARRAY_AGG(CONCAT(s."Name", ' Count: ', subquery."count"))
         FROM (
           SELECT j."Return_station_id", COUNT(*) AS "count"
           FROM Journeys AS j
