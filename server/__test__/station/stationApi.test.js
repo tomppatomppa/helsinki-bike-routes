@@ -296,6 +296,7 @@ describe('Test /api/stations/:id', () => {
       expect(parseInt(body.returns_count)).toBe(8)
     })
   })
+
   describe('Should only include calculation for a specific month', () => {
     describe('Departures', () => {
       test('Should return 5 stations that started from 501 during 05/2021', async () => {
@@ -355,6 +356,31 @@ describe('Test /api/stations/:id', () => {
           .query({ startDate: '2021-07-01', endDate: '2021-07-31' })
           .expect(200)
         expect(parseInt(body.departures_count)).toBe(0)
+      })
+    })
+
+    describe('Average distance for departures starting from the station', () => {
+      test('Should return 2401 for departures', async () => {
+        const { body } = await request(app).get('/api/stations/501').expect(200)
+        expect(parseInt(body.average_distance_departures)).toBe(2401)
+      })
+      test('Should return 2401 for departures during 05/2021', async () => {
+        const { body } = await request(app)
+          .get('/api/stations/501')
+          .query({ startDate: '2021-05-01', endDate: '2021-05-31' })
+          .expect(200)
+        expect(parseInt(body.average_distance_departures)).toBe(2043)
+      })
+      test('Should return 3026 for returns', async () => {
+        const { body } = await request(app).get('/api/stations/501').expect(200)
+        expect(parseInt(body.average_distance_returns)).toBe(3026)
+      })
+      test('Should return 3043 for returns during 05/2021', async () => {
+        const { body } = await request(app)
+          .get('/api/stations/501')
+          .query({ startDate: '2021-05-01', endDate: '2021-05-31' })
+          .expect(200)
+        expect(parseInt(body.average_distance_returns)).toBe(3043)
       })
     })
   })
