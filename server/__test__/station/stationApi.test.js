@@ -383,6 +383,7 @@ describe('Test /api/stations/:id', () => {
         expect(parseInt(body.average_distance_returns)).toBe(3043)
       })
     })
+
     describe('Top 5 most common return stations', () => {
       test('Should return only Keilalahti Count: 8', async () => {
         const { body } = await request(app).get('/api/stations/501').expect(200)
@@ -415,6 +416,37 @@ describe('Test /api/stations/:id', () => {
         )
       })
     })
-    describe('Top 5 most common departure station for for journeys ending at the station', () => {})
+    describe('Top 5 most common departure station for for journeys ending at the station', () => {
+      test('Should return only Keilalahti Count: 8', async () => {
+        const { body } = await request(app).get('/api/stations/501').expect(200)
+        expect(body.most_common_departure_stations[0]).toEqual(
+          'Keilalahti Count: 8'
+        )
+      })
+      test('Should return only Keilalahti Count: 3', async () => {
+        const { body } = await request(app)
+          .get('/api/stations/501')
+          .query({ startDate: '2021-06-01', endDate: '2021-06-30' })
+          .expect(200)
+        expect(body.most_common_departure_stations[0]).toEqual(
+          'Keilalahti Count: 3'
+        )
+      })
+      test('Should return only Hanasaari Count: 8', async () => {
+        const { body } = await request(app).get('/api/stations/503').expect(200)
+        expect(body.most_common_departure_stations[0]).toEqual(
+          'Hanasaari Count: 8'
+        )
+      })
+      test('Should return only Hanasaari Count: 3', async () => {
+        const { body } = await request(app)
+          .get('/api/stations/503')
+          .query({ startDate: '2021-06-01', endDate: '2021-06-30' })
+          .expect(200)
+        expect(body.most_common_departure_stations[0]).toEqual(
+          'Hanasaari Count: 3'
+        )
+      })
+    })
   })
 })
