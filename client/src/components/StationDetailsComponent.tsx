@@ -30,40 +30,31 @@ const StationDetailsComponent = (props: Props) => {
       <div className="flex flex-row w-full mx-auto gap-4 justify-evenly">
         <div>
           <p>
-            <strong>Names:</strong> {Nimi}, {Namn}, {Name}
+            Names: {Nimi}, {Namn}, {Name}
           </p>
           <p>
-            <strong>Adress:</strong> {Osoite}, {Adress}
+            Adress: {Osoite}, {Adress}
           </p>
+          <p>Departures from station: {departures_count}</p>
+          <p>Returns to station: {returns_count}</p>
           <p>
-            <strong>Departures from station:</strong> {departures_count}
+            Avg. distance for departures (m): {average_distance_departures | 0}
           </p>
-          <p>
-            <strong>Returns to station: </strong>
-            {returns_count}
-          </p>
-          <p>
-            <strong>Avg. distance for departures (m): </strong>
-            {average_distance_departures | 0}
-          </p>
-          <p>
-            <strong>Avg. distance for returns (m):</strong>
-            {average_distance_returns | 0}
-          </p>
+          <p>Avg. distance for returns (m): {average_distance_returns | 0}</p>
         </div>
         <div>
           <p>
             <strong>Top 5 return stations for journey:</strong>
-            {most_common_return_stations?.map((item) => (
-              <li>{item}</li>
+            {most_common_return_stations?.map((item, index) => (
+              <li key={index}>{item}</li>
             ))}
           </p>
         </div>
         <div>
           <p>
             <strong>Top 5 return stations for journey:</strong>
-            {most_common_departure_stations?.map((item) => (
-              <li>{item} </li>
+            {most_common_departure_stations?.map((item, index) => (
+              <li key={index}>{item}</li>
             ))}
           </p>
         </div>
