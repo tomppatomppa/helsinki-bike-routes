@@ -17,4 +17,8 @@ export interface StationDetails {
   Adress: string
   departures_count: number
   returns_count: number
+  average_distance_departures: number
+  average_distance_returns: number
+  most_common_return_stations: string[]
+  most_common_departure_stations: string[]
 }
