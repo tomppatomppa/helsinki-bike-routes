@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useMemo } from 'react'
 import {
   MapContainer,
   TileLayer,
