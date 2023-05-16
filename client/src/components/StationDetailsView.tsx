@@ -18,7 +18,7 @@ const StationDetailsView = (props: Props) => {
 
   const {
     data: station,
-
+    isLoading,
     isError,
   } = useQuery<StationDetails>(['station', stationID, dates], () =>
     fetchStationByID(stationID, dates)
@@ -43,7 +43,7 @@ const StationDetailsView = (props: Props) => {
         checked={isChecked}
         onChange={handleResetChecked}
       />
-
+      <Spinner show={isLoading} delay={300} />
       {station && <StationDetailsComponent station={station} />}
     </div>
   )

@@ -66,6 +66,7 @@ const StationTable = ({ data, onClick }: Props) => {
     ],
     []
   )
+
   const tableInstance = useTable<TableProps>(
     {
       columns,
@@ -76,6 +77,7 @@ const StationTable = ({ data, onClick }: Props) => {
     },
     useExpanded<TableProps>
   )
+
   const {
     getTableProps,
     getTableBodyProps,

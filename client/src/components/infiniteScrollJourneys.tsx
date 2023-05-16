@@ -15,7 +15,7 @@ import { useDebounce } from 'use-debounce'
 const InfiniteScrollJourneys = () => {
   const { queryParams, orderByColumn, findByField, setSearch } =
     useQueryParams()
-  const [searchValue] = useDebounce(queryParams.search, 200)
+  const [searchValue] = useDebounce(queryParams.search, 300)
   const { ref: loadMoreRef, inView } = useInView()
 
   const {
@@ -68,7 +68,7 @@ const InfiniteScrollJourneys = () => {
           setSearch={setSearch}
         />
         {isSuccess && (
-          <div>
+          <div className="max-w-3xl mx-auto">
             <JourneyTable data={rows} orderByColumn={orderByColumn} />
             <div ref={loadMoreRef}></div>
           </div>

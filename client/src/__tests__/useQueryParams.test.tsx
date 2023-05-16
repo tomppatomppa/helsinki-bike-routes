@@ -4,9 +4,9 @@ import { describe, expect, test } from 'vitest'
 import useQueryParams from '../hooks/useQueryParams'
 
 describe('useQueryParams hook', () => {
-  test('Should start with limit 20 by default', () => {
+  test('Should start with limit 50 by default', () => {
     const { result } = renderHook(() => useQueryParams())
-    expect(result.current.queryParams.limit).toBe(20)
+    expect(result.current.queryParams.limit).toBe(50)
   })
 
   test('Should start with order [] by default', () => {

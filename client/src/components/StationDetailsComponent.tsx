@@ -1,4 +1,3 @@
-import { Suspense } from 'react'
 import { StationDetails } from '../types/station'
 
 interface Props {

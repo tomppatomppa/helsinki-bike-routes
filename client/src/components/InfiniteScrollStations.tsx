@@ -15,7 +15,7 @@ const InfiniteScrollStations = () => {
   const [showMap, setShowMap] = useState<boolean>(true)
   const [station, setStation] = useState<Station | null>(null)
   const { queryParams, setSearch, findByField } = useQueryParams()
-  const [searchValue] = useDebounce(queryParams.search, 200)
+  const [searchValue] = useDebounce(queryParams.search, 300)
 
   const {
     data: stations,
@@ -34,7 +34,6 @@ const InfiniteScrollStations = () => {
         queryParams.search,
         queryParams.search_field
       ),
-
     {
       getNextPageParam: (lastPage) => {
         return lastPage.nextCursor

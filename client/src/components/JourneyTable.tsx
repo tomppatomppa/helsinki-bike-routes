@@ -34,12 +34,12 @@ const JourneyTable = ({ data, orderByColumn }: Props) => {
       {
         Header: 'Distance (m)',
         accessor: 'Covered_distance_m',
-        width: 50,
+        width: 75,
       },
       {
         Header: 'Duration (sec.)',
         accessor: 'Duration_sec',
-        width: 50,
+        width: 75,
       },
     ],
 
@@ -57,7 +57,7 @@ const JourneyTable = ({ data, orderByColumn }: Props) => {
     tableInstance
 
   return (
-    <div>
+    <div id="journey-table">
       <table {...getTableProps()} className="w-full text-sm text-left">
         <thead>
           {headerGroups.map((headerGroup) => (

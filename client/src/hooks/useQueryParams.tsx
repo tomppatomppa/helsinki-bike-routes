@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 const useQueryParams = () => {
-  const [limit] = useState<number>(20)
+  const [limit] = useState<number>(50)
   const [order, setOrder] = useState<string[]>([])
   const [search, setSearch] = useState<string>('')
   const [search_field, setSearchField] = useState('')
