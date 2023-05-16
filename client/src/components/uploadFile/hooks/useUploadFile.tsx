@@ -4,6 +4,7 @@ import { uploadFile } from '../../../api/uploadApi'
 
 const useUploadFile = () => {
   const queryClient = useQueryClient()
+
   const {
     data,
     mutate: sendFile,

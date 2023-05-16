@@ -3,12 +3,15 @@ import useUploadFile from './hooks/useUploadFile'
 import { readCsvFileHeaders } from '../../utils/readCsvFileHeaders'
 import FileDetails from './FileDetails'
 import UploadResults from './UploadResults'
+import ProgressBar from '../common/ProgressBar'
+import useUploadProgress from './hooks/useUploadProgres'
 
 const UploadFile = () => {
   const [filetype, setFileType] = useState<string | null>(null)
   const [file, setFile] = useState<File | null>(null)
   const { sendFile, isError, isLoading, data } = useUploadFile()
   const inputRef = useRef<HTMLInputElement | null>(null)
+  const uploadProgress = useUploadProgress(isLoading)
 
   const onUploadButtonClick = () => {
     if (inputRef.current) {
@@ -65,11 +68,15 @@ const UploadFile = () => {
           There was a problem with uploading {filetype}
         </p>
       ) : null}
-      {!isLoading ? (
-        <p className="animate-pulse text-xl mt-12 text-red-900">
-          Uploading {filetype} please wait...
-        </p>
+      {isLoading ? (
+        <div>
+          <p className="animate-pulse text-xl mt-12 text-red-900">
+            Uploading {filetype} please wait...
+          </p>
+          <ProgressBar value={uploadProgress} />
+        </div>
       ) : null}
+
       {file && !isLoading && (
         <FileDetails
           fileType={filetype}

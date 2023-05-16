@@ -3,11 +3,8 @@ import InfiniteScrollJourneys from './components/infiniteScrollJourneys'
 
 import { Routes, Route } from 'react-router-dom'
 import MainLayout from './components/layout/MainLayout'
-import useJourneysEventSource from './hooks/useJourneysEventSource'
 
 function App() {
-  const message = useJourneysEventSource()
-  console.log(message)
   return (
     <div className="App mx-auto text-center">
       <Routes>

@@ -14,7 +14,7 @@ const deleteTmpFile = require('../middleware/deleteTmpFile')
 const parseCSV = require('../utils/parsers/parseCSV')
 const { filterJourneys, chunk } = require('../utils/helpers')
 
-let clientResponse = null
+const clients = new Set()
 
 route.get('/events', (req, res) => {
   res.setHeader('Content-Type', 'text/event-stream')
@@ -22,38 +22,42 @@ route.get('/events', (req, res) => {
   res.setHeader('Connection', 'keep-alive')
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.flushHeaders()
-
   clientResponse = res
+  // Add the response object to the clients set
+  clients.add(res)
 
-  const message = 'Connected to SSE'
-  sendSSE(message)
+  // Remove the response object from the clients set when the connection is closed
+  req.on('close', () => {
+    clients.delete(res)
+  })
 })
-
 // Send SSE event to the client
 const sendSSE = (message) => {
-  if (clientResponse) {
-    clientResponse.write(`data: ${message}\n\n`)
-  }
+  clients.forEach((client) => {
+    client.write(`data: ${message}\n\n`)
+  })
 }
 
 route.post('/add-many', upload.single('file'), async (req, res) => {
   const filePath = path.resolve(__dirname, `../${req.file.path}`)
+
   const parsedJourneys = await parseCSV(filePath, validateJourney)
   //Filter out journeys with non existing Station ID's
+
   const filteredJourneys = await filterJourneys(parsedJourneys)
 
   if (filteredJourneys.length === 0) {
     return res.status(400).json({ error: 'No valid journeys' })
   }
 
-  const chunks = chunk(filteredJourneys, 20000)
   let index = 0
-  await chunks.reduce((promise, chunk) => {
+  const chunkSize = 20000
+  await chunk(filteredJourneys, chunkSize).reduce((promise, chunk) => {
     return promise.then(() => {
-      const message = `${(index / chunks.length) * 100}`
+      const message = `${(index / (filteredJourneys.length / chunkSize)) * 100}`
       sendSSE(message)
       index = index + 1
-      //return Journey.bulkCreate(chunk, { ignoreDuplicates: true })
+      return Journey.bulkCreate(chunk, { ignoreDuplicates: true })
     })
   }, Promise.resolve())
 

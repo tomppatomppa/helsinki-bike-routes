@@ -15,6 +15,7 @@ const { validationResult } = require('express-validator')
 
 route.post('/add-many', upload.single('file'), async (req, res) => {
   const filePath = path.resolve(__dirname, `../${req.file.path}`)
+
   const result = await parseCSV(filePath, validateStation)
 
   const errors = []
