@@ -2,10 +2,10 @@ import { useQuery } from 'react-query'
 import { fetchStationByID } from '../api/stationApi'
 import Spinner from './common/Spinner'
 import { StationDetails } from '../types/station'
-import StationDetailsComponent from './StationDetailsComponent'
 import { useState } from 'react'
 import { MonthSelector } from './common/MonthSelector'
 import Checkbox from './common/Checkbox'
+import StationDetailsComponent from './StationDetailsComponent'
 
 interface Props {
   stationID: number
@@ -18,7 +18,7 @@ const StationDetailsView = (props: Props) => {
 
   const {
     data: station,
-    isLoading,
+
     isError,
   } = useQuery<StationDetails>(['station', stationID, dates], () =>
     fetchStationByID(stationID, dates)
@@ -43,7 +43,7 @@ const StationDetailsView = (props: Props) => {
         checked={isChecked}
         onChange={handleResetChecked}
       />
-      <Spinner show={isLoading} delay={300} />
+
       {station && <StationDetailsComponent station={station} />}
     </div>
   )

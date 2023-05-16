@@ -14,7 +14,7 @@ import SearchBar from './common/SearchBar'
 const InfiniteScrollJourneys = () => {
   const { queryParams, orderByColumn, findByField, setSearch } =
     useQueryParams()
-  const { ref: loadMoreRef, inView } = useInView()
+  const { ref: loadMoreRef, inView } = useInView({ threshold: 0.25 })
 
   const {
     data: journeys,
@@ -52,9 +52,9 @@ const InfiniteScrollJourneys = () => {
 
   return (
     <div>
-      <div className='min-h-auto overflow-y-auto divide-y'>
+      <div className="min-h-auto overflow-y-auto divide-y">
         {isError ? (
-          <p className='text-red-900'>
+          <p className="text-red-900">
             There was a problem with fetching journeys
           </p>
         ) : null}

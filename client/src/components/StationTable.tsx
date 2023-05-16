@@ -5,6 +5,7 @@ import { useMemo } from 'react'
 import React, { Fragment } from 'react'
 
 import StationDetailsView from './StationDetailsView'
+
 interface Props {
   data: Station[]
   onClick: (value: Station) => void
