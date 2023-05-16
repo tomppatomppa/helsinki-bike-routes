@@ -14,6 +14,28 @@ const deleteTmpFile = require('../middleware/deleteTmpFile')
 const parseCSV = require('../utils/parsers/parseCSV')
 const { filterJourneys, chunk } = require('../utils/helpers')
 
+let clientResponse = null
+
+route.get('/events', (req, res) => {
+  res.setHeader('Content-Type', 'text/event-stream')
+  res.setHeader('Cache-Control', 'no-cache')
+  res.setHeader('Connection', 'keep-alive')
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.flushHeaders()
+
+  clientResponse = res
+
+  const message = 'Connected to SSE'
+  sendSSE(message)
+})
+
+// Send SSE event to the client
+const sendSSE = (message) => {
+  if (clientResponse) {
+    clientResponse.write(`data: ${message}\n\n`)
+  }
+}
+
 route.post('/add-many', upload.single('file'), async (req, res) => {
   const filePath = path.resolve(__dirname, `../${req.file.path}`)
   const parsedJourneys = await parseCSV(filePath, validateJourney)
@@ -24,9 +46,14 @@ route.post('/add-many', upload.single('file'), async (req, res) => {
     return res.status(400).json({ error: 'No valid journeys' })
   }
 
-  await chunk(filteredJourneys, 20000).reduce((promise, chunk) => {
+  const chunks = chunk(filteredJourneys, 20000)
+  let index = 0
+  await chunks.reduce((promise, chunk) => {
     return promise.then(() => {
-      return Journey.bulkCreate(chunk, { ignoreDuplicates: true })
+      const message = `${(index / chunks.length) * 100}`
+      sendSSE(message)
+      index = index + 1
+      //return Journey.bulkCreate(chunk, { ignoreDuplicates: true })
     })
   }, Promise.resolve())
 

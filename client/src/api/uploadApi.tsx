@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const baseUrl = '/api'
+
 interface Props {
   file: File
   filetype: string

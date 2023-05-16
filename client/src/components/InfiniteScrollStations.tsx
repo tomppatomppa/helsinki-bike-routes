@@ -104,7 +104,7 @@ const InfiniteScrollStations = () => {
         ) : null}
         {isLoading ? <p>Fetching stations</p> : null}
         {isSuccess && (
-          <div>
+          <div className="max-w-6xl mx-auto max-h-[10vh]">
             <StationTable data={rows} onClick={handleSelectStation} />
             {hasNextPage && <div ref={loadMoreRef}></div>}
           </div>
