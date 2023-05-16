@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { render } from '@testing-library/react'
+import { fireEvent, render } from '@testing-library/react'
 import Map from '../components/map/Map'
 import { LatLngExpression } from 'leaflet'
 
@@ -19,10 +19,15 @@ describe('Map.tsx', () => {
     y: 60,
   }
 
-  test('Should render 2 img elements on map', () => {
-    const { container } = render(
+  test('Should render 2 img elements on map when All stations is toggled', () => {
+    const { container, getByLabelText } = render(
       <Map station={null} allStationCoordinates={allStationCoordinates} />
     )
+    const checkbox = getByLabelText('All stations')
+    expect(checkbox).toBeDefined()
+    // Simulate a click on the checkbox
+    fireEvent.click(checkbox)
+
     const markerPane = container.getElementsByClassName(
       'leaflet-pane leaflet-marker-pane'
     )[0]

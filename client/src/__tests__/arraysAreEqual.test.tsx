@@ -9,7 +9,7 @@ describe('arraysAreEqual', () => {
   test('Should return false when length is not same', () => {
     expect(arraysEqual(['1', '3'], ['3', '2', '1'])).toBe(false)
   })
-  test('Should return true', () => {
+  test('Should return true when they are equal', () => {
     expect(arraysEqual(['1', '2'], ['1', '2'])).toBe(true)
   })
 })

@@ -8,7 +8,7 @@ const currentYear = 2021
 const startDate = new Date(currentYear, currentMonth - 1, 2)
   .toISOString()
   .slice(0, 10)
-const endDate = new Date(currentYear, currentMonth, 1)
+const endDate = new Date(currentYear, currentMonth, 2)
   .toISOString()
   .slice(0, 10)
 

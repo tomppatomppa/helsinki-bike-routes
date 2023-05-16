@@ -16,7 +16,6 @@ const InfiniteScrollJourneys = () => {
   const { queryParams, orderByColumn, findByField, setSearch } =
     useQueryParams()
   const [searchValue] = useDebounce(queryParams.search, 300)
-  const { ref: loadMoreRef, inView } = useInView()
 
   const {
     data: journeys,
@@ -42,6 +41,9 @@ const InfiniteScrollJourneys = () => {
       },
     }
   )
+  const { ref: loadMoreRef, inView } = useInView({
+    skip: !hasNextPage,
+  })
 
   useEffect(() => {
     if (inView && !isFetchingNextPage && hasNextPage) {

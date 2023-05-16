@@ -6,7 +6,7 @@ const parseCSV = require('../utils/parsers/parseCSV')
 const validateStation = require('../utils/validators/validateStation')
 const deleteTmpFile = require('../middleware/deleteTmpFile')
 
-const { Station, Journey } = require('../models/index')
+const { Station } = require('../models/index')
 
 const { Op, Sequelize } = require('sequelize')
 

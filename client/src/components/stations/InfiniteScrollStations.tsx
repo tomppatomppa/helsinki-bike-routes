@@ -98,7 +98,6 @@ const InfiniteScrollStations = () => {
         findByField={findByField}
         setSearch={setSearch}
       />
-
       <div className="min-h-[80vh] w-full overflow-auto divide-y p-6">
         {isError ? (
           <p className="text-red-900">
@@ -107,9 +106,9 @@ const InfiniteScrollStations = () => {
         ) : null}
         {isLoading ? <p>Fetching stations</p> : null}
         {isSuccess && (
-          <div className="max-w-6xl mx-auto max-h-[10vh]">
+          <div className="max-w-6xl mx-auto max-h-[20vh]">
             <StationTable data={rows} onClick={handleSelectStation} />
-            {hasNextPage && <div ref={loadMoreRef}></div>}
+            <div ref={loadMoreRef}></div>
           </div>
         )}
       </div>

@@ -1,7 +1,6 @@
 const isFloat = require('./isFloat')
 const isString = require('./isString')
 const isPositiveInteger = require('./isPositiveInteger')
-const isNullOrEmpty = require('./isNullOrEmpty')
 
 const MAX_X_COORDINATE = 180
 const MIN_X_COORDINATE = -180
