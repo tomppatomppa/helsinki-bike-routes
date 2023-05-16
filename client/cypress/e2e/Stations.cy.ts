@@ -27,7 +27,7 @@ describe('Stations', () => {
     cy.wait('@getStations').then(({ request }) => {
       expect(request.query).to.deep.equal({
         offset: '0',
-        limit: '20',
+        limit: '50',
         search: '',
         search_field: '',
       })
@@ -43,7 +43,7 @@ describe('Stations', () => {
     cy.wait('@getStations').then(({ request }) => {
       expect(request.query).to.deep.equal({
         offset: '0',
-        limit: '20',
+        limit: '50',
         search: 'Hanasaari',
         search_field: 'Nimi',
       })

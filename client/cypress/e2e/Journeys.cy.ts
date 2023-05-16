@@ -15,7 +15,7 @@ describe('Stations', () => {
 
     cy.intercept(
       'GET',
-      '/api/journeys?offset=0&limit=20&search=&search_field=&order**'
+      '/api/journeys?offset=0&limit=50&search=&search_field=&order**'
     ).as('getJourneys')
 
     //Initial order is ASC

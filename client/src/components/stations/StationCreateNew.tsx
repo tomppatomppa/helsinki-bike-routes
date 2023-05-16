@@ -15,7 +15,7 @@ const StationCreate = () => {
           className="border p-2 mt-2 bg-gray-300"
           onClick={() => setShow(!show)}
         >
-          Create Station
+          Add Station
         </button>
       )}
       {show && (
