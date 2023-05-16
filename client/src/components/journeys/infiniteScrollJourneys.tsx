@@ -5,11 +5,11 @@ import { useInView } from 'react-intersection-observer'
 import {
   JourneysDataWithCursor,
   fetchJourneysByCursor,
-} from '../api/journeysApi'
+} from '../../api/journeysApi'
 
 import JourneyTable from './JourneyTable'
-import useQueryParams from '../hooks/useQueryParams'
-import SearchBar from './common/SearchBar'
+import useQueryParams from '../../hooks/useQueryParams'
+import SearchBar from '../common/SearchBar'
 import { useDebounce } from 'use-debounce'
 
 const InfiniteScrollJourneys = () => {

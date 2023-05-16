@@ -1,4 +1,4 @@
-import { useRef, useMemo } from 'react'
+import { useRef } from 'react'
 import {
   MapContainer,
   TileLayer,
@@ -7,13 +7,12 @@ import {
   LayersControl,
   LayerGroup,
 } from 'react-leaflet'
-import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import { LatLngExpression, LatLngTuple } from 'leaflet'
-
+import { blueIcon, greenIcon } from './icons'
 const { Overlay } = LayersControl
 
-import { Station } from '../types/station'
+import { Station } from '../../types/station'
 
 interface MapProps {
   allStationCoordinates: LatLngExpression[]
@@ -28,17 +27,6 @@ const Map = (props: MapProps) => {
   const allStationsOverlayRef = useRef(null)
   const singleStationOverlayRef = useRef(null)
 
-  const greenIcon = new L.Icon({
-    iconUrl:
-      'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-    shadowUrl:
-      'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41],
-  })
-
   return (
     <MapContainer
       className="h-96"
@@ -51,10 +39,10 @@ const Map = (props: MapProps) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Overlay checked={!station} name="All stations">
+        <Overlay name="All stations">
           <LayerGroup attribution="lg1" ref={allStationsOverlayRef}>
             {allStationCoordinates?.map((coord, index) => (
-              <Marker key={index} position={coord}>
+              <Marker key={index} icon={blueIcon} position={coord}>
                 <Popup>
                   <span>
                     {index} A pretty CSS3 popup. <br /> Easily customizable.
@@ -64,7 +52,7 @@ const Map = (props: MapProps) => {
             ))}
           </LayerGroup>
         </Overlay>
-        <Overlay checked={station !== null} name="Selected Station">
+        <Overlay checked={!!station} name="Selected Station">
           <LayerGroup attribution="single" ref={singleStationOverlayRef}>
             {station && (
               <Marker

@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 import { render } from '@testing-library/react'
-import StationDetailsComponent from '../components/StationDetailsComponent'
+import StationDetailsComponent from '../components/stations/StationDetailsComponent'
 
 const station = {
   Nimi: 'Hanasaari',

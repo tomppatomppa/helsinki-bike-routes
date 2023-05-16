@@ -1,10 +1,10 @@
 import { useQuery } from 'react-query'
-import { fetchStationByID } from '../api/stationApi'
-import Spinner from './common/Spinner'
-import { StationDetails } from '../types/station'
+import { fetchStationByID } from '../../api/stationApi'
+import Spinner from '../common/Spinner'
+import { StationDetails } from '../../types/station'
 import { useState } from 'react'
-import { MonthSelector } from './common/MonthSelector'
-import Checkbox from './common/Checkbox'
+import { MonthSelector } from '../common/MonthSelector'
+import Checkbox from '../common/Checkbox'
 import StationDetailsComponent from './StationDetailsComponent'
 
 interface Props {

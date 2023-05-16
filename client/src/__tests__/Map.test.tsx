@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 import { render } from '@testing-library/react'
-import Map from '../components/Map'
+import Map from '../components/map/Map'
 import { LatLngExpression } from 'leaflet'
 
 describe('Map.tsx', () => {

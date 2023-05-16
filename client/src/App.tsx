@@ -1,5 +1,5 @@
-import InfiniteScrollStations from './components/InfiniteScrollStations'
-import InfiniteScrollJourneys from './components/infiniteScrollJourneys'
+import InfiniteScrollStations from './components/stations/InfiniteScrollStations'
+import InfiniteScrollJourneys from './components/journeys/infiniteScrollJourneys'
 
 import { Routes, Route } from 'react-router-dom'
 import MainLayout from './components/layout/MainLayout'

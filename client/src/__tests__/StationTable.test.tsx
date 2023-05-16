@@ -2,7 +2,7 @@ import { describe, expect, test, vi } from 'vitest'
 import { screen, render, within } from '@testing-library/react'
 
 import { Station } from '../types/station'
-import StationTable from '../components/StationTable'
+import StationTable from '../components/stations/StationTable'
 
 const stations: Station[] = [
   {

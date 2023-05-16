@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useTable, Column, useExpanded, Row } from 'react-table'
-import { Station } from '../types/station'
+import { Station } from '../../types/station'
 import { useMemo } from 'react'
 import React, { Fragment } from 'react'
 

@@ -1,7 +1,7 @@
 import { useTable, Column, useRowState } from 'react-table'
 
 import { useMemo } from 'react'
-import { Journey } from '../types/journey'
+import { Journey } from '../../types/journey'
 
 interface Props {
   data: Journey[]

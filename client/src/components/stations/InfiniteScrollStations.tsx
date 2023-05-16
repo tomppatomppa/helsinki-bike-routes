@@ -1,14 +1,17 @@
 import { useEffect } from 'react'
 import { useInfiniteQuery } from 'react-query'
-import { StationDataWithCursor, fetchStationsByCursor } from '../api/stationApi'
+import {
+  StationDataWithCursor,
+  fetchStationsByCursor,
+} from '../../api/stationApi'
 import { useInView } from 'react-intersection-observer'
 import { useState } from 'react'
 import StationTable from './StationTable'
-import useQueryParams from '../hooks/useQueryParams'
-import Map from './Map'
+import useQueryParams from '../../hooks/useQueryParams'
+import Map from '../map/Map'
 import { LatLngTuple } from 'leaflet'
-import { Station } from '../types/station'
-import SearchBar from './common/SearchBar'
+import { Station } from '../../types/station'
+import SearchBar from '../common/SearchBar'
 import { useDebounce } from 'use-debounce'
 
 const InfiniteScrollStations = () => {
