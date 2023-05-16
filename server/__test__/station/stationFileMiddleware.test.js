@@ -3,15 +3,6 @@ const request = supertest
 const app = require('../../app')
 
 const { csvData } = require('./createData')
-const { connectToDatabase, sequelize } = require('../../utils/database')
-
-beforeAll(async () => {
-  await connectToDatabase()
-})
-
-afterAll(async () => {
-  await sequelize.close()
-})
 
 describe('File validation /api/stations/add-many', () => {
   describe('Test sending invalid files to the endpoint', () => {

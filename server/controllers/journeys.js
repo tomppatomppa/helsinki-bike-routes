@@ -12,29 +12,26 @@ const journeysQueryValidator = require('../utils/validators/journeysQueryValidat
 const validateJourney = require('../utils/validators/validateJourney')
 const deleteTmpFile = require('../middleware/deleteTmpFile')
 const parseCSV = require('../utils/parsers/parseCSV')
-const { filterJourneys } = require('../utils/helpers')
+const { filterJourneys, chunk } = require('../utils/helpers')
 
 route.post('/add-many', upload.single('file'), async (req, res) => {
   const filePath = path.resolve(__dirname, `../${req.file.path}`)
   const parsedJourneys = await parseCSV(filePath, validateJourney)
-
+  //Filter out journeys with non existing Station ID's
   const filteredJourneys = await filterJourneys(parsedJourneys)
 
-  const found = filteredJourneys.find(
-    (item) => item.Covered_distance_m === '7791.67'
-  )
-  console.log(found)
   if (filteredJourneys.length === 0) {
     return res.status(400).json({ error: 'No valid journeys' })
   }
 
-  const addedJourneys = await Journey.bulkCreate(filteredJourneys).catch(
-    (error) => console.log(error)
-  )
+  await chunk(filteredJourneys, 20000).reduce((promise, chunk) => {
+    return promise.then(() => {
+      return Journey.bulkCreate(chunk, { ignoreDuplicates: true })
+    })
+  }, Promise.resolve())
 
   deleteTmpFile(filePath)
-
-  res.status(200).json({ addedJourneys: addedJourneys.length })
+  res.status(200).json({ addedJourneys: filteredJourneys.length })
 })
 
 route.get('/', journeysQueryValidator(), async (req, res) => {
