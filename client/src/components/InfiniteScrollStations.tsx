@@ -15,7 +15,7 @@ const InfiniteScrollStations = () => {
   const [showMap, setShowMap] = useState<boolean>(true)
   const [station, setStation] = useState<Station | null>(null)
   const { queryParams, setSearch, findByField } = useQueryParams()
-  const [value] = useDebounce(queryParams.search, 500)
+  const [searchValue] = useDebounce(queryParams.search, 200)
 
   const {
     data: stations,
@@ -26,7 +26,7 @@ const InfiniteScrollStations = () => {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery<StationDataWithCursor>(
-    ['stations', value],
+    ['stations', searchValue],
     ({ pageParam = 0 }) =>
       fetchStationsByCursor(
         pageParam,

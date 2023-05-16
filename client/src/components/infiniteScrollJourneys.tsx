@@ -10,11 +10,13 @@ import {
 import JourneyTable from './JourneyTable'
 import useQueryParams from '../hooks/useQueryParams'
 import SearchBar from './common/SearchBar'
+import { useDebounce } from 'use-debounce'
 
 const InfiniteScrollJourneys = () => {
   const { queryParams, orderByColumn, findByField, setSearch } =
     useQueryParams()
-  const { ref: loadMoreRef, inView } = useInView({ threshold: 0.25 })
+  const [searchValue] = useDebounce(queryParams.search, 200)
+  const { ref: loadMoreRef, inView } = useInView()
 
   const {
     data: journeys,
@@ -25,7 +27,7 @@ const InfiniteScrollJourneys = () => {
     fetchNextPage,
     hasNextPage,
   } = useInfiniteQuery<JourneysDataWithCursor>(
-    ['journeys', queryParams.search, queryParams.order],
+    ['journeys', searchValue, queryParams.order],
     ({ pageParam = 0 }) =>
       fetchJourneysByCursor(
         pageParam,
