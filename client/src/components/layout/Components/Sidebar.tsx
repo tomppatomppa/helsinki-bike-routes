@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 
 import UploadFile from '../../uploadFile/UploadFile'
 import CloseButton from '../../common/CloseButton'
+import StationCreate from '../../stations/StationCreateNew'
 
 interface Props {
   handleSetSidebar: () => void
@@ -11,7 +12,7 @@ const Sidebar = ({ handleSetSidebar }: Props) => {
   return (
     <div
       data-testid="sidebar-element"
-      className={`bg-neutral-100 h-full w-56 px-6 py-4 divide-y-2 transition-all duration-200`}
+      className={`flex flex-col gap-5 bg-neutral-100 h-full w-56 px-6 py-4 divide-y-2`}
     >
       <nav className="flex flex-col items-start space-y-3">
         <h5
@@ -33,6 +34,9 @@ const Sidebar = ({ handleSetSidebar }: Props) => {
       </nav>
       <div className="flex flex-col items-start">
         <UploadFile />
+      </div>
+      <div className="flex flex-col items-start">
+        <StationCreate />
       </div>
     </div>
   )

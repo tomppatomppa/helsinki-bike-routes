@@ -9,6 +9,15 @@ export interface Station {
   y: number
 }
 
+export type StationFormFields = Station & {
+  Kaupunki?: string
+  Stad?: string
+  Operaattor?: string
+  Kapasiteet: number
+  x: number
+  y: number
+}
+
 export interface StationDetails {
   Nimi: string
   Namn: string
