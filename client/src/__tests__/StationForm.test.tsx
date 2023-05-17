@@ -10,7 +10,9 @@ describe('StationForm.tsx', () => {
   }
 
   test('Renders required labels', () => {
-    const { getByLabelText } = render(<StationForm {...props} />)
+    const { getByLabelText } = render(
+      <StationForm nextAvailableID={null} {...props} />
+    )
 
     expect(getByLabelText('ID')).toBeDefined()
     expect(getByLabelText('Nimi')).toBeDefined()
@@ -27,9 +29,14 @@ describe('StationForm.tsx', () => {
   test('Calls onCancel once', async () => {
     const onCancel = vi.fn()
     const user = userEvent
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
+
     const { getByRole } = render(
-      <StationForm onCancel={onCancel} onSubmit={() => {}} />
+      <StationForm
+        nextAvailableID={null}
+        onCancel={onCancel}
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        onSubmit={() => {}}
+      />
     )
     await user.click(getByRole('button', { name: /cancel/i }))
     expect(onCancel).toHaveBeenCalledOnce()
@@ -37,8 +44,14 @@ describe('StationForm.tsx', () => {
   test('Submits correct values', async () => {
     const handleSubmit = vi.fn()
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    render(<StationForm onCancel={() => {}} onSubmit={handleSubmit} />)
+    render(
+      <StationForm
+        nextAvailableID={null}
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        onCancel={() => {}}
+        onSubmit={handleSubmit}
+      />
+    )
     screen.debug()
     const user = userEvent
 
@@ -75,8 +88,14 @@ describe('StationForm.tsx', () => {
   test('Should not send when validation fails', async () => {
     const handleSubmit = vi.fn()
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    render(<StationForm onCancel={() => {}} onSubmit={handleSubmit} />)
+    render(
+      <StationForm
+        nextAvailableID={null}
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        onCancel={() => {}}
+        onSubmit={handleSubmit}
+      />
+    )
 
     const user = userEvent
     await user.click(screen.getByRole('button', { name: /save/i }))
