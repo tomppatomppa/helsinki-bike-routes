@@ -2,24 +2,27 @@ import { useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 import { createStation } from '../../../api/stationApi'
 
-const useCreateStation = (setShowModal: (value: string) => void) => {
+const useCreateStation = () => {
   const queryClient = useQueryClient()
   const [nextID, setNextID] = useState<number | null>(null)
 
-  const { mutate: sendStationForm, isLoading } = useMutation(createStation, {
+  const {
+    mutate: sendStationForm,
+    isLoading,
+    isSuccess,
+  } = useMutation(createStation, {
     onError: ({ response }) => {
       const ID = response?.data?.nextAvailableID
       if (ID) {
         setNextID(ID)
       }
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries('stations')
-      setShowModal(`Station ${data.Name} Created`)
     },
   })
 
-  return { sendStationForm, nextID, isLoading }
+  return { sendStationForm, nextID, isLoading, isSuccess }
 }
 
 export default useCreateStation

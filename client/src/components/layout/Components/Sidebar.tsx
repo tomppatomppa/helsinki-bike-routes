@@ -10,13 +10,9 @@ interface Props {
 }
 
 const Sidebar = ({ handleSetSidebar }: Props) => {
-  const [message, setMessage] = useState<string>('')
   const [showModal, setShowModal] = useState<boolean>(false)
 
-  const handleSetShowModal = (message: string | null) => {
-    if (message) {
-      setMessage(message)
-    }
+  const handleSetShowModal = () => {
     setShowModal(!showModal)
   }
 
@@ -55,7 +51,6 @@ const Sidebar = ({ handleSetSidebar }: Props) => {
             Add Station
           </button>
         )}
-        {message && <div className="p-2 bg-gray-200">{message}</div>}
         <Modal show={showModal}>
           <StationCreate setShowModal={handleSetShowModal} />
         </Modal>
