@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import UploadFile from '../../uploadFile/UploadFile'
 import CloseButton from '../../common/CloseButton'
@@ -10,7 +10,16 @@ interface Props {
 }
 
 const Sidebar = ({ handleSetSidebar }: Props) => {
+  const [message, setMessage] = useState<string>('')
   const [showModal, setShowModal] = useState<boolean>(false)
+
+  const handleSetShowModal = (message: string | null) => {
+    if (message) {
+      setMessage(message)
+    }
+    setShowModal(!showModal)
+  }
+
   return (
     <div
       data-testid="sidebar-element"
@@ -46,8 +55,9 @@ const Sidebar = ({ handleSetSidebar }: Props) => {
             Add Station
           </button>
         )}
+        <div className="p-2 bg-green-200">{message}</div>
         <Modal show={showModal}>
-          <StationCreate setShowModal={setShowModal} />
+          <StationCreate setShowModal={handleSetShowModal} />
         </Modal>
       </div>
     </div>

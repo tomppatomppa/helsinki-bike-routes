@@ -1,18 +1,20 @@
 import { StationForm } from './StationForm'
-import { StationFormFields } from '../../types/station'
+
+import useCreateStation from './hooks/useCreateStation'
 
 interface Props {
-  setShowModal: (value: boolean) => void
+  setShowModal: (value: string | null) => void
 }
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
 
 const StationCreate = ({ setShowModal }: Props) => {
-  const handleSubmit = async (values: StationFormFields) => {
-    await sleep(500)
-    console.log(values)
-  }
+  const { sendStationForm, nextID } = useCreateStation(setShowModal)
+
   return (
-    <StationForm onSubmit={handleSubmit} onCancel={() => setShowModal(false)} />
+    <StationForm
+      nextAvailableID={nextID}
+      onSubmit={sendStationForm}
+      onCancel={() => setShowModal(null)}
+    />
   )
 }
 

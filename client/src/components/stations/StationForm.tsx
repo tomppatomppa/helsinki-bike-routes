@@ -3,11 +3,13 @@ import { StationFormFields } from '../../types/station'
 import * as Yup from 'yup'
 
 interface StationFormProps {
+  nextAvailableID: number | null
   onCancel: () => void
   onSubmit: (value: StationFormFields) => void
 }
 
 const StationSchema = Yup.object().shape({
+  ID: Yup.number().integer().min(1, 'Min value 1').required('Required'),
   Nimi: Yup.string()
     .min(3, 'Too Short!')
     .max(50, 'Too Long!')
@@ -46,7 +48,7 @@ const StationSchema = Yup.object().shape({
 })
 
 export const StationForm = (props: StationFormProps) => {
-  const { onCancel, onSubmit } = props
+  const { onCancel, onSubmit, nextAvailableID } = props
 
   return (
     <Formik
@@ -67,10 +69,18 @@ export const StationForm = (props: StationFormProps) => {
       validationSchema={StationSchema}
       onSubmit={onSubmit}
     >
-      {({ isSubmitting }) => (
+      {() => (
         <Form className="flex flex-col">
           <label htmlFor="ID">ID</label>
           <Field id="ID" name="ID" placeholder="ID" type="number" />
+          {nextAvailableID && (
+            <div className="text-red-900">
+              Next available ID : {nextAvailableID}
+            </div>
+          )}
+          <ErrorMessage className="text-red-900" name="ID">
+            {(msg) => <div className="text-red-900">{msg}</div>}
+          </ErrorMessage>
 
           <label htmlFor="Nimi">Nimi</label>
           <Field id="Nimi" name="Nimi" placeholder="Nimi" />
@@ -141,11 +151,7 @@ export const StationForm = (props: StationFormProps) => {
           <label htmlFor="y">y</label>
           <Field id="y" name="y" placeholder="y" type="number" />
           <div className="flex justify-evenly mt-12">
-            <button
-              disabled={isSubmitting}
-              className="p-2 bg-green-200"
-              type="submit"
-            >
+            <button className="p-2 bg-green-200" type="submit">
               Submit
             </button>
             <button className="p-2 bg-red-200" type="button" onClick={onCancel}>

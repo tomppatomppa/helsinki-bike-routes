@@ -7,11 +7,11 @@ const validateStation = require('../utils/validators/validateStation')
 const deleteTmpFile = require('../middleware/deleteTmpFile')
 
 const { Station } = require('../models/index')
-
 const { Op, Sequelize } = require('sequelize')
 
 const stationsQueryValidator = require('../utils/validators/stationsQueryValidator')
 const { validationResult } = require('express-validator')
+const { getNextAvailableID } = require('../utils/helpers')
 
 route.post('/add-many', upload.single('file'), async (req, res) => {
   const filePath = path.resolve(__dirname, `../${req.file.path}`)
@@ -21,9 +21,7 @@ route.post('/add-many', upload.single('file'), async (req, res) => {
     const { FID, ...rest } = item
     return rest
   })
-
   const errors = []
-
   const savedStations = await Station.bulkCreate(withoutFID, {
     validate: true,
     ignoreDuplicates: true,
@@ -34,9 +32,13 @@ route.post('/add-many', upload.single('file'), async (req, res) => {
 })
 
 route.post('/add-single', async (req, res) => {
-  const result = await Station.create({ ...req.body })
-
-  res.status(200).json(result)
+  try {
+    const result = await Station.create({ ...req.body })
+    res.status(200).json(result)
+  } catch (e) {
+    const id = await getNextAvailableID()
+    res.status(400).json({ nextAvailableID: id })
+  }
 })
 
 route.get('/', stationsQueryValidator(), async (req, res) => {

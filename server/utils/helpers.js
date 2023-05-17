@@ -26,6 +26,7 @@ function removeDot(obj) {
 }
 
 const { Station } = require('../models/index')
+const { sequelize } = require('./database')
 
 async function filterJourneys(journeys) {
   const allStations = await Station.findAll({
@@ -39,7 +40,19 @@ async function filterJourneys(journeys) {
       stationIds.includes(journey.Return_station_id)
   )
 }
-
+const getNextAvailableID = async () => {
+  try {
+    const query = 'SELECT COALESCE(MAX("ID"), 0) + 1 AS next_id FROM stations;'
+    const result = await sequelize.query(query, {
+      type: sequelize.QueryTypes.SELECT,
+    })
+    const nextID = result[0].next_id
+    return nextID
+  } catch (error) {
+    console.error('Failed to get the next available ID:', error)
+    throw error
+  }
+}
 function chunk(array, size) {
   if (size < 1) throw new Error('Size must be positive')
 
@@ -56,4 +69,5 @@ module.exports = {
   removeDot,
   filterJourneys,
   chunk,
+  getNextAvailableID,
 }

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Station, StationDetails } from '../types/station'
+import { Station, StationDetails, StationFormFields } from '../types/station'
 
 const baseUrl = '/api/stations'
 
@@ -29,5 +29,12 @@ export const fetchStationByID = async (
   const { data } = await axios.get<StationDetails>(`${baseUrl}/${stationID}`, {
     params: { ...dates },
   })
+  return data
+}
+export const createStation = async (values: StationFormFields) => {
+  const { data } = await axios.post<StationDetails>(
+    `${baseUrl}/add-single`,
+    values
+  )
   return data
 }
