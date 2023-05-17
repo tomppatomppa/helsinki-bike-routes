@@ -31,3 +31,20 @@ export interface StationDetails {
   most_common_return_stations: string[]
   most_common_departure_stations: string[]
 }
+
+export interface CreatedStationFields {
+  FID: number
+  ID: number
+  Kapasiteet: number
+  Kaupunki: string
+  Name: string
+  Namn: string
+  Nimi: string
+  Operaattor: string
+  Osoite: string
+  Stad: string
+  createdAt: string
+  updatedAt: string
+  x: number
+  y: number
+}

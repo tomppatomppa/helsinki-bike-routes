@@ -1,5 +1,10 @@
 import axios from 'axios'
-import { Station, StationDetails, StationFormFields } from '../types/station'
+import {
+  CreatedStationFields,
+  Station,
+  StationDetails,
+  StationFormFields,
+} from '../types/station'
 
 const baseUrl = '/api/stations'
 
@@ -31,14 +36,13 @@ export const fetchStationByID = async (
   })
   return data
 }
-export const createStation = async (values: StationFormFields) => {
-  const { data } = await axios.post<StationDetails>(
-    `${baseUrl}/add-single`,
-    values
-  )
+export const createStation = async (
+  values: StationFormFields
+): Promise<CreatedStationFields> => {
+  const { data } = await axios.post(`${baseUrl}/add-single`, values)
   return data
 }
 export const deleteStation = async (ID: number) => {
-  const { data } = await axios.delete<StationDetails>(`${baseUrl}/${ID}`)
+  const { data } = await axios.delete(`${baseUrl}/${ID}`)
   return data
 }

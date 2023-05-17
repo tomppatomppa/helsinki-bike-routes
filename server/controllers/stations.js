@@ -178,11 +178,20 @@ route.get('/:id', async (req, res) => {
 })
 
 route.delete('/:id', async (req, res) => {
-  await Station.destroy({
+  const { id } = req.params
+  const station = await Station.findOne({
     where: {
-      ID: req.params.id,
+      ID: id,
     },
   })
-  res.status(200).json('Deleted Station')
+
+  if (!station) {
+    return res
+      .status(404)
+      .json({ error: `Station with the ID ${id} doesn't exist` })
+  }
+  await station.destroy()
+
+  res.status(200).json(`Deleted Station ${id}`)
 })
 module.exports = route

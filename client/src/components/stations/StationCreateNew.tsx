@@ -11,22 +11,29 @@ interface Props {
 
 const StationCreate = ({ setShowModal }: Props) => {
   const { sendStationForm, nextID, station } = useCreateStation()
-  const { mutate: deleteCreatedStation, isSuccess } = useMutation(deleteStation)
-  console.log(station)
+  const {
+    mutate: deleteCreatedStation,
+    isSuccess,
+    isError,
+  } = useMutation(deleteStation)
+
   return station ? (
     <div className="relative bg-white p-12 flex rounded-md flex-col">
       <label className="text-xl">
         {isSuccess ? 'Deleted Station' : 'Succesfully added station'}
       </label>
+      {isError && <label>Station has already been deleted</label>}
       <div className="absolute top-0 right-0">
         <CloseButton onClick={() => setShowModal(null)} />
       </div>
-      <button
-        className="p-2 mt-6 bg-red-900 text-white"
-        onClick={() => deleteCreatedStation(station?.ID)}
-      >
-        Delete Created Station
-      </button>
+      {!isSuccess && (
+        <button
+          className="p-2 mt-6 bg-red-900 text-white"
+          onClick={() => deleteCreatedStation(station?.ID)}
+        >
+          Delete Created Station
+        </button>
+      )}
     </div>
   ) : (
     <StationForm
