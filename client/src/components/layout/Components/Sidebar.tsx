@@ -42,7 +42,7 @@ const Sidebar = ({ handleSetSidebar }: Props) => {
       <div className="flex flex-col items-start">
         <UploadFile />
       </div>
-      <div className="flex flex-col items-start">
+      <div className="flex flex-col items-start flex-1">
         {!showModal && (
           <button
             className="border p-2 mt-2 bg-gray-300"
@@ -54,6 +54,9 @@ const Sidebar = ({ handleSetSidebar }: Props) => {
         <Modal show={showModal}>
           <StationCreate setShowModal={handleSetShowModal} />
         </Modal>
+      </div>
+      <div className="self-end">
+        <button className="p-2 bg-red-900 text-white">Delete Test Data</button>
       </div>
     </div>
   )

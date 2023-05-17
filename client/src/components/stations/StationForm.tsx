@@ -331,7 +331,6 @@ export const StationForm = (props: StationFormProps) => {
                       <Field
                         id="x"
                         name="x"
-                        min={0}
                         placeholder="x"
                         type="number"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -352,7 +351,6 @@ export const StationForm = (props: StationFormProps) => {
                       <Field
                         id="y"
                         name="y"
-                        min={0}
                         placeholder="y"
                         type="number"
                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"

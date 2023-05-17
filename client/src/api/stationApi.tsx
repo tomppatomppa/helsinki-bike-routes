@@ -38,3 +38,7 @@ export const createStation = async (values: StationFormFields) => {
   )
   return data
 }
+export const deleteStation = async (ID: number) => {
+  const { data } = await axios.delete<StationDetails>(`${baseUrl}/${ID}`)
+  return data
+}
