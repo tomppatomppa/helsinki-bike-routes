@@ -82,7 +82,7 @@ export const StationForm = (props: StationFormProps) => {
     >
       {() => (
         <Form className="bg-neutral-200 p-12 rounded-md">
-          <div className="space-y-12">
+          <div className="space-y-12 mt-16">
             <div className="border-b border-gray-900/10 pb-12">
               <h2 className="text-base font-semibold leading-7 text-gray-900">
                 Create a new station

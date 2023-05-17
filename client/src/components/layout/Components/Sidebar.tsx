@@ -51,12 +51,10 @@ const Sidebar = ({ handleSetSidebar }: Props) => {
             Add Station
           </button>
         )}
+
         <Modal show={showModal}>
           <StationCreate setShowModal={handleSetShowModal} />
         </Modal>
-      </div>
-      <div className="self-end">
-        <button className="p-2 bg-red-900 text-white">Delete Test Data</button>
       </div>
     </div>
   )
