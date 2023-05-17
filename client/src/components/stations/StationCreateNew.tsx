@@ -8,11 +8,13 @@ interface Props {
 
 const StationCreate = ({ setShowModal }: Props) => {
   const { sendStationForm, nextID } = useCreateStation(setShowModal)
-
+  const handleSend = (value) => {
+    console.log(value)
+  }
   return (
     <StationForm
       nextAvailableID={nextID}
-      onSubmit={sendStationForm}
+      onSubmit={handleSend}
       onCancel={() => setShowModal(null)}
     />
   )

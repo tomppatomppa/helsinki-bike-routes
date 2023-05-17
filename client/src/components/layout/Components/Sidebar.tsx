@@ -55,7 +55,7 @@ const Sidebar = ({ handleSetSidebar }: Props) => {
             Add Station
           </button>
         )}
-        <div className="p-2 bg-green-200">{message}</div>
+        {message && <div className="p-2 bg-gray-200">{message}</div>}
         <Modal show={showModal}>
           <StationCreate setShowModal={handleSetShowModal} />
         </Modal>

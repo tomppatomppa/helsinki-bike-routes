@@ -10,13 +10,12 @@ const useCreateStation = (setShowModal: (value: string) => void) => {
     onError: ({ response }) => {
       const ID = response?.data?.nextAvailableID
       if (ID) {
-        console.log('set')
         setNextID(ID)
       }
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries('stations')
-      setShowModal(`Station ${data.Name} created`)
+      setShowModal(`Station ${data.Name} Created`)
     },
   })
 
