@@ -28,6 +28,7 @@ describe('StationForm.tsx', () => {
   test('Submits correct values', async () => {
     const handleSubmit = vi.fn()
 
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     render(<StationForm onCancel={() => {}} onSubmit={handleSubmit} />)
 
     const user = userEvent

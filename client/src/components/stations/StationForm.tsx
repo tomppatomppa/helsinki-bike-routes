@@ -28,6 +28,21 @@ const StationSchema = Yup.object().shape({
     .min(3, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
+  Kaupunki: Yup.string().optional().max(50, 'Too Long!'),
+  Stad: Yup.string().optional().max(50, 'Too Long!'),
+  Operaattor: Yup.string().optional().max(50, 'Too Long!'),
+  Kapasiteet: Yup.number()
+    .integer()
+    .min(0, 'Cannot be negative')
+    .required('Required'),
+  x: Yup.number()
+    .min(-90, 'Min longitude is -90')
+    .max(90, 'Max longitude is 90')
+    .required('Required'),
+  y: Yup.number()
+    .min(-180, 'Min latitude is -180')
+    .max(180, 'Max latitude is 180')
+    .required('Required'),
 })
 export const StationForm = (props: StationFormProps) => {
   const { onCancel, onSubmit } = props
@@ -52,7 +67,7 @@ export const StationForm = (props: StationFormProps) => {
       onSubmit={onSubmit}
     >
       {() => (
-        <Form>
+        <Form className="flex flex-col">
           <label htmlFor="ID">ID</label>
           <Field id="ID" name="ID" placeholder="ID" type="number" />
 
@@ -88,10 +103,22 @@ export const StationForm = (props: StationFormProps) => {
 
           <label htmlFor="Kaupunki">Kaupunki</label>
           <Field id="Kaupunki" name="Kaupunki" placeholder="Kaupunki" />
+          <ErrorMessage className="text-red-900" name="Kaupunki">
+            {(msg) => <div className="text-red-900">{msg}</div>}
+          </ErrorMessage>
+
           <label htmlFor="Stad">Stad</label>
           <Field id="Stad" name="Stad" placeholder="Stad" />
+          <ErrorMessage className="text-red-900" name="Stad">
+            {(msg) => <div className="text-red-900">{msg}</div>}
+          </ErrorMessage>
+
           <label htmlFor="Operaattor">Operaattor</label>
           <Field id="Operaattor" name="Operaattor" placeholder="Operaattor" />
+          <ErrorMessage className="text-red-900" name="Operaattor">
+            {(msg) => <div className="text-red-900">{msg}</div>}
+          </ErrorMessage>
+
           <label htmlFor="Kapasiteet">Kapasiteet</label>
           <Field
             id="Kapasiteet"
@@ -100,8 +127,16 @@ export const StationForm = (props: StationFormProps) => {
             placeholder="Kapasiteet"
             type="number"
           />
+          <ErrorMessage className="text-red-900" name="Kapasiteet">
+            {(msg) => <div className="text-red-900">{msg}</div>}
+          </ErrorMessage>
+
           <label htmlFor="x">x</label>
           <Field id="x" name="x" placeholder="x" type="number" />
+          <ErrorMessage className="text-red-900" name="x">
+            {(msg) => <div className="text-red-900">{msg}</div>}
+          </ErrorMessage>
+
           <label htmlFor="y">y</label>
           <Field id="y" name="y" placeholder="y" type="number" />
           <div className="flex justify-evenly mt-12">
