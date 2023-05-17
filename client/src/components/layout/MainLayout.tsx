@@ -24,7 +24,7 @@ const MainLayout = () => {
       <div className="col-span-2 row-span-auto">
         <Header handleSetSidebar={handleSetSidebar} />
       </div>
-      <aside className="fixed z-10 bottom-0 h-full">
+      <aside className="fixed z-10 bottom-0 h-full overscroll-auto">
         {showSidebar && <Sidebar handleSetSidebar={handleSetSidebar} />}
       </aside>
       <main className="col-start-auto col-span-auto">

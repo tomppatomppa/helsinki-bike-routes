@@ -1,20 +1,22 @@
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-
 import UploadFile from '../../uploadFile/UploadFile'
 import CloseButton from '../../common/CloseButton'
 import StationCreate from '../../stations/StationCreateNew'
+import Modal from '../../common/Modal'
 
 interface Props {
   handleSetSidebar: () => void
 }
 
 const Sidebar = ({ handleSetSidebar }: Props) => {
+  const [showModal, setShowModal] = useState<boolean>(false)
   return (
     <div
       data-testid="sidebar-element"
-      className={`flex flex-col gap-5 bg-neutral-100 h-full w-56 px-6 py-4 divide-y-2`}
+      className={` flex flex-col gap-5 bg-neutral-100 h-full w-56 px-6 py-4 divide-y-2`}
     >
-      <nav className="flex flex-col items-start space-y-3">
+      <nav className="flex flex-col items-start space-y-3 ">
         <h5
           id="drawer-navigation-label"
           className="text-base font-semibold text-gray-500 uppercase"
@@ -36,7 +38,17 @@ const Sidebar = ({ handleSetSidebar }: Props) => {
         <UploadFile />
       </div>
       <div className="flex flex-col items-start">
-        <StationCreate />
+        {!showModal && (
+          <button
+            className="border p-2 mt-2 bg-gray-300"
+            onClick={() => setShowModal(!showModal)}
+          >
+            Add Station
+          </button>
+        )}
+        <Modal show={showModal}>
+          <StationCreate setShowModal={setShowModal} />
+        </Modal>
       </div>
     </div>
   )
