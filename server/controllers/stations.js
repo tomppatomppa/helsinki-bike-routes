@@ -177,4 +177,12 @@ route.get('/:id', async (req, res) => {
   return res.status(200).json(stationExists)
 })
 
+route.delete('/:id', async (req, res) => {
+  await Station.destroy({
+    where: {
+      ID: req.params.id,
+    },
+  })
+  res.status(200).json('Deleted Station')
+})
 module.exports = route
