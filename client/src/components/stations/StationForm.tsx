@@ -44,6 +44,7 @@ const StationSchema = Yup.object().shape({
     .max(180, 'Max latitude is 180')
     .required('Required'),
 })
+
 export const StationForm = (props: StationFormProps) => {
   const { onCancel, onSubmit } = props
 
@@ -66,7 +67,7 @@ export const StationForm = (props: StationFormProps) => {
       validationSchema={StationSchema}
       onSubmit={onSubmit}
     >
-      {() => (
+      {({ isSubmitting }) => (
         <Form className="flex flex-col">
           <label htmlFor="ID">ID</label>
           <Field id="ID" name="ID" placeholder="ID" type="number" />
@@ -140,7 +141,11 @@ export const StationForm = (props: StationFormProps) => {
           <label htmlFor="y">y</label>
           <Field id="y" name="y" placeholder="y" type="number" />
           <div className="flex justify-evenly mt-12">
-            <button className="p-2 bg-green-200" type="submit">
+            <button
+              disabled={isSubmitting}
+              className="p-2 bg-green-200"
+              type="submit"
+            >
               Submit
             </button>
             <button className="p-2 bg-red-200" type="button" onClick={onCancel}>

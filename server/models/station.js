@@ -7,8 +7,8 @@ Station.init(
   {
     FID: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
       primaryKey: true,
+      autoIncrement: true,
     },
     ID: {
       type: DataTypes.INTEGER,
@@ -104,9 +104,11 @@ Station.init(
       },
     },
   },
+
   {
     sequelize,
     modelName: 'station',
+    primaryKey: 'FID',
     hooks: {
       beforeValidate: (instance) => {
         Object.keys(instance.dataValues).forEach((key) => {

@@ -1,5 +1,5 @@
 import { describe, expect, test, vi } from 'vitest'
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { StationForm } from '../components/stations/StationForm'
 import userEvent from '@testing-library/user-event'
 
@@ -24,7 +24,16 @@ describe('StationForm.tsx', () => {
     expect(getByLabelText('x')).toBeDefined()
     expect(getByLabelText('y')).toBeDefined()
   })
-
+  test('Calls onCancel once', async () => {
+    const onCancel = vi.fn()
+    const user = userEvent
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    const { getByRole } = render(
+      <StationForm onCancel={onCancel} onSubmit={() => {}} />
+    )
+    await user.click(getByRole('button', { name: /cancel/i }))
+    expect(onCancel).toHaveBeenCalledOnce()
+  })
   test('Submits correct values', async () => {
     const handleSubmit = vi.fn()
 
@@ -67,5 +76,17 @@ describe('StationForm.tsx', () => {
         y: 24.87,
       })
     })
+  })
+  test('Should not send when validation fails', async () => {
+    const handleSubmit = vi.fn()
+
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    render(<StationForm onCancel={() => {}} onSubmit={handleSubmit} />)
+
+    const user = userEvent
+    await user.click(screen.getByRole('button', { name: /submit/i }))
+    const divElement = screen.getAllByText('Required')
+    expect(handleSubmit).toHaveBeenCalledTimes(0)
+    expect(divElement).toBeDefined()
   })
 })

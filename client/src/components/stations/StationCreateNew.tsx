@@ -4,9 +4,11 @@ import { StationFormFields } from '../../types/station'
 interface Props {
   setShowModal: (value: boolean) => void
 }
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
 
 const StationCreate = ({ setShowModal }: Props) => {
-  const handleSubmit = (values: StationFormFields) => {
+  const handleSubmit = async (values: StationFormFields) => {
+    await sleep(500)
     console.log(values)
   }
   return (

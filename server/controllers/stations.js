@@ -17,12 +17,16 @@ route.post('/add-many', upload.single('file'), async (req, res) => {
   const filePath = path.resolve(__dirname, `../${req.file.path}`)
 
   const result = await parseCSV(filePath, validateStation)
+  const withoutFID = result.map((item) => {
+    const { FID, ...rest } = item
+    return rest
+  })
 
   const errors = []
 
-  const savedStations = await Station.bulkCreate(result, {
-    ignoreDuplicates: true,
+  const savedStations = await Station.bulkCreate(withoutFID, {
     validate: true,
+    ignoreDuplicates: true,
   }).catch((error) => errors.push(error))
 
   deleteTmpFile(filePath)
