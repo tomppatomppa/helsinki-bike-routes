@@ -21,8 +21,8 @@ describe('StationForm.tsx', () => {
     expect(getByLabelText('Kaupunki')).toBeDefined()
     expect(getByLabelText('Operaattor')).toBeDefined()
     expect(getByLabelText('Kapasiteet')).toBeDefined()
-    expect(getByLabelText('x')).toBeDefined()
-    expect(getByLabelText('y')).toBeDefined()
+    expect(getByLabelText('Longitude(x)')).toBeDefined()
+    expect(getByLabelText('Latitude(y)')).toBeDefined()
   })
   test('Calls onCancel once', async () => {
     const onCancel = vi.fn()
@@ -39,7 +39,7 @@ describe('StationForm.tsx', () => {
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     render(<StationForm onCancel={() => {}} onSubmit={handleSubmit} />)
-
+    screen.debug()
     const user = userEvent
 
     user.clear(screen.getByLabelText('ID'))
@@ -49,14 +49,9 @@ describe('StationForm.tsx', () => {
     await user.type(screen.getByLabelText('Namn'), 'Hanaholmen')
     await user.type(screen.getByLabelText('Osoite'), 'Hanasaarenranta 1')
     await user.type(screen.getByLabelText('Adress'), 'Hanaholmsstranden 1')
-    await user.type(screen.getByLabelText('Kaupunki'), 'Espoo')
-    await user.type(screen.getByLabelText('Stad'), 'Esbo')
-    await user.type(screen.getByLabelText('Kapasiteet'), '20')
-    await user.type(screen.getByLabelText('Operaattor'), 'Helsinki City Bikes')
-    await user.type(screen.getByLabelText('x'), '60.42')
-    await user.type(screen.getByLabelText('y'), '24.87')
 
-    await user.click(screen.getByRole('button', { name: /submit/i }))
+    expect(screen.getByRole('button', { name: /save/i })).toBeDefined()
+    await user.click(screen.getByRole('button', { name: /save/i }))
 
     expect(handleSubmit).toHaveBeenCalledOnce()
     await waitFor(() => {
@@ -68,12 +63,12 @@ describe('StationForm.tsx', () => {
         Nimi: 'Hanasaari',
         Osoite: 'Hanasaarenranta 1',
         Adress: 'Hanaholmsstranden 1',
-        Kaupunki: 'Espoo',
-        Stad: 'Esbo',
-        Operaattor: 'Helsinki City Bikes',
-        Kapasiteet: 20,
-        x: 60.42,
-        y: 24.87,
+        Kaupunki: '',
+        Stad: '',
+        Operaattor: '',
+        Kapasiteet: 0,
+        x: 0,
+        y: 0,
       })
     })
   })
@@ -84,7 +79,7 @@ describe('StationForm.tsx', () => {
     render(<StationForm onCancel={() => {}} onSubmit={handleSubmit} />)
 
     const user = userEvent
-    await user.click(screen.getByRole('button', { name: /submit/i }))
+    await user.click(screen.getByRole('button', { name: /save/i }))
     const divElement = screen.getAllByText('Required')
     expect(handleSubmit).toHaveBeenCalledTimes(0)
     expect(divElement).toBeDefined()

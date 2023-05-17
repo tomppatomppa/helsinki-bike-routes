@@ -81,15 +81,12 @@ export const StationForm = (props: StationFormProps) => {
       onSubmit={onSubmit}
     >
       {() => (
-        <Form>
+        <Form className="bg-neutral-200 p-12 rounded-md">
           <div className="space-y-12">
             <div className="border-b border-gray-900/10 pb-12">
               <h2 className="text-base font-semibold leading-7 text-gray-900">
                 Create a new station
               </h2>
-              <p className="mt-1 text-sm leading-6 text-gray-600">
-                Use a permanent address where you can receive mail.
-              </p>
 
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 {/* ID*/}
