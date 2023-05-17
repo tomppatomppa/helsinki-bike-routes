@@ -50,6 +50,7 @@ export const StationForm = (props: StationFormProps) => {
         <Field
           id="Kapasiteet"
           name="Kapasiteet"
+          min={0}
           placeholder="Kapasiteet"
           type="number"
         />

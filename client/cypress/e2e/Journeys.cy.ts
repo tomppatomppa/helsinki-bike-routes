@@ -10,7 +10,7 @@ describe('Stations', () => {
     cy.get('input').should('be.disabled')
   })
 
-  it('Pressing column should set query param order ASC and DESC', () => {
+  it('Pressing column should set query param order to ASC and DESC', () => {
     cy.visit('/journeys')
 
     cy.intercept(
