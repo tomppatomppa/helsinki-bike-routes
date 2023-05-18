@@ -1,16 +1,8 @@
-import {
-  Field,
-  Form,
-  Formik,
-  ErrorMessage,
-  useFormikContext,
-  useFormik,
-} from 'formik'
+import { Field, Form, Formik, ErrorMessage } from 'formik'
 
 import * as Yup from 'yup'
 import { JourneyFormFields } from '../../types/journey'
 import { useState } from 'react'
-import CloseButton from '../common/CloseButton'
 
 interface JourneyFormProps {
   onCancel: () => void
@@ -23,6 +15,9 @@ interface Station {
 
 const JourneySchema = Yup.object().shape({
   Departure_station_name: Yup.string().required('Required'),
+  Departure_station_id: Yup.number().positive().required('Required'),
+  Return_station_name: Yup.string().required('Required'),
+  Return_station_id: Yup.number().positive().required('Required'),
 })
 const dummyStations = [
   {
@@ -34,18 +29,20 @@ const dummyStations = [
     Name: 'Keilalahti',
   },
   {
-    id: 1,
+    id: 3,
     Name: 'Westendinasema',
   },
   {
-    id: 1,
+    id: 4,
     Name: 'Golfpolku',
   },
 ]
 export const AddJourneyForm = (props: JourneyFormProps) => {
+  const [activeInput, setActiveInput] = useState<string>('')
   const { onCancel, onSubmit } = props
   const [stations] = useState<Station[]>(dummyStations)
   const [search, setSearch] = useState<string>('')
+
   const filtered = stations.filter((station) =>
     station.Name.toLowerCase().includes(search.toLowerCase())
   )
@@ -56,6 +53,8 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
       initialValues={{
         Departure_station_name: '',
         Departure_station_id: '',
+        Return_station_name: '',
+        Return_station_id: '',
       }}
       onSubmit={onSubmit}
     >
@@ -91,13 +90,13 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                       {(msg) => <div className="text-red-900">{msg}</div>}
                     </ErrorMessage>
                     <input
+                      onClick={() => setActiveInput('departure')}
                       value={search}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         setSearch(e.target.value)
                       }
                     />
-
-                    {search && (
+                    {activeInput === 'departure' && (
                       <div className="absolute mt-1 w-full bg-white shadow-lg rounded-bl rounded-br max-h-36 overflow-y-auto">
                         {filtered?.map((station, index) => (
                           <div
@@ -108,6 +107,57 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                               )
                               setFieldValue('Departure_station_id', station.id)
                               setSearch('')
+                              setActiveInput('')
+                            }}
+                            className="cursor-pointer hover:bg-neutral-200 p-2"
+                            key={index}
+                          >
+                            {station?.Name}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+                {/* Return_station_name*/}
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="Departure_station_name"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Return station
+                  </label>
+                  <div className="mt-2 relative">
+                    <Field
+                      disabled={true}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      id="Return_station_name"
+                      name="Return_station_name"
+                      placeholder="Return station name"
+                      type="input"
+                    />
+                    <ErrorMessage
+                      className="text-red-900"
+                      name="Return_station_name"
+                    >
+                      {(msg) => <div className="text-red-900">{msg}</div>}
+                    </ErrorMessage>
+                    <input
+                      onClick={() => setActiveInput('return')}
+                      value={search}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setSearch(e.target.value)
+                      }
+                    />
+                    {activeInput === 'return' && (
+                      <div className="absolute mt-1 w-full bg-white shadow-lg rounded-bl rounded-br max-h-36 overflow-y-auto">
+                        {filtered?.map((station, index) => (
+                          <div
+                            onClick={() => {
+                              setFieldValue('Return_station_name', station.Name)
+                              setFieldValue('Return_station_id', station.id)
+                              setSearch('')
+                              setActiveInput('')
                             }}
                             className="cursor-pointer hover:bg-neutral-200 p-2"
                             key={index}
