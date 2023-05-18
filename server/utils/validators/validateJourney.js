@@ -1,5 +1,4 @@
 const isFloat = require('./isFloat')
-const isPositiveInteger = require('./isPositiveInteger')
 
 const MIN_STATION_ID = 1
 const MIN_JOURNEY_DURATION = 600

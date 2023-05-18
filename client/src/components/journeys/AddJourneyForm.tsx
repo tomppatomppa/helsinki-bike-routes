@@ -32,6 +32,7 @@ const JourneySchema = Yup.object().shape({
         return getDateDifferenceInMinutes(value, departure) >= 600
       }
     ),
+  Distance: Yup.number().required('Required').min(10, 'Minimum 10 meters'),
 })
 const dummyStations = [
   {
@@ -72,6 +73,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
         Departure: new Date(),
         Return: new Date(),
         Duration: '',
+        Distance: '',
       }}
       onSubmit={onSubmit}
     >
@@ -252,6 +254,26 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                     />
 
                     <ErrorMessage className="text-red-900" name="Duration">
+                      {(msg) => <div className="text-red-900">{msg}</div>}
+                    </ErrorMessage>
+                  </div>
+                </div>
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="Distance"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Distance (m)
+                  </label>
+                  <div className="mt-2">
+                    <Field
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      id="Distance"
+                      name="Distance"
+                      placeholder="Distance"
+                      type="number"
+                    />
+                    <ErrorMessage className="text-red-900" name="Distance">
                       {(msg) => <div className="text-red-900">{msg}</div>}
                     </ErrorMessage>
                   </div>
