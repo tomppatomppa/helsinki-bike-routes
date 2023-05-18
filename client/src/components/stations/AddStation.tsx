@@ -6,7 +6,7 @@ import useCreateStation from './hooks/useCreateStation'
 import { deleteStation } from '../../api/stationApi'
 
 interface Props {
-  setShowModal: (value: string | null) => void
+  setShowModal: (value: boolean) => void
 }
 
 const AddStation = ({ setShowModal }: Props) => {
@@ -24,7 +24,7 @@ const AddStation = ({ setShowModal }: Props) => {
       </label>
       {isError && <label>Station has already been deleted</label>}
       <div className="absolute top-0 right-0">
-        <CloseButton onClick={() => setShowModal(null)} />
+        <CloseButton onClick={() => setShowModal(false)} />
       </div>
       {!isSuccess && (
         <button
@@ -39,7 +39,7 @@ const AddStation = ({ setShowModal }: Props) => {
     <StationForm
       nextAvailableID={nextID}
       onSubmit={sendStationForm}
-      onCancel={() => setShowModal(null)}
+      onCancel={() => setShowModal(false)}
     />
   )
 }

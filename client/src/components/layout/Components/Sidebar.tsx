@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import UploadFile from '../../uploadFile/UploadFile'
 import CloseButton from '../../common/CloseButton'
 import Modal from '../../common/Modal'
-import AddStation from '../../stations/addStation'
+import AddStation from '../../stations/AddStation'
 
 interface Props {
   handleSetSidebar: () => void
@@ -11,9 +11,11 @@ interface Props {
 
 const Sidebar = ({ handleSetSidebar }: Props) => {
   const [showModal, setShowModal] = useState<boolean>(false)
+  const [modalType, setModalType] = useState<string>('station')
 
-  const handleSetShowModal = () => {
+  const handleSetShowModal = (type: string) => {
     setShowModal(!showModal)
+    setModalType(type)
   }
 
   return (
@@ -46,14 +48,25 @@ const Sidebar = ({ handleSetSidebar }: Props) => {
         {!showModal && (
           <button
             className="border p-2 mt-2 bg-gray-300"
-            onClick={() => setShowModal(!showModal)}
+            onClick={() => handleSetShowModal('station')}
           >
             Add Station
           </button>
         )}
-
+        {!showModal && (
+          <button
+            className="border p-2 mt-2 bg-gray-300"
+            onClick={() => handleSetShowModal('journey')}
+          >
+            Add Journey
+          </button>
+        )}
         <Modal show={showModal}>
-          <AddStation setShowModal={handleSetShowModal} />
+          {modalType === 'station' ? (
+            <AddStation setShowModal={setShowModal} />
+          ) : (
+            <div>Journeys</div>
+          )}
         </Modal>
       </div>
     </div>
