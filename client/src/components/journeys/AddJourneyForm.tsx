@@ -18,7 +18,7 @@ const JourneySchema = Yup.object().shape({
   Return_station_name: Yup.string().required('Required'),
   Return_station_id: Yup.number().positive().required('Required'),
   Departure: Yup.date().required('Required'),
-  Duration: Yup.number().required('Required'),
+  Duration_sec: Yup.number().required('Required'),
   Return: Yup.date()
     .required('Required')
     .min(Yup.ref('Departure'), 'Must be after Departure date')
@@ -30,7 +30,9 @@ const JourneySchema = Yup.object().shape({
         return getDateDifferenceInMinutes(value, departure) >= 600
       }
     ),
-  Distance: Yup.number().required('Required').min(10, 'Minimum 10 meters'),
+  Covered_distance_m: Yup.number()
+    .required('Required')
+    .min(10, 'Minimum 10 meters'),
 })
 
 export const AddJourneyForm = (props: JourneyFormProps) => {
@@ -38,9 +40,10 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
   const [activeInput, setActiveInput] = useState<string>('')
   const [search, setSearch] = useState<string>('')
 
-  const filtered = stations.filter((station) =>
-    station.Name.toLowerCase().includes(search.toLowerCase())
-  )
+  const filtered =
+    stations.filter((station) =>
+      station.Name.toLowerCase().includes(search.toLowerCase())
+    ) ?? []
 
   const handleResetSearch = () => {
     setSearch('')
@@ -56,8 +59,8 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
         Return_station_id: '',
         Departure: new Date(),
         Return: new Date(),
-        Duration: '',
-        Distance: '',
+        Duration_sec: '',
+        Covered_distance_m: '',
       }}
       onSubmit={onSubmit}
     >
@@ -205,7 +208,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                       onSelect={(value: Date) => {
                         setFieldValue('Return', value)
                         setFieldValue(
-                          'Duration',
+                          'Duration_sec',
                           getDateDifferenceInMinutes(
                             values.Departure,
                             value
@@ -220,7 +223,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                 </div>
                 <div className="sm:col-span-3">
                   <label
-                    htmlFor="Duration"
+                    htmlFor="Duration_sec"
                     className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     Duration (sec.)
@@ -229,33 +232,36 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                     <Field
                       disabled={true}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      id="Duration"
-                      name="Duration"
-                      placeholder="Duration"
+                      id="Duration_sec"
+                      name="Duration_sec"
+                      placeholder="Duration_sec"
                       type="number"
                     />
 
-                    <ErrorMessage className="text-red-900" name="Duration">
+                    <ErrorMessage className="text-red-900" name="Duration_sec">
                       {(msg) => <div className="text-red-900">{msg}</div>}
                     </ErrorMessage>
                   </div>
                 </div>
                 <div className="sm:col-span-3">
                   <label
-                    htmlFor="Distance"
+                    htmlFor="Covered_distance_m"
                     className="block text-sm font-medium leading-6 text-gray-900"
                   >
-                    Distance (m)
+                    Covered distance (m)
                   </label>
                   <div className="mt-2">
                     <Field
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      id="Distance"
-                      name="Distance"
-                      placeholder="Distance"
+                      id="Covered_distance_m"
+                      name="Covered_distance_m"
+                      placeholder="Covered_distance_m"
                       type="number"
                     />
-                    <ErrorMessage className="text-red-900" name="Distance">
+                    <ErrorMessage
+                      className="text-red-900"
+                      name="Covered_distance_m"
+                    >
                       {(msg) => <div className="text-red-900">{msg}</div>}
                     </ErrorMessage>
                   </div>

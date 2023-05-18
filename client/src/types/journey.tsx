@@ -8,6 +8,12 @@ export interface Journey {
   Duration_sec: number
 }
 
+export type StationAllFields = Journey & {
+  Departure: Date
+  Return: Date
+  createdAt: Date
+  updatedAt: Date
+}
 export interface JourneyFormFields {
   Departure_station_name: string
   Departure_station_id: number | string

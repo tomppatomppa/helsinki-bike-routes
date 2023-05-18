@@ -63,7 +63,6 @@ route.post('/add-many', upload.single('file'), async (req, res) => {
 
 route.post('/add-single', async (req, res) => {
   const station = await Journey.create(req.body)
-
   res.status(200).json(station)
 })
 

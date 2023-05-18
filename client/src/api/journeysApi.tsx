@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Journey } from '../types/journey'
+import { Journey, JourneyFormFields, StationAllFields } from '../types/journey'
 
 const baseUrl = '/api/journeys'
 
@@ -20,5 +20,13 @@ export const fetchJourneysByCursor = async (
     params: { offset: cursor, limit, search, search_field, order },
   })
 
+  return data
+}
+
+export const createJourney = async (journey: JourneyFormFields) => {
+  const { data } = await axios.post<StationAllFields>(
+    `${baseUrl}/add-single`,
+    journey
+  )
   return data
 }

@@ -287,81 +287,78 @@ describe('Test /api/journeys', () => {
       })
     })
   })
+})
+describe('/api/journeys/add-single', () => {
+  const station = {
+    Covered_distance_m: '1870',
+    Departure_station_id: '501',
+    Departure_station_name: 'Hanasaari',
+    Duration_sec: '611',
+    Return: '2021-06-01T00:07:14',
+    Return_station_id: '501',
+    Return_station_name: 'Hanasaari',
+    Departure: '2021-05-31T23:56:59',
+  }
+  test('Reset database', async () => {
+    await Journey.truncate()
+    await Station.truncate({ cascade: true, restartIdentity: true })
 
-  describe('/api/journeys/add-single', () => {
-    const station = {
-      Covered_distance_m: '1870',
-      Departure_station_id: '501',
-      Departure_station_name: 'Hanasaari',
-      Duration_sec: '611',
-      Return: '2021-06-01T00:07:14',
-      Return_station_id: '501',
-      Return_station_name: 'Hanasaari',
-      Departure: '2021-05-31T23:56:59',
-    }
-    test('Reset database', async () => {
-      await Journey.truncate()
-      await Station.truncate({ cascade: true, restartIdentity: true })
-
-      const stations = await Station.findAll()
-      expect(stations).toHaveLength(0)
-    })
-    test('Create two stations', async () => {
-      await Station.create(stations[0])
-      await Station.create(stations[1])
-      const allStations = await Station.findAll()
-      expect(allStations).toHaveLength(2)
-    })
-    test('Should return 400 when Departure station doestn exist', async () => {
-      await request(app)
-        .post('/api/journeys/add-single')
-        .send({ ...station, Departure_station_id: '081' })
-        .expect(400)
-    })
-    test('Should return 400 when Return station doestn exist', async () => {
-      await request(app)
-        .post('/api/journeys/add-single')
-        .send({ ...station, Return_station_id: '081' })
-        .expect(400)
-    })
-    test('Should return 400 when Return Date is before Departure date', async () => {
-      const { body } = await request(app)
-        .post('/api/journeys/add-single')
-        .send({
-          ...station,
-          Departure: '2021-05-31T23:56:59',
-          Return: '2021-05-31T23:56:58',
-        })
-        .expect(400)
-      expect(body.error).toEqual(['Return date must be after departure date'])
-    })
-    test('Should return 400 when covered distance is < 10', async () => {
-      const { body } = await request(app)
-        .post('/api/journeys/add-single')
-        .send({
-          ...station,
-          Covered_distance_m: 9,
-        })
-        .expect(400)
-      expect(body.error).toEqual([
-        'Validation min on Covered_distance_m failed',
-      ])
-    })
-    test('Should return 400 when Duration is < 600', async () => {
-      const { body } = await request(app)
-        .post('/api/journeys/add-single')
-        .send({
-          ...station,
-          Duration_sec: 599,
-        })
-        .expect(400)
-      expect(body.error).toEqual(['Validation min on Duration_sec failed'])
-    })
-    test('Should return 200 for valid journey', async () => {
-      const { body } = await request(app)
-        .post('/api/journeys/add-single')
-        .send(station)
-        .expect(200)
-    })
+    const stations = await Station.findAll()
+    expect(stations).toHaveLength(0)
+  })
+  test('Create two stations', async () => {
+    await Station.create(stations[0])
+    await Station.create(stations[1])
+    const allStations = await Station.findAll()
+    expect(allStations).toHaveLength(2)
+  })
+  test('Should return 400 when Departure station doestn exist', async () => {
+    await request(app)
+      .post('/api/journeys/add-single')
+      .send({ ...station, Departure_station_id: '081' })
+      .expect(400)
+  })
+  test('Should return 400 when Return station doestn exist', async () => {
+    await request(app)
+      .post('/api/journeys/add-single')
+      .send({ ...station, Return_station_id: '081' })
+      .expect(400)
+  })
+  test('Should return 400 when Return Date is before Departure date', async () => {
+    const { body } = await request(app)
+      .post('/api/journeys/add-single')
+      .send({
+        ...station,
+        Departure: '2021-05-31T23:56:59',
+        Return: '2021-05-31T23:56:58',
+      })
+      .expect(400)
+    expect(body.error).toEqual(['Return date must be after departure date'])
+  })
+  test('Should return 400 when covered distance is < 10', async () => {
+    const { body } = await request(app)
+      .post('/api/journeys/add-single')
+      .send({
+        ...station,
+        Covered_distance_m: 9,
+      })
+      .expect(400)
+    expect(body.error).toEqual(['Validation min on Covered_distance_m failed'])
+  })
+  test('Should return 400 when Duration is < 600', async () => {
+    const { body } = await request(app)
+      .post('/api/journeys/add-single')
+      .send({
+        ...station,
+        Duration_sec: 599,
+      })
+      .expect(400)
+    expect(body.error).toEqual(['Validation min on Duration_sec failed'])
+  })
+  test('Should return 200 for valid journey', async () => {
+    await request(app)
+      .post('/api/journeys/add-single')
+      .send(station)
+      .expect(200)
   })
 })
