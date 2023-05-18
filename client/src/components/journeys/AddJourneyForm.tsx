@@ -42,6 +42,10 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
     station.Name.toLowerCase().includes(search.toLowerCase())
   )
 
+  const handleResetSearch = () => {
+    setSearch('')
+    setActiveInput('')
+  }
   return (
     <Formik
       validationSchema={JourneySchema}
@@ -105,8 +109,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                                 station.Name
                               )
                               setFieldValue('Departure_station_id', station.ID)
-                              setSearch('')
-                              setActiveInput('')
+                              handleResetSearch()
                             }}
                             className="cursor-pointer hover:bg-neutral-200 p-2"
                             key={index}
@@ -155,8 +158,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                             onClick={() => {
                               setFieldValue('Return_station_name', station.Name)
                               setFieldValue('Return_station_id', station.ID)
-                              setSearch('')
-                              setActiveInput('')
+                              handleResetSearch()
                             }}
                             className="cursor-pointer hover:bg-neutral-200 p-2"
                             key={index}

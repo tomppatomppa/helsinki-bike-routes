@@ -12,9 +12,22 @@ Journey.init(
     },
     Departure: {
       type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        isDate: true,
+      },
     },
     Return: {
       type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        isDate: true,
+        isAfterDeparture(value) {
+          if (value <= this.Departure) {
+            throw new Error('Return date must be after departure date')
+          }
+        },
+      },
     },
     Departure_station_id: {
       type: DataTypes.INTEGER,
@@ -23,6 +36,7 @@ Journey.init(
     },
     Departure_station_name: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     Return_station_id: {
       type: DataTypes.INTEGER,
@@ -31,12 +45,21 @@ Journey.init(
     },
     Return_station_name: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     Covered_distance_m: {
       type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        min: 10,
+      },
     },
     Duration_sec: {
       type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        min: 600,
+      },
     },
   },
   {
