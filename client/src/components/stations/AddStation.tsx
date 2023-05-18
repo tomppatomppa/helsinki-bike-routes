@@ -9,7 +9,7 @@ interface Props {
   setShowModal: (value: string | null) => void
 }
 
-const StationCreate = ({ setShowModal }: Props) => {
+const AddStation = ({ setShowModal }: Props) => {
   const { sendStationForm, nextID, station } = useCreateStation()
   const {
     mutate: deleteCreatedStation,
@@ -44,4 +44,4 @@ const StationCreate = ({ setShowModal }: Props) => {
   )
 }
 
-export default StationCreate
+export default AddStation

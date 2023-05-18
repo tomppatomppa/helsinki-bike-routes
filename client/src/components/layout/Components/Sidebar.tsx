@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import UploadFile from '../../uploadFile/UploadFile'
 import CloseButton from '../../common/CloseButton'
-import StationCreate from '../../stations/StationCreateNew'
 import Modal from '../../common/Modal'
+import AddStation from '../../stations/addStation'
 
 interface Props {
   handleSetSidebar: () => void
@@ -53,7 +53,7 @@ const Sidebar = ({ handleSetSidebar }: Props) => {
         )}
 
         <Modal show={showModal}>
-          <StationCreate setShowModal={handleSetShowModal} />
+          <AddStation setShowModal={handleSetShowModal} />
         </Modal>
       </div>
     </div>

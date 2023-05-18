@@ -60,3 +60,43 @@ describe('Stations', () => {
     cy.get('.leaflet-container').should('be.visible')
   })
 })
+type StationData = {
+  ID: string
+  Name: string
+  Namn: string
+  Nimi: string
+  Osoite: string
+  Adress: string
+}
+
+describe('Station Creation and Deletion', () => {
+  beforeEach(() => {
+    cy.fixture('stationCreationData.json').as('stationData')
+  })
+  it('Visits the page', () => {
+    cy.visit('/')
+    cy.contains('Toggle Sidebar').click()
+    cy.contains('Add Station').click()
+  })
+  it('Fill in the form, create and delete', () => {
+    cy.visit('/')
+    cy.contains('Toggle Sidebar').click()
+    cy.contains('Add Station').click()
+
+    cy.get('#ID').clear()
+    cy.get<StationData>('@stationData').then((station) => {
+      cy.get('#ID').type(station.ID)
+      cy.get('#Nimi').type(station.Nimi)
+      cy.get('#Namn').type(station.Namn)
+      cy.get('#Name').type(station.Name)
+      cy.get('#Osoite').type(station.Osoite)
+      cy.get('#Adress').type(station.Adress)
+    })
+
+    cy.get('form').submit()
+
+    cy.contains('Succesfully added station').should('exist')
+    cy.contains('button', 'Delete Created Station').click()
+    cy.contains('Deleted Station').should('exist')
+  })
+})
