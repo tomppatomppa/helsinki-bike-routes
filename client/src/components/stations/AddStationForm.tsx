@@ -58,7 +58,7 @@ const StationSchema = Yup.object().shape({
     .required('Required'),
 })
 
-export const StationForm = (props: StationFormProps) => {
+export const AddStationForm = (props: StationFormProps) => {
   const { onCancel, onSubmit, nextAvailableID } = props
 
   return (

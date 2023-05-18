@@ -1,6 +1,6 @@
 import { describe, expect, test, vi } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
-import { StationForm } from '../components/stations/StationForm'
+import { AddStationForm } from '../components/stations/AddStationForm'
 import userEvent from '@testing-library/user-event'
 
 describe('StationForm.tsx', () => {
@@ -11,7 +11,7 @@ describe('StationForm.tsx', () => {
 
   test('Renders required labels', () => {
     const { getByLabelText } = render(
-      <StationForm nextAvailableID={null} {...props} />
+      <AddStationForm nextAvailableID={null} {...props} />
     )
 
     expect(getByLabelText('ID')).toBeDefined()
@@ -31,7 +31,7 @@ describe('StationForm.tsx', () => {
     const user = userEvent
 
     const { getByRole } = render(
-      <StationForm
+      <AddStationForm
         nextAvailableID={null}
         onCancel={onCancel}
         // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -45,7 +45,7 @@ describe('StationForm.tsx', () => {
     const handleSubmit = vi.fn()
 
     render(
-      <StationForm
+      <AddStationForm
         nextAvailableID={null}
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         onCancel={() => {}}
@@ -89,7 +89,7 @@ describe('StationForm.tsx', () => {
     const handleSubmit = vi.fn()
 
     render(
-      <StationForm
+      <AddStationForm
         nextAvailableID={null}
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         onCancel={() => {}}
@@ -105,7 +105,7 @@ describe('StationForm.tsx', () => {
   })
 
   test('Should display next available ID if it is passed as prop', () => {
-    render(<StationForm nextAvailableID={402} {...props} />)
+    render(<AddStationForm nextAvailableID={402} {...props} />)
     screen.getByText('Next available ID : 402')
   })
 })

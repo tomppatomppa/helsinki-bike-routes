@@ -7,3 +7,8 @@ export interface Journey {
   Covered_distance_m: number
   Duration_sec: number
 }
+
+export interface JourneyFormFields {
+  Departure_station_name: string
+  Departure_station_id: number | string
+}

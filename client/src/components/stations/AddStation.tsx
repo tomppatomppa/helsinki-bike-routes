@@ -1,6 +1,6 @@
 import { useMutation } from 'react-query'
 import CloseButton from '../common/CloseButton'
-import { StationForm } from './StationForm'
+import { AddStationForm } from './AddStationForm'
 
 import useCreateStation from './hooks/useCreateStation'
 import { deleteStation } from '../../api/stationApi'
@@ -36,7 +36,7 @@ const AddStation = ({ setShowModal }: Props) => {
       )}
     </div>
   ) : (
-    <StationForm
+    <AddStationForm
       nextAvailableID={nextID}
       onSubmit={sendStationForm}
       onCancel={() => setShowModal(false)}

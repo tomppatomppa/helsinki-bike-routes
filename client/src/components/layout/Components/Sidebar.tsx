@@ -4,6 +4,7 @@ import UploadFile from '../../uploadFile/UploadFile'
 import CloseButton from '../../common/CloseButton'
 import Modal from '../../common/Modal'
 import AddStation from '../../stations/AddStation'
+import AddJourney from '../../journeys/AddJourney'
 
 interface Props {
   handleSetSidebar: () => void
@@ -65,7 +66,7 @@ const Sidebar = ({ handleSetSidebar }: Props) => {
           {modalType === 'station' ? (
             <AddStation setShowModal={setShowModal} />
           ) : (
-            <div>Journeys</div>
+            <AddJourney setShowModal={setShowModal} />
           )}
         </Modal>
       </div>
