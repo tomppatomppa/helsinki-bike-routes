@@ -10,8 +10,8 @@ export interface Station {
 }
 
 export interface StationNameAndID {
-  ID: number
   Name: string
+  ID: number
 }
 export type StationFormFields = Station & {
   Kaupunki?: string

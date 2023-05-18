@@ -29,7 +29,7 @@ export const fetchStationsByCursor = async (
 }
 
 export const getAllStationNames = async () => {
-  const { data } = await axios.get<StationNameAndID>(`${baseUrl}/names`)
+  const { data } = await axios.get<StationNameAndID[]>(`${baseUrl}/names`)
   return data
 }
 

@@ -7,6 +7,7 @@ import { getDateDifferenceInMinutes } from '../../utils/getDateDifferenceInMinut
 import { StationNameAndID } from '../../types/station'
 
 interface JourneyFormProps {
+  stations: StationNameAndID[]
   onCancel: () => void
   onSubmit: (value: JourneyFormFields) => void
 }
@@ -31,28 +32,10 @@ const JourneySchema = Yup.object().shape({
     ),
   Distance: Yup.number().required('Required').min(10, 'Minimum 10 meters'),
 })
-const dummyStations = [
-  {
-    ID: 1,
-    Name: 'Hanasaari',
-  },
-  {
-    ID: 2,
-    Name: 'Keilalahti',
-  },
-  {
-    ID: 3,
-    Name: 'Westendinasema',
-  },
-  {
-    ID: 4,
-    Name: 'Golfpolku',
-  },
-]
+
 export const AddJourneyForm = (props: JourneyFormProps) => {
-  const { onCancel, onSubmit } = props
+  const { onCancel, onSubmit, stations } = props
   const [activeInput, setActiveInput] = useState<string>('')
-  const [stations] = useState<StationNameAndID[]>(dummyStations)
   const [search, setSearch] = useState<string>('')
 
   const filtered = stations.filter((station) =>
