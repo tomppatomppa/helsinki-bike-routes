@@ -126,6 +126,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                     )}
                   </div>
                 </div>
+
                 {/* Return_station_name*/}
                 <div className="sm:col-span-3">
                   <label
@@ -177,7 +178,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                     )}
                   </div>
                 </div>
-
+                {/*  Departure Date*/}
                 <div className="sm:col-span-3">
                   <label
                     htmlFor="Departure"
