@@ -13,5 +13,6 @@ export interface JourneyFormFields {
   Departure_station_id: number | string
   Return_station_name: string
   Return_station_id: number | string
-  Departure: string
+  Departure: Date
+  Return: Date
 }

@@ -3,6 +3,7 @@ import * as Yup from 'yup'
 import { JourneyFormFields } from '../../types/journey'
 import { useState } from 'react'
 import DateTimePicker from '../common/DateTimePicker'
+import { getDateDifferenceInMinutes } from '../../utils/getDateDifferenceInMinutes'
 
 interface JourneyFormProps {
   onCancel: () => void
@@ -19,6 +20,18 @@ const JourneySchema = Yup.object().shape({
   Return_station_name: Yup.string().required('Required'),
   Return_station_id: Yup.number().positive().required('Required'),
   Departure: Yup.date().required('Required'),
+  Duration: Yup.number().required('Required'),
+  Return: Yup.date()
+    .required('Required')
+    .min(Yup.ref('Departure'), 'Must be after Departure date')
+    .test(
+      'time-difference',
+      'Time difference must be at least 10 minutes',
+      function (value: Date) {
+        const departure = this.resolve(Yup.ref<Date>('Departure'))
+        return getDateDifferenceInMinutes(value, departure) >= 600
+      }
+    ),
 })
 const dummyStations = [
   {
@@ -56,7 +69,9 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
         Departure_station_id: '',
         Return_station_name: '',
         Return_station_id: '',
-        Departure: '',
+        Departure: new Date(),
+        Return: new Date(),
+        Duration: '',
       }}
       onSubmit={onSubmit}
     >
@@ -174,7 +189,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
 
                 <div className="sm:col-span-3">
                   <label
-                    htmlFor="Operaattor"
+                    htmlFor="Departure"
                     className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     Departure Date
@@ -188,6 +203,55 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                       }
                     />
                     <ErrorMessage className="text-red-900" name="Departure">
+                      {(msg) => <div className="text-red-900">{msg}</div>}
+                    </ErrorMessage>
+                  </div>
+                </div>
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="Return"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Return Date
+                  </label>
+                  <div className="mt-2">
+                    <DateTimePicker
+                      selectedDate={values.Return}
+                      name="Return"
+                      onSelect={(value: Date) => {
+                        setFieldValue('Return', value)
+                        setFieldValue(
+                          'Duration',
+                          getDateDifferenceInMinutes(
+                            values.Departure,
+                            value
+                          ).toFixed(0)
+                        )
+                      }}
+                    />
+                    <ErrorMessage className="text-red-900" name="Return">
+                      {(msg) => <div className="text-red-900">{msg}</div>}
+                    </ErrorMessage>
+                  </div>
+                </div>
+                <div className="sm:col-span-3">
+                  <label
+                    htmlFor="Duration"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Duration (sec.)
+                  </label>
+                  <div className="mt-2">
+                    <Field
+                      disabled={true}
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      id="Duration"
+                      name="Duration"
+                      placeholder="Duration"
+                      type="number"
+                    />
+
+                    <ErrorMessage className="text-red-900" name="Duration">
                       {(msg) => <div className="text-red-900">{msg}</div>}
                     </ErrorMessage>
                   </div>
