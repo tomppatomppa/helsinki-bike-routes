@@ -41,6 +41,13 @@ route.post('/add-single', async (req, res) => {
   }
 })
 
+route.get('/names', async (req, res) => {
+  const allStationNamesAndId = await Station.findAll({
+    attributes: ['ID', 'Name'],
+  })
+  res.status(200).json(allStationNamesAndId)
+})
+
 route.get('/', stationsQueryValidator(), async (req, res) => {
   const errors = validationResult(req)
 
