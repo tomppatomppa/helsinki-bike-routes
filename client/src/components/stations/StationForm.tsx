@@ -106,9 +106,9 @@ export const StationForm = (props: StationFormProps) => {
                       type="number"
                     />
                     {nextAvailableID && (
-                      <div className="text-red-900">
+                      <label htmlFor="error-id" className="text-red-900">
                         Next available ID : {nextAvailableID}
-                      </div>
+                      </label>
                     )}
                     <ErrorMessage className="text-red-900" name="ID">
                       {(msg) => <div className="text-red-900">{msg}</div>}

@@ -103,4 +103,9 @@ describe('StationForm.tsx', () => {
     expect(handleSubmit).toHaveBeenCalledTimes(0)
     expect(divElement).toBeDefined()
   })
+
+  test('Should display next available ID if it is passed as prop', () => {
+    render(<StationForm nextAvailableID={402} {...props} />)
+    screen.getByText('Next available ID : 402')
+  })
 })
