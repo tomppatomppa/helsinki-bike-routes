@@ -4,14 +4,11 @@ import { JourneyFormFields } from '../../types/journey'
 import { useState } from 'react'
 import DateTimePicker from '../common/DateTimePicker'
 import { getDateDifferenceInMinutes } from '../../utils/getDateDifferenceInMinutes'
+import { StationNameAndID } from '../../types/station'
 
 interface JourneyFormProps {
   onCancel: () => void
   onSubmit: (value: JourneyFormFields) => void
-}
-interface Station {
-  id: number
-  Name: string
 }
 
 const JourneySchema = Yup.object().shape({
@@ -36,26 +33,26 @@ const JourneySchema = Yup.object().shape({
 })
 const dummyStations = [
   {
-    id: 1,
+    ID: 1,
     Name: 'Hanasaari',
   },
   {
-    id: 2,
+    ID: 2,
     Name: 'Keilalahti',
   },
   {
-    id: 3,
+    ID: 3,
     Name: 'Westendinasema',
   },
   {
-    id: 4,
+    ID: 4,
     Name: 'Golfpolku',
   },
 ]
 export const AddJourneyForm = (props: JourneyFormProps) => {
   const { onCancel, onSubmit } = props
   const [activeInput, setActiveInput] = useState<string>('')
-  const [stations] = useState<Station[]>(dummyStations)
+  const [stations] = useState<StationNameAndID[]>(dummyStations)
   const [search, setSearch] = useState<string>('')
 
   const filtered = stations.filter((station) =>
@@ -124,7 +121,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                                 'Departure_station_name',
                                 station.Name
                               )
-                              setFieldValue('Departure_station_id', station.id)
+                              setFieldValue('Departure_station_id', station.ID)
                               setSearch('')
                               setActiveInput('')
                             }}
@@ -174,7 +171,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                           <div
                             onClick={() => {
                               setFieldValue('Return_station_name', station.Name)
-                              setFieldValue('Return_station_id', station.id)
+                              setFieldValue('Return_station_id', station.ID)
                               setSearch('')
                               setActiveInput('')
                             }}

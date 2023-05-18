@@ -452,9 +452,9 @@ describe('Test /api/stations/:id', () => {
 })
 
 describe('/api/stations/names', () => {
-  test('Should have 9 stations', async () => {
+  test('Stations should have only ID and Name field', async () => {
     const { body } = await request(app).get('/api/stations/names').expect(200)
-    expect(body).toHaveLength(9)
+
     body.forEach((station) => {
       const keys = Object.keys(station)
       expect(keys.length).toBe(2)

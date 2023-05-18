@@ -4,6 +4,7 @@ import {
   Station,
   StationDetails,
   StationFormFields,
+  StationNameAndID,
 } from '../types/station'
 
 const baseUrl = '/api/stations'
@@ -27,6 +28,11 @@ export const fetchStationsByCursor = async (
   return data
 }
 
+export const getAllStationNames = async () => {
+  const { data } = await axios.get<StationNameAndID>(`${baseUrl}/names`)
+  return data
+}
+
 export const fetchStationByID = async (
   stationID: number,
   dates: object | null
@@ -36,12 +42,14 @@ export const fetchStationByID = async (
   })
   return data
 }
+
 export const createStation = async (
   values: StationFormFields
 ): Promise<CreatedStationFields> => {
   const { data } = await axios.post(`${baseUrl}/add-single`, values)
   return data
 }
+
 export const deleteStation = async (ID: number) => {
   const { data } = await axios.delete(`${baseUrl}/${ID}`)
   return data
