@@ -32,13 +32,8 @@ route.post('/add-many', upload.single('file'), async (req, res) => {
 })
 
 route.post('/add-single', async (req, res) => {
-  try {
-    const result = await Station.create({ ...req.body })
-    res.status(200).json(result)
-  } catch (e) {
-    const id = await getNextAvailableID()
-    res.status(400).json({ nextAvailableID: id })
-  }
+  const result = await Station.create({ ...req.body })
+  res.status(200).json(result)
 })
 
 route.get('/names', async (req, res) => {

@@ -1,6 +1,7 @@
 const multer = require('multer')
+const { getNextAvailableID } = require('../utils/helpers')
 
-function errorHandler(error, req, res, next) {
+async function errorHandler(error, req, res, next) {
   if (error instanceof multer.MulterError) {
     res.status(400).json({ error: 'File upload error' })
   } else if (error) {
@@ -16,6 +17,10 @@ function errorHandler(error, req, res, next) {
       })
     }
     if (error.name === 'SequelizeUniqueConstraintError') {
+      if (error.fields.ID) {
+        const id = await getNextAvailableID()
+        return res.status(400).json({ nextAvailableID: id })
+      }
       return res.status(400).send({
         error: error.errors.map((e) => e.message),
       })
