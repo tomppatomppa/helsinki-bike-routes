@@ -96,6 +96,8 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                       {(msg) => <div className="text-red-900">{msg}</div>}
                     </ErrorMessage>
                     <input
+                      id="departure-input"
+                      data-testid="departure-input"
                       onClick={() => setActiveInput('departure')}
                       value={search}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -127,7 +129,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                 {/* Return_station_name*/}
                 <div className="sm:col-span-3">
                   <label
-                    htmlFor="Departure_station_name"
+                    htmlFor="Return_station_name"
                     className="block text-sm font-medium leading-6 text-gray-900"
                   >
                     Return station
@@ -148,6 +150,8 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                       {(msg) => <div className="text-red-900">{msg}</div>}
                     </ErrorMessage>
                     <input
+                      id="return-input"
+                      data-testid="return-input"
                       onClick={() => setActiveInput('return')}
                       value={search}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -184,7 +188,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                   <div className="mt-2">
                     <DateTimePicker
                       selectedDate={values.Departure}
-                      name="Departure"
+                      id="Departure"
                       onSelect={(value: Date) =>
                         setFieldValue('Departure', value)
                       }
@@ -204,7 +208,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                   <div className="mt-2">
                     <DateTimePicker
                       selectedDate={values.Return}
-                      name="Return"
+                      id="Return"
                       onSelect={(value: Date) => {
                         setFieldValue('Return', value)
                         setFieldValue(
@@ -221,6 +225,8 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                     </ErrorMessage>
                   </div>
                 </div>
+
+                {/* Duration (sec.)*/}
                 <div className="sm:col-span-3">
                   <label
                     htmlFor="Duration_sec"

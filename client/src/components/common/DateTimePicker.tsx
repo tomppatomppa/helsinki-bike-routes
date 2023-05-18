@@ -3,12 +3,12 @@ import 'react-datepicker/dist/react-datepicker.css'
 
 interface DateTimePickerProps {
   selectedDate: Date
-  name: string
+  id: string
   onSelect: (date: Date) => void
 }
 const DateTimePicker = ({
   selectedDate,
-  name,
+  id,
   onSelect,
 }: DateTimePickerProps) => {
   const handleDateChange = (date: Date) => {
@@ -17,7 +17,7 @@ const DateTimePicker = ({
 
   return (
     <DatePicker
-      name={name}
+      id={id}
       selected={selectedDate}
       onChange={handleDateChange}
       showTimeSelect

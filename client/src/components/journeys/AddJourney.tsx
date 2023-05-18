@@ -29,13 +29,11 @@ const AddJourney = ({ setShowModal }: AddJourneyProps) => {
           <div className="bg-green-200 p-2">Succesfully added journey</div>
         </div>
       )}
-      {stations && (
-        <AddJourneyForm
-          stations={stations}
-          onCancel={() => setShowModal(false)}
-          onSubmit={sendJourneyForm}
-        />
-      )}
+      <AddJourneyForm
+        stations={stations || []}
+        onCancel={() => setShowModal(false)}
+        onSubmit={sendJourneyForm}
+      />
     </div>
   )
 }

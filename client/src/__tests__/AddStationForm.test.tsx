@@ -52,7 +52,7 @@ describe('StationForm.tsx', () => {
         onSubmit={handleSubmit}
       />
     )
-    screen.debug()
+
     const user = userEvent
 
     user.clear(screen.getByLabelText('ID'))
