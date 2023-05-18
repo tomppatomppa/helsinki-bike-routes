@@ -1,8 +1,8 @@
 import { Field, Form, Formik, ErrorMessage } from 'formik'
-
 import * as Yup from 'yup'
 import { JourneyFormFields } from '../../types/journey'
 import { useState } from 'react'
+import DateTimePicker from '../common/DateTimePicker'
 
 interface JourneyFormProps {
   onCancel: () => void
@@ -18,6 +18,7 @@ const JourneySchema = Yup.object().shape({
   Departure_station_id: Yup.number().positive().required('Required'),
   Return_station_name: Yup.string().required('Required'),
   Return_station_id: Yup.number().positive().required('Required'),
+  Departure: Yup.date().required('Required'),
 })
 const dummyStations = [
   {
@@ -38,8 +39,8 @@ const dummyStations = [
   },
 ]
 export const AddJourneyForm = (props: JourneyFormProps) => {
-  const [activeInput, setActiveInput] = useState<string>('')
   const { onCancel, onSubmit } = props
+  const [activeInput, setActiveInput] = useState<string>('')
   const [stations] = useState<Station[]>(dummyStations)
   const [search, setSearch] = useState<string>('')
 
@@ -55,10 +56,11 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
         Departure_station_id: '',
         Return_station_name: '',
         Return_station_id: '',
+        Departure: '',
       }}
       onSubmit={onSubmit}
     >
-      {({ setFieldValue }) => (
+      {({ values, setFieldValue }) => (
         <Form className="bg-neutral-200 p-12 rounded-md">
           <div className="space-y-12 mt-16">
             <div className="border-b border-gray-900/10 pb-12">
@@ -97,7 +99,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                       }
                     />
                     {activeInput === 'departure' && (
-                      <div className="absolute mt-1 w-full bg-white shadow-lg rounded-bl rounded-br max-h-36 overflow-y-auto">
+                      <div className="absolute z-10 mt-1 w-full bg-white shadow-lg rounded-bl rounded-br max-h-36 overflow-y-auto">
                         {filtered?.map((station, index) => (
                           <div
                             onClick={() => {
@@ -150,7 +152,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                       }
                     />
                     {activeInput === 'return' && (
-                      <div className="absolute mt-1 w-full bg-white shadow-lg rounded-bl rounded-br max-h-36 overflow-y-auto">
+                      <div className="absolute z-10 mt-1 w-full bg-white shadow-lg rounded-bl rounded-br max-h-36 overflow-y-auto">
                         {filtered?.map((station, index) => (
                           <div
                             onClick={() => {
@@ -170,26 +172,26 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                   </div>
                 </div>
 
-                {/* Operaattor
                 <div className="sm:col-span-3">
                   <label
                     htmlFor="Operaattor"
                     className="block text-sm font-medium leading-6 text-gray-900"
                   >
-                    Operaattor
+                    Departure Date
                   </label>
                   <div className="mt-2">
-                    <Field
-                      id="Operaattor"
-                      name="Operaattor"
-                      placeholder="Operaattor"
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    <DateTimePicker
+                      selectedDate={values.Departure}
+                      name="Departure"
+                      onSelect={(value: Date) =>
+                        setFieldValue('Departure', value)
+                      }
                     />
-                    <ErrorMessage className="text-red-900" name="Operaattor">
+                    <ErrorMessage className="text-red-900" name="Departure">
                       {(msg) => <div className="text-red-900">{msg}</div>}
                     </ErrorMessage>
                   </div>
-                </div> */}
+                </div>
               </div>
             </div>
 
