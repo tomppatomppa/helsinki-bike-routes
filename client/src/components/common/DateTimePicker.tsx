@@ -17,6 +17,7 @@ const DateTimePicker = ({
 
   return (
     <DatePicker
+      autoComplete="off"
       id={id}
       selected={selectedDate}
       onChange={handleDateChange}
