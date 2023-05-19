@@ -77,7 +77,6 @@ const UploadFile = () => {
           <ProgressBar value={uploadProgress} />
         </div>
       ) : null}
-
       {file && !isLoading && (
         <FileDetails
           fileType={filetype}

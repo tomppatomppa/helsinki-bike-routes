@@ -5,6 +5,7 @@ import { useState } from 'react'
 import DateTimePicker from '../common/DateTimePicker'
 import { getDateDifferenceInMinutes } from '../../utils/getDateDifferenceInMinutes'
 import { StationNameAndID } from '../../types/station'
+import CustomInput from './CustomInput'
 
 interface JourneyFormProps {
   stations: StationNameAndID[]
@@ -83,11 +84,21 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                   </label>
                   <div className="mt-2 relative">
                     <Field
-                      disabled={true}
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       id="Departure_station_name"
-                      name="Departure_station_name"
+                      data-testid="departure-input"
                       placeholder="Departure station name"
+                      component={CustomInput}
+                      value={values.Departure_station_name}
+                      list={filtered}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setSearch(e.target.value)
+                      }
+                      onClick={(station: StationNameAndID) => {
+                        setFieldValue('Departure_station_name', station.Name)
+                        setFieldValue('Departure_station_id', station.ID)
+                        handleResetSearch()
+                      }}
                       type="input"
                     />
                     <ErrorMessage
@@ -96,35 +107,6 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                     >
                       {(msg) => <div className="text-red-900">{msg}</div>}
                     </ErrorMessage>
-                    <input
-                      id="departure-input"
-                      data-testid="departure-input"
-                      onClick={() => setActiveInput('departure')}
-                      value={search}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setSearch(e.target.value)
-                      }
-                    />
-                    {activeInput === 'departure' && (
-                      <div className="absolute z-10 mt-1 w-full bg-white shadow-lg rounded-bl rounded-br max-h-36 overflow-y-auto">
-                        {filtered?.map((station, index) => (
-                          <div
-                            onClick={() => {
-                              setFieldValue(
-                                'Departure_station_name',
-                                station.Name
-                              )
-                              setFieldValue('Departure_station_id', station.ID)
-                              handleResetSearch()
-                            }}
-                            className="cursor-pointer hover:bg-neutral-200 p-2"
-                            key={index}
-                          >
-                            {station?.Name}
-                          </div>
-                        ))}
-                      </div>
-                    )}
                   </div>
                 </div>
 
