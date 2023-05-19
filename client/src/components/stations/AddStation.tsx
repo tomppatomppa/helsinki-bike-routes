@@ -18,7 +18,7 @@ const AddStation = ({ setShowModal }: Props) => {
   } = useMutation(deleteStation)
 
   return station ? (
-    <div className="relative bg-white p-12 flex rounded-md flex-col">
+    <div className="relative p-12 bg-white flex rounded-md flex-col">
       <label className="text-xl">
         {isSuccess ? 'Deleted Station' : 'Succesfully added station'}
       </label>
