@@ -64,7 +64,7 @@ export const AddStationForm = (props: StationFormProps) => {
   return (
     <Formik
       initialValues={{
-        ID: 0,
+        ID: 1,
         Nimi: '',
         Name: '',
         Namn: '',

@@ -1,10 +1,12 @@
-export interface Station {
+export interface StationCommonFields {
   ID: number
   Nimi: string
   Namn: string
   Name: string
   Osoite: string
   Adress: string
+}
+export interface Station extends StationCommonFields {
   x: number
   y: number
 }
@@ -13,21 +15,15 @@ export interface StationNameAndID {
   Name: string
   ID: number
 }
-export type StationFormFields = Station & {
+
+export interface StationFormFields extends StationCommonFields {
   Kaupunki?: string
   Stad?: string
   Operaattor?: string
   Kapasiteet: number
-  x: number
-  y: number
 }
 
-export interface StationDetails {
-  Nimi: string
-  Namn: string
-  Name: string
-  Osoite: string
-  Adress: string
+export interface StationDetails extends StationCommonFields {
   departures_count: number
   returns_count: number
   average_distance_departures: number
@@ -36,21 +32,13 @@ export interface StationDetails {
   most_common_departure_stations: string[]
 }
 
-export interface CreatedStationFields {
+export interface CreatedStationFields extends StationCommonFields {
   FID: number
-  ID: number
   Kapasiteet: number
   Kaupunki: string
-  Name: string
-  Namn: string
-  Nimi: string
-  Operaattor: string
-  Osoite: string
   Stad: string
   createdAt: string
   updatedAt: string
-  x: number
-  y: number
 }
 
 export enum StationTableColumns {
