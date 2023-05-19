@@ -15,10 +15,8 @@ describe('JourneyFormInput.tsx', () => {
   test('Should not render options on initially', () => {
     render(<JourneyFormInput {...props} />)
 
-    const station1 = screen.queryByText('station1')
-    const station2 = screen.queryByText('station2')
-    expect(station1).toBeNull()
-    expect(station2).toBeNull()
+    const filteredOptions = screen.queryAllByRole('option')
+    expect(filteredOptions.length).toBe(0)
   })
   test('Should render options when input is focused', async () => {
     render(<JourneyFormInput {...props} />)
@@ -26,11 +24,8 @@ describe('JourneyFormInput.tsx', () => {
     const inputElement = screen.getByRole('textbox')
     await userEvent.click(inputElement)
 
-    const station1 = screen.queryByText('station1')
-    const station2 = screen.queryByText('station2')
-
-    expect(station1).toBeDefined()
-    expect(station2).toBeDefined()
+    const filteredOptions = screen.queryAllByRole('option')
+    expect(filteredOptions.length).toBe(2)
   })
 
   test('Should have called onClick with the selected value', async () => {
@@ -54,5 +49,6 @@ describe('JourneyFormInput.tsx', () => {
 
     const filteredOptions = screen.queryAllByRole('option')
     expect(filteredOptions.length).toBe(1)
+    expect(filteredOptions[0].textContent).toBe('station1')
   })
 })
