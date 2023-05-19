@@ -23,7 +23,9 @@ export interface JourneyFormFields {
   Return: Date
 }
 
-export enum JourneyQueryParams {
+export enum JourneyTableColumns {
   Departure_station_name = 'Departure_station_name',
   Return_station_name = 'Return_station_name',
+  Covered_distance_m = 'Covered_distance_m',
+  Duration_sec = 'Duration_sec',
 }

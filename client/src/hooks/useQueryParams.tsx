@@ -1,16 +1,22 @@
 import { useState } from 'react'
-import { StationQueryParams } from '../types/station'
-import { JourneyQueryParams } from '../types/journey'
+import { StationTableColumns } from '../types/station'
+import { JourneyTableColumns } from '../types/journey'
 
-type QueryParams = '' | StationQueryParams | JourneyQueryParams
+type SearchField =
+  | ''
+  | StationTableColumns
+  | JourneyTableColumns.Departure_station_name
+  | JourneyTableColumns.Return_station_name
+type OrderTypes = JourneyTableColumns
+type Order = [OrderTypes, 'ASC' | 'DESC'] | []
 
 const useQueryParams = () => {
   const [limit] = useState<number>(50)
-  const [order, setOrder] = useState<string[]>([])
+  const [order, setOrder] = useState<Order>([])
   const [search, setSearch] = useState<string>('')
-  const [search_field, setSearchField] = useState<QueryParams>('')
+  const [search_field, setSearchField] = useState<SearchField>('')
 
-  const orderByColumn = (value: string | undefined) => {
+  const orderByColumn = (value: OrderTypes) => {
     if (!value) return
     setOrder((prev) => {
       const isNewColumn = value === prev[0] ? false : true
@@ -19,7 +25,7 @@ const useQueryParams = () => {
     })
   }
 
-  const findByField = (value: QueryParams) => {
+  const findByField = (value: SearchField) => {
     setSearchField(value)
     setSearch('')
   }

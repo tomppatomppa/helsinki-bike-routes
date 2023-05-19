@@ -53,7 +53,7 @@ export interface CreatedStationFields {
   y: number
 }
 
-export enum StationQueryParams {
+export enum StationTableColumns {
   Name = 'Name',
   Namn = 'Namn',
   Nimi = 'Nimi',
