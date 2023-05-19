@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { StationNameAndID } from '../../types/station'
 
-interface CustomInputProps {
+interface JourneysFormInputProps {
   onClick: (value: StationNameAndID) => void
   value: string
   options: StationNameAndID[]
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const CustomInput = (props: CustomInputProps) => {
+const JourneysFormInput = (props: JourneysFormInputProps) => {
   const { onClick, options, ...customProps } = props
   const [isFocused, setIsFocused] = useState(false)
   const [searchValue, setSearchValue] = useState('')
@@ -56,4 +56,4 @@ const CustomInput = (props: CustomInputProps) => {
   )
 }
 
-export default CustomInput
+export default JourneysFormInput

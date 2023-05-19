@@ -4,7 +4,7 @@ import { JourneyFormFields } from '../../types/journey'
 import DateTimePicker from '../common/DateTimePicker'
 import { getDateDifferenceInMinutes } from '../../utils/getDateDifferenceInMinutes'
 import { StationNameAndID } from '../../types/station'
-import CustomInput from './CustomInput'
+import JourneysFormInput from './JourneysFormInput'
 
 interface JourneyFormProps {
   stations: StationNameAndID[]
@@ -76,7 +76,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                       placeholder="Departure station name"
                       type="input"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      component={CustomInput}
+                      component={JourneysFormInput}
                       value={values.Departure_station_name}
                       options={stations}
                       onClick={(station: StationNameAndID) => {
@@ -108,7 +108,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                       placeholder="Return station name"
                       type="input"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                      component={CustomInput}
+                      component={JourneysFormInput}
                       value={values.Return_station_name}
                       options={stations}
                       onClick={(station: StationNameAndID) => {
