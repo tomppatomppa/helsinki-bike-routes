@@ -44,9 +44,10 @@ describe('Filling out journey form', () => {
     cy.get('.mt-2 > :nth-child(1) > .absolute > :nth-child(1)').click()
     cy.get('#Return_station_name').focus()
     cy.get('.mt-2 > :nth-child(1) > .absolute > :nth-child(1)').click()
+
     cy.get('#Return').click()
-    // cy.get('#Covered_distance_m').clear()
-    // cy.get('#Covered_distance_m').type('1000')
+    cy.get('#Covered_distance_m').clear()
+    cy.get('#Covered_distance_m').type('1000')
 
     cy.get('form').submit()
 

@@ -61,6 +61,24 @@ describe('AddJourneyForm.tsx', () => {
     const optionElement2 = screen.getByText('Kasarmitori')
     await userEvent.click(optionElement2)
 
+    const returnInputElement = document.getElementById(
+      'Return'
+    ) as HTMLInputElement
+    const currentDate = new Date()
+    const numberOfDaysToAdd = 1
+    currentDate.setDate(currentDate.getDate() + numberOfDaysToAdd)
+    const newDateFormatted = currentDate.toLocaleString('en-US', {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    })
+
+    fireEvent.change(returnInputElement, {
+      target: { value: newDateFormatted },
+    })
+
     const distanceElement = screen.getByPlaceholderText('Covered_distance_m')
     await userEvent.type(distanceElement, '12345')
 

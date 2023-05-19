@@ -18,7 +18,9 @@ const JourneySchema = Yup.object().shape({
   Return_station_name: Yup.string().required('Required'),
   Return_station_id: Yup.number().positive().required('Required'),
   Departure: Yup.date().required('Required'),
-  Duration_sec: Yup.number().required('Required'),
+  Duration_sec: Yup.number()
+    .required('Required')
+    .min(600, 'Minimum duration is 600'),
   Return: Yup.date()
     .required('Required')
     .min(Yup.ref('Departure'), 'Must be after Departure date')
@@ -35,9 +37,6 @@ const JourneySchema = Yup.object().shape({
     .min(10, 'Minimum 10 meters'),
 })
 
-const defaultDepartureDate = new Date()
-
-const defaultReturnDate = new Date(defaultDepartureDate.getTime() + 20 * 60000)
 export const AddJourneyForm = (props: JourneyFormProps) => {
   const { onCancel, onSubmit, stations } = props
 
@@ -49,8 +48,8 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
         Departure_station_id: 0,
         Return_station_name: '',
         Return_station_id: 0,
-        Departure: defaultDepartureDate,
-        Return: defaultReturnDate,
+        Departure: new Date(),
+        Return: '' as Date | any,
         Duration_sec: 0,
         Covered_distance_m: 0,
       }}
