@@ -11,6 +11,7 @@ interface JourneyFormProps {
   onCancel: () => void
   onSubmit: (value: JourneyFormFields) => void
 }
+type Input = 'departure' | 'return' | ''
 
 const JourneySchema = Yup.object().shape({
   Departure_station_name: Yup.string().required('Required'),
@@ -37,7 +38,7 @@ const JourneySchema = Yup.object().shape({
 
 export const AddJourneyForm = (props: JourneyFormProps) => {
   const { onCancel, onSubmit, stations } = props
-  const [activeInput, setActiveInput] = useState<string>('')
+  const [activeInput, setActiveInput] = useState<Input>('')
   const [search, setSearch] = useState<string>('')
 
   const filtered =
@@ -54,13 +55,13 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
       validationSchema={JourneySchema}
       initialValues={{
         Departure_station_name: '',
-        Departure_station_id: '',
+        Departure_station_id: 0,
         Return_station_name: '',
-        Return_station_id: '',
+        Return_station_id: 0,
         Departure: new Date(),
         Return: new Date(),
-        Duration_sec: '',
-        Covered_distance_m: '',
+        Duration_sec: 0,
+        Covered_distance_m: 0,
       }}
       onSubmit={onSubmit}
     >
@@ -247,7 +248,6 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                       placeholder="Duration_sec"
                       type="number"
                     />
-
                     <ErrorMessage className="text-red-900" name="Duration_sec">
                       {(msg) => <div className="text-red-900">{msg}</div>}
                     </ErrorMessage>
