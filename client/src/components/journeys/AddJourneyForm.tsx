@@ -84,13 +84,14 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                   </label>
                   <div className="mt-2 relative">
                     <Field
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       id="Departure_station_name"
                       data-testid="departure-input"
                       placeholder="Departure station name"
+                      type="input"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       component={CustomInput}
                       value={values.Departure_station_name}
-                      list={filtered}
+                      options={stations}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         setSearch(e.target.value)
                       }
@@ -99,7 +100,6 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                         setFieldValue('Departure_station_id', station.ID)
                         handleResetSearch()
                       }}
-                      type="input"
                     />
                     <ErrorMessage
                       className="text-red-900"

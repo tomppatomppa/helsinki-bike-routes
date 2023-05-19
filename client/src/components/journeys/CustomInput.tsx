@@ -3,19 +3,24 @@ import { StationNameAndID } from '../../types/station'
 
 interface CustomInputProps {
   onClick: (value: StationNameAndID) => void
-  value?: string
-  list: StationNameAndID[]
+  value: string
+  options: StationNameAndID[]
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const CustomInput = (props: CustomInputProps) => {
-  const { onClick, list, onChange, ...customProps } = props
+  const { onClick, options, ...customProps } = props
   const [isFocused, setIsFocused] = useState(false)
+  const [searchValue, setSearchValue] = useState('')
+
+  const filteredList =
+    options.filter((station) =>
+      station.Name.toLowerCase().includes(searchValue.toLowerCase())
+    ) ?? []
 
   const handleFocus = () => {
     setIsFocused(true)
   }
-
   const handleBlur = () => {
     setIsFocused(false)
   }
@@ -23,15 +28,23 @@ const CustomInput = (props: CustomInputProps) => {
     onClick(station)
     handleBlur()
   }
+
   return (
     <div>
-      <input {...customProps} onChange={onChange} onFocus={handleFocus} />
+      <label> {customProps.value}</label>
+      <input
+        autoComplete="off"
+        {...customProps}
+        value={searchValue}
+        onChange={(e) => setSearchValue(e.target.value)}
+        onFocus={handleFocus}
+      />
       {isFocused && (
         <div className="absolute z-10 mt-1 w-full bg-white shadow-lg rounded-bl rounded-br max-h-36 overflow-y-auto">
-          {list?.map((station, index) => (
+          {filteredList?.map((station, index) => (
             <div
               onClick={() => handleItemClick(station)}
-              className="cursor-pointer hover:bg-neutral-200 p-2"
+              className="cursor-pointer text-left hover:bg-neutral-200 p-2"
               key={index}
             >
               {station.Name}
