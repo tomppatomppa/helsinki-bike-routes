@@ -1,7 +1,12 @@
 import { renderHook, act } from '@testing-library/react-hooks'
 import { describe, expect, test } from 'vitest'
 
-import useQueryParams from '../hooks/useQueryParams'
+import useQueryParams, { SearchField } from '../hooks/useQueryParams'
+import { JourneyTableColumns } from '../types/journey'
+
+const departureStationName = 'Departure_station_name' as JourneyTableColumns
+const findByFieldNimi = 'Name' as SearchField
+const findByFieldOsoite = 'Osoite' as SearchField
 
 describe('useQueryParams hook', () => {
   test('Should start with limit 50 by default', () => {
@@ -24,39 +29,51 @@ describe('useQueryParams hook', () => {
   test('Should set order to ASC and then DESC', () => {
     const { result } = renderHook(() => useQueryParams())
     act(() => {
-      result.current.orderByColumn('Name')
+      result.current.orderByColumn(departureStationName)
     })
-    expect(result.current.queryParams.order).toEqual(['Name', 'ASC'])
+    expect(result.current.queryParams.order).toEqual([
+      departureStationName,
+      'ASC',
+    ])
     act(() => {
-      result.current.orderByColumn('Name')
+      result.current.orderByColumn(departureStationName)
     })
-    expect(result.current.queryParams.order).toEqual(['Name', 'DESC'])
+    expect(result.current.queryParams.order).toEqual([
+      departureStationName,
+      'DESC',
+    ])
   })
   test('Should reset order to ASC when column changes', () => {
     const { result } = renderHook(() => useQueryParams())
     act(() => {
-      result.current.orderByColumn('Nimi')
+      result.current.orderByColumn(departureStationName)
     })
-    expect(result.current.queryParams.order).toEqual(['Nimi', 'ASC'])
+    expect(result.current.queryParams.order).toEqual([
+      departureStationName,
+      'ASC',
+    ])
     act(() => {
-      result.current.orderByColumn('Name')
+      result.current.orderByColumn(departureStationName)
     })
-    expect(result.current.queryParams.order).toEqual(['Name', 'ASC'])
+    expect(result.current.queryParams.order).toEqual([
+      departureStationName,
+      'DESC',
+    ])
   })
   test('Should set search_field', () => {
     const { result } = renderHook(() => useQueryParams())
 
     act(() => {
-      result.current.findByField('Osoite')
+      result.current.findByField(findByFieldOsoite)
     })
-    expect(result.current.queryParams.search_field).toEqual('Osoite')
+    expect(result.current.queryParams.search_field).toEqual(findByFieldOsoite)
   })
   test('Setting search_field resets search value', () => {
     const { result } = renderHook(() => useQueryParams())
     act(() => {
-      result.current.findByField('Osoite')
+      result.current.findByField(findByFieldOsoite)
       result.current.setSearch('Haka')
-      result.current.findByField('Nimi')
+      result.current.findByField(findByFieldNimi)
     })
     expect(result.current.queryParams.search).toEqual('')
   })
