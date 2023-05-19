@@ -1,9 +1,10 @@
+import { SearchField } from '../../hooks/useQueryParams'
 import Dropdown from './Dropdown'
 
 interface SearchBarProps {
   search: string
-  search_field: string
-  findByField: (value: string) => void
+  search_field: SearchField
+  findByField: (value: SearchField) => void
   setSearch: (value: string) => void
   options: string[]
 }

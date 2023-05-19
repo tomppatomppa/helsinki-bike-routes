@@ -1,25 +1,15 @@
 import { useTable, Column, useRowState } from 'react-table'
 
 import { useMemo } from 'react'
-import { Journey } from '../../types/journey'
+import { Journey, JourneyTableColumns } from '../../types/journey'
 
-interface Props {
+interface JourneyTableProps {
   data: Journey[]
-  orderByColumn: (value: string) => void
+  orderByColumn: (value: JourneyTableColumns) => void
 }
 
-interface TableProps {
-  id: number
-  Departure_station_name: string
-  Departure_station_id: number
-  Return_station_name: string
-  Return_station_id: number
-  Covered_distance_m: number
-  Duration_sec: number
-}
-
-const JourneyTable = ({ data, orderByColumn }: Props) => {
-  const columns = useMemo<Column<TableProps>[]>(
+const JourneyTable = ({ data, orderByColumn }: JourneyTableProps) => {
+  const columns = useMemo<Column<Journey>[]>(
     () => [
       {
         Header: 'Departure Station',
@@ -45,10 +35,10 @@ const JourneyTable = ({ data, orderByColumn }: Props) => {
 
     []
   )
-  const tableInstance = useTable<TableProps>(
+  const tableInstance = useTable<Journey>(
     {
       columns,
-      data: useMemo<any[]>(() => data, [data]),
+      data: useMemo<Journey[]>(() => data, [data]),
     },
     useRowState
   )
@@ -67,7 +57,9 @@ const JourneyTable = ({ data, orderByColumn }: Props) => {
                   className="cursor-pointer"
                   style={{ width: column.width }}
                   {...column.getHeaderProps()}
-                  onClick={() => orderByColumn(column.id?.toString())}
+                  onClick={() =>
+                    orderByColumn(column.id?.toString() as JourneyTableColumns)
+                  }
                 >
                   {column.render('Header') as React.ReactNode}
                 </th>

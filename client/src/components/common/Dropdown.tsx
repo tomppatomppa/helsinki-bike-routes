@@ -1,15 +1,17 @@
+import { SearchField } from '../../hooks/useQueryParams'
+
 interface DropdownProps {
   title: string
-  options: any[]
+  options: string[]
   value: string
-  onSelect: (event: string) => void
+  onSelect: (event: SearchField) => void
 }
 
 const Dropdown = (props: DropdownProps) => {
   const { title, options, value, onSelect } = props
 
   const handleOnChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    onSelect(event.target.value.toString())
+    onSelect(event.target.value.toString() as SearchField)
   }
 
   return (
