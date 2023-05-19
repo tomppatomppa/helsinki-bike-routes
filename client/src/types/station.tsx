@@ -52,3 +52,11 @@ export interface CreatedStationFields {
   x: number
   y: number
 }
+
+export enum StationQueryParams {
+  Name = 'Name',
+  Namn = 'Namn',
+  Nimi = 'Nimi',
+  Osoite = 'Osoite',
+  Adress = 'Adress',
+}

@@ -1,10 +1,14 @@
 import { useState } from 'react'
+import { StationQueryParams } from '../types/station'
+import { JourneyQueryParams } from '../types/journey'
+
+type QueryParams = '' | StationQueryParams | JourneyQueryParams
 
 const useQueryParams = () => {
   const [limit] = useState<number>(50)
   const [order, setOrder] = useState<string[]>([])
   const [search, setSearch] = useState<string>('')
-  const [search_field, setSearchField] = useState('')
+  const [search_field, setSearchField] = useState<QueryParams>('')
 
   const orderByColumn = (value: string | undefined) => {
     if (!value) return
@@ -15,7 +19,7 @@ const useQueryParams = () => {
     })
   }
 
-  const findByField = (value: string) => {
+  const findByField = (value: QueryParams) => {
     setSearchField(value)
     setSearch('')
   }
