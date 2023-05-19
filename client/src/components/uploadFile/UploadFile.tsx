@@ -9,7 +9,7 @@ import useUploadProgress from './hooks/useUploadProgres'
 const UploadFile = () => {
   const [filetype, setFileType] = useState<string | null>(null)
   const [file, setFile] = useState<File | null>(null)
-  const { sendFile, isError, isLoading, data } = useUploadFile()
+  const { sendFile, isError, isLoading, data, error } = useUploadFile()
   const inputRef = useRef<HTMLInputElement | null>(null)
   const uploadProgress = useUploadProgress(isLoading)
 
@@ -64,9 +64,10 @@ const UploadFile = () => {
         </>
       )}
       {isError ? (
-        <p className="text-red-900">
-          There was a problem with uploading {filetype}
-        </p>
+        <div className="text-red-900">
+          <p>There was a problem with uploading </p>
+          <p>Reason: {error?.response?.data.error}</p>
+        </div>
       ) : null}
       {isLoading ? (
         <div>
