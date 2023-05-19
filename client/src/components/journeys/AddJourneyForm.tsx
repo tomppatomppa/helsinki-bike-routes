@@ -4,7 +4,7 @@ import { JourneyFormFields } from '../../types/journey'
 import DateTimePicker from '../common/DateTimePicker'
 import { getDateDifferenceInMinutes } from '../../utils/getDateDifferenceInMinutes'
 import { StationNameAndID } from '../../types/station'
-import JourneysFormInput from './JourneysFormInput'
+import JourneysFormInput from './JourneyFormInput'
 
 interface JourneyFormProps {
   stations: StationNameAndID[]

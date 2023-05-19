@@ -1,19 +1,18 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { StationNameAndID } from '../../types/station'
 
-interface JourneysFormInputProps {
+interface JourneyFormInputProps {
   onClick: (value: StationNameAndID) => void
   value: string
   options: StationNameAndID[]
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const JourneysFormInput = (props: JourneysFormInputProps) => {
+const JourneyFormInput = (props: JourneyFormInputProps) => {
   const { onClick, options, ...customProps } = props
   const [isFocused, setIsFocused] = useState(false)
   const [searchValue, setSearchValue] = useState('')
 
-  const filteredList =
+  const filteredOptions =
     options.filter((station) =>
       station.Name.toLowerCase().includes(searchValue.toLowerCase())
     ) ?? []
@@ -41,14 +40,14 @@ const JourneysFormInput = (props: JourneysFormInputProps) => {
       />
       {isFocused && (
         <div className="absolute z-10 mt-1 w-full bg-white shadow-lg rounded-bl rounded-br max-h-36 overflow-y-auto">
-          {filteredList?.map((station, index) => (
-            <div
+          {filteredOptions?.map((station, index) => (
+            <option
               onClick={() => handleItemClick(station)}
               className="cursor-pointer text-left hover:bg-neutral-200 p-2"
               key={index}
             >
               {station.Name}
-            </div>
+            </option>
           ))}
         </div>
       )}
@@ -56,4 +55,4 @@ const JourneysFormInput = (props: JourneysFormInputProps) => {
   )
 }
 
-export default JourneysFormInput
+export default JourneyFormInput

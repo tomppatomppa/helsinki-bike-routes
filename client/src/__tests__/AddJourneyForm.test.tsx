@@ -51,7 +51,6 @@ describe('AddJourneyForm.tsx', () => {
       />
     )
     const user = userEvent
-    screen.debug()
 
     const inputElement = screen.getByTestId('departure-input')
     await userEvent.click(inputElement)
@@ -75,6 +74,7 @@ describe('AddJourneyForm.tsx', () => {
       hour: 'numeric',
       minute: 'numeric',
     })
+
     fireEvent.change(returnInputElement, {
       target: { value: newDateFormatted },
     })
