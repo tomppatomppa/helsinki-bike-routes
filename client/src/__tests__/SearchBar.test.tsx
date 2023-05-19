@@ -1,11 +1,12 @@
 import { describe, expect, test, vi } from 'vitest'
 import { render, fireEvent } from '@testing-library/react'
 import SearchBar from '../components/common/SearchBar'
+import { SearchField } from '../hooks/useQueryParams'
 
 describe('SearchBar.tsx', () => {
   const props = {
     search: 'Test search',
-    search_field: 'Test field',
+    search_field: 'Name' as SearchField,
     options: ['Option 1', 'Option 2', 'Option 3'],
     setSearch: vi.fn(),
     findByField: vi.fn(),

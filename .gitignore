@@ -1,2 +1,3 @@
 /server/dist
+/server/tmp/csv
 /client/dist
