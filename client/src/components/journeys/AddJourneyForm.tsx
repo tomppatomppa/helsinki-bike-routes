@@ -1,7 +1,6 @@
 import { Field, Form, Formik, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { JourneyFormFields } from '../../types/journey'
-import { useState } from 'react'
 import DateTimePicker from '../common/DateTimePicker'
 import { getDateDifferenceInMinutes } from '../../utils/getDateDifferenceInMinutes'
 import { StationNameAndID } from '../../types/station'
@@ -12,7 +11,6 @@ interface JourneyFormProps {
   onCancel: () => void
   onSubmit: (value: JourneyFormFields) => void
 }
-type Input = 'departure' | 'return' | ''
 
 const JourneySchema = Yup.object().shape({
   Departure_station_name: Yup.string().required('Required'),
@@ -39,18 +37,7 @@ const JourneySchema = Yup.object().shape({
 
 export const AddJourneyForm = (props: JourneyFormProps) => {
   const { onCancel, onSubmit, stations } = props
-  const [activeInput, setActiveInput] = useState<Input>('')
-  const [search, setSearch] = useState<string>('')
 
-  const filtered =
-    stations.filter((station) =>
-      station.Name.toLowerCase().includes(search.toLowerCase())
-    ) ?? []
-
-  const handleResetSearch = () => {
-    setSearch('')
-    setActiveInput('')
-  }
   return (
     <Formik
       validationSchema={JourneySchema}
@@ -92,13 +79,9 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                       component={CustomInput}
                       value={values.Departure_station_name}
                       options={stations}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setSearch(e.target.value)
-                      }
                       onClick={(station: StationNameAndID) => {
                         setFieldValue('Departure_station_name', station.Name)
                         setFieldValue('Departure_station_id', station.ID)
-                        handleResetSearch()
                       }}
                     />
                     <ErrorMessage
@@ -120,12 +103,18 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                   </label>
                   <div className="mt-2 relative">
                     <Field
-                      disabled={true}
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       id="Return_station_name"
-                      name="Return_station_name"
+                      data-testid="return-input"
                       placeholder="Return station name"
                       type="input"
+                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                      component={CustomInput}
+                      value={values.Return_station_name}
+                      options={stations}
+                      onClick={(station: StationNameAndID) => {
+                        setFieldValue('Return_station_name', station.Name)
+                        setFieldValue('Return_station_id', station.ID)
+                      }}
                     />
                     <ErrorMessage
                       className="text-red-900"
@@ -133,32 +122,6 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                     >
                       {(msg) => <div className="text-red-900">{msg}</div>}
                     </ErrorMessage>
-                    <input
-                      id="return-input"
-                      data-testid="return-input"
-                      onClick={() => setActiveInput('return')}
-                      value={search}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setSearch(e.target.value)
-                      }
-                    />
-                    {activeInput === 'return' && (
-                      <div className="absolute z-10 mt-1 w-full bg-white shadow-lg rounded-bl rounded-br max-h-36 overflow-y-auto">
-                        {filtered?.map((station, index) => (
-                          <div
-                            onClick={() => {
-                              setFieldValue('Return_station_name', station.Name)
-                              setFieldValue('Return_station_id', station.ID)
-                              handleResetSearch()
-                            }}
-                            className="cursor-pointer hover:bg-neutral-200 p-2"
-                            key={index}
-                          >
-                            {station?.Name}
-                          </div>
-                        ))}
-                      </div>
-                    )}
                   </div>
                 </div>
 
