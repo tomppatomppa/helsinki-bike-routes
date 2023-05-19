@@ -3,6 +3,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 
 import userEvent from '@testing-library/user-event'
 import { AddJourneyForm } from '../components/journeys/AddJourneyForm'
+import { getFormattedDate } from '../utils/getFormattedDate'
 
 describe('AddJourneyForm.tsx', () => {
   const props = {
@@ -67,16 +68,9 @@ describe('AddJourneyForm.tsx', () => {
     const currentDate = new Date()
     const numberOfDaysToAdd = 1
     currentDate.setDate(currentDate.getDate() + numberOfDaysToAdd)
-    const newDateFormatted = currentDate.toLocaleString('en-US', {
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-    })
 
     fireEvent.change(returnInputElement, {
-      target: { value: newDateFormatted },
+      target: { value: getFormattedDate(currentDate) },
     })
 
     const distanceElement = screen.getByPlaceholderText('Covered_distance_m')

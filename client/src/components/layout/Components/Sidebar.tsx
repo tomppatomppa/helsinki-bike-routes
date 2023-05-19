@@ -6,15 +6,17 @@ import Modal from '../../common/Modal'
 import AddStation from '../../stations/AddStation'
 import AddJourney from '../../journeys/AddJourney'
 
-interface Props {
+interface SidebarProps {
   handleSetSidebar: () => void
 }
 
-const Sidebar = ({ handleSetSidebar }: Props) => {
-  const [showModal, setShowModal] = useState<boolean>(false)
-  const [modalType, setModalType] = useState<string>('station')
+type ModalType = 'STATION' | 'JOURNEY'
 
-  const handleSetShowModal = (type: string) => {
+const Sidebar = ({ handleSetSidebar }: SidebarProps) => {
+  const [showModal, setShowModal] = useState<boolean>(false)
+  const [modalType, setModalType] = useState<ModalType>('STATION')
+
+  const handleSetShowModal = (type: ModalType) => {
     setShowModal(!showModal)
     setModalType(type)
   }
@@ -49,7 +51,7 @@ const Sidebar = ({ handleSetSidebar }: Props) => {
         {!showModal && (
           <button
             className="border p-2 mt-2 bg-gray-300"
-            onClick={() => handleSetShowModal('station')}
+            onClick={() => handleSetShowModal('STATION')}
           >
             Add Station
           </button>
@@ -57,13 +59,13 @@ const Sidebar = ({ handleSetSidebar }: Props) => {
         {!showModal && (
           <button
             className="border p-2 mt-2 bg-gray-300"
-            onClick={() => handleSetShowModal('journey')}
+            onClick={() => handleSetShowModal('JOURNEY')}
           >
             Add Journey
           </button>
         )}
         <Modal show={showModal}>
-          {modalType === 'station' ? (
+          {modalType === 'STATION' ? (
             <AddStation setShowModal={setShowModal} />
           ) : (
             <AddJourney setShowModal={setShowModal} />
