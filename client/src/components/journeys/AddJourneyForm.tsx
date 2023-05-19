@@ -127,7 +127,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                   </div>
                 </div>
 
-                {/* Return_station_name*/}
+                {/*Return_station_name*/}
                 <div className="sm:col-span-3">
                   <label
                     htmlFor="Return_station_name"
@@ -178,7 +178,8 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                     )}
                   </div>
                 </div>
-                {/*  Departure Date*/}
+
+                {/*Departure Date*/}
                 <div className="sm:col-span-3">
                   <label
                     htmlFor="Departure"
@@ -199,6 +200,8 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                     </ErrorMessage>
                   </div>
                 </div>
+
+                {/*Return Date*/}
                 <div className="sm:col-span-3">
                   <label
                     htmlFor="Return"
@@ -250,6 +253,8 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                     </ErrorMessage>
                   </div>
                 </div>
+
+                {/*  Covered distance (m)*/}
                 <div className="sm:col-span-3">
                   <label
                     htmlFor="Covered_distance_m"

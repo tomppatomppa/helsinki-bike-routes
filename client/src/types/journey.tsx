@@ -22,3 +22,8 @@ export interface JourneyFormFields {
   Departure: Date
   Return: Date
 }
+
+export enum JourneyQueryParams {
+  Departure_station_name = 'Departure_station_name',
+  Return_station_name = 'Return_station_name',
+}
