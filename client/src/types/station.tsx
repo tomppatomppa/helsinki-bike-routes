@@ -23,7 +23,7 @@ export interface StationFormFields extends StationCommonFields {
   Kapasiteet: number
 }
 
-export interface StationDetails extends StationCommonFields {
+export interface StationDetails extends Omit<StationCommonFields, 'ID'> {
   departures_count: number
   returns_count: number
   average_distance_departures: number
