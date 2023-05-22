@@ -42,7 +42,6 @@ describe('JourneyFormInput.tsx', () => {
 
   test('Should filter out option based on searchValue', async () => {
     render(<JourneyFormInput {...props} />)
-    screen.debug()
 
     const inputElement = screen.getByRole('textbox') as HTMLInputElement
     await userEvent.type(inputElement, 'station1')

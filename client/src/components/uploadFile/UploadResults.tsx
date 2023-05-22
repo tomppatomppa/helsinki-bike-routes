@@ -5,7 +5,7 @@ interface Props {
 const UploadResults = ({ data }: Props) => {
   return (
     <ul className="mt-6 text-left ">
-      <span className="text-lg">Result</span>
+      <h1 id="results-heading">Result</h1>
       {Object.entries(data).map(([key, value]) => (
         <li key={key}>
           {key}: {value}
