@@ -4,7 +4,7 @@ interface Props {
 const Header = ({ handleSetSidebar }: Props) => {
   return (
     <div
-      data-testid="header-element"
+      id="header-element"
       className="h-full  bg-neutral-400 p-2 shadow-lg flex items-center"
     >
       <button className="md:absolute" onClick={handleSetSidebar}>

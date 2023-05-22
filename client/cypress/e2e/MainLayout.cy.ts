@@ -5,43 +5,45 @@ describe('template spec', () => {
     //Ui MainLayout elements in Stations route
 
     //Sidebar
-    cy.get('[data-testid="sidebar-element"]').should('not.exist')
+    cy.get('[id="sidebar-element"]').should('not.exist')
 
     //Header
-    cy.get('[data-testid="header-element"]').should('exist')
+    cy.get('[id="header-element"]').should('exist')
     cy.contains('Toggle Sidebar')
 
     //Footer
-    cy.get('[data-testid="footer-element"]').should('exist')
+    cy.get('[id="footer-element"]').should('exist')
 
     //Map
     cy.get('.leaflet-container').should('exist')
 
     //Station table
-    cy.get('[data-testid="station-table"]').should('exist')
+    cy.get('[id="station-table"]').should('exist')
   })
   describe('Sidebar', () => {
     it('Should open sidebar and close sidebar', () => {
       cy.visit('/')
 
-      cy.get('[data-testid="sidebar-element"]').should('not.exist')
+      cy.get('[id="sidebar-element"]').should('not.exist')
       //Open
       cy.contains('Toggle Sidebar').click()
-      cy.get('[data-testid="sidebar-element"]').should('exist')
+      cy.get('[id="sidebar-element"]').should('exist')
 
       //Close
       cy.get('[id="close-button"]').click()
-      cy.get('[data-testid="sidebar-element"]').should('not.exist')
+      cy.get('[id="sidebar-element"]').should('not.exist')
     })
     it('Sidebar should contain menu items', () => {
       cy.visit('/')
 
       cy.contains('Toggle Sidebar').click()
 
-      cy.get('[data-testid="sidebar-element"]').contains('Menu')
-      cy.get('[data-testid="sidebar-element"]').contains('Journeys')
-      cy.get('[data-testid="sidebar-element"]').contains('Stations')
-      cy.get('[data-testid="sidebar-element"]').contains('Upload File')
+      cy.get('#sidebar-element').contains('Menu')
+      cy.get('#sidebar-element').contains('Journeys')
+      cy.get('#sidebar-element').contains('Stations')
+      cy.get('#sidebar-element').contains('Upload File')
+      cy.get('#sidebar-element').contains('Add Station')
+      cy.get('#sidebar-element').contains('Add Journey')
     })
     it('Clicking Journeys should change route', () => {
       cy.visit('/')

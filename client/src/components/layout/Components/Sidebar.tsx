@@ -23,6 +23,7 @@ const Sidebar = ({ handleSetSidebar }: SidebarProps) => {
 
   return (
     <div
+      id="sidebar-element"
       data-testid="sidebar-element"
       className={` flex flex-col gap-5 bg-neutral-100 h-full w-56 px-6 py-4 divide-y-2`}
     >
