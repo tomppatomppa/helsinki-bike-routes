@@ -23,7 +23,21 @@ function validateStationsQueryParams() {
   ]
 }
 
+const formatDateToISO8601 = (value, { req }) => {
+  if (value && !isNaN(Date.parse(value))) {
+    // Parse the date string to a Date object
+    const date = new Date(value)
+    // Format the date to ISO 8601 format
+    const formattedDate = date.toISOString().split('T')[0]
+    return formattedDate
+  }
+  // Return the value as is if it is not a valid date
+  return value
+}
 function validateStationIdQueryParams() {
-  return [query('between').isDate()]
+  return [
+    query('startDate').default('2000-01-01').custom(formatDateToISO8601),
+    query('endDate').default('2100-12-31').custom(formatDateToISO8601),
+  ]
 }
 module.exports = { validateStationsQueryParams, validateStationIdQueryParams }

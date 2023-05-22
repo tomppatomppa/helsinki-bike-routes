@@ -12,7 +12,7 @@ const { Op, Sequelize } = require('sequelize')
 const {
   validateStationsQueryParams,
   validateStationIdQueryParams,
-} = require('../utils/validators/stationsQueryValidator')
+} = require('../utils/validators/stationsQueryValidators')
 const { validationResult } = require('express-validator')
 
 route.post('/add-many', upload.single('file'), async (req, res) => {
@@ -100,7 +100,13 @@ route.get('/', validateStationsQueryParams(), async (req, res) => {
 })
 
 route.get('/:id', validateStationIdQueryParams(), async (req, res) => {
-  const { startDate = '2000-01-01', endDate = '2100-12-31' } = req.query
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() })
+  }
+
+  const { startDate, endDate } = req.query
 
   const between = `BETWEEN CAST('${startDate}' AS timestamp with time zone) AND CAST('${endDate}' AS timestamp with time zone)`
   const stationExists = await Station.findOne({
