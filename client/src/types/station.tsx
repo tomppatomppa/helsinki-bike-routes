@@ -17,8 +17,8 @@ export interface StationNameAndID {
 }
 
 export interface StationFormFields extends StationCommonFields {
-  Kaupunki?: string
-  Stad?: string
+  Kaupunki?: FINNISH_CITY_NAMES
+  Stad?: SWEDISH_CITY_NAMES
   Operaattor?: string
   Kapasiteet: number
 }
@@ -47,4 +47,16 @@ export enum StationTableColumns {
   Nimi = 'Nimi',
   Osoite = 'Osoite',
   Adress = 'Adress',
+}
+
+export enum FINNISH_CITY_NAMES {
+  helsinki = 'Helsinki',
+  espoo = 'Espoo',
+  vantaa = 'Vantaa',
+}
+
+export enum SWEDISH_CITY_NAMES {
+  helsinki = 'Helsingfors',
+  espoo = 'Esbo',
+  vantaa = 'Vanda',
 }
