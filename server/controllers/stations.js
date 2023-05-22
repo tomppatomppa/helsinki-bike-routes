@@ -11,24 +11,26 @@ const { Op, Sequelize } = require('sequelize')
 
 const stationsQueryValidator = require('../utils/validators/stationsQueryValidator')
 const { validationResult } = require('express-validator')
-const { getNextAvailableID } = require('../utils/helpers')
 
 route.post('/add-many', upload.single('file'), async (req, res) => {
   const filePath = path.resolve(__dirname, `../${req.file.path}`)
 
   const result = await parseCSV(filePath, validateStation)
-  const withoutFID = result.map((item) => {
-    const { FID, ...rest } = item
+  // Exclude FID from stations when using bulkCreate
+  // This ensures that the primary key starts from the correct
+  // index when adding a single station
+  const stationsWithoutFID = result.map((station) => {
+    const { FID, ...rest } = station
     return rest
   })
-  const errors = []
-  const savedStations = await Station.bulkCreate(withoutFID, {
+
+  const savedStations = await Station.bulkCreate(stationsWithoutFID, {
     validate: true,
     ignoreDuplicates: true,
-  }).catch((error) => errors.push(error))
+  })
 
   deleteTmpFile(filePath)
-  res.status(200).json({ stationsAdded: savedStations?.length | 0, errors })
+  res.status(200).json({ stationsAdded: savedStations?.length | 0 })
 })
 
 route.post('/add-single', async (req, res) => {
@@ -110,31 +112,44 @@ route.get('/:id', async (req, res) => {
       'Adress',
       [
         Sequelize.literal(
-          `(SELECT COUNT(*) FROM journeys WHERE journeys."Departure_station_id" = "station"."ID" AND journeys."Departure" ${between})`
+          `(SELECT COUNT(*) FROM journeys 
+          WHERE journeys."Departure_station_id" = "station"."ID" 
+          AND journeys."Departure" ${between})`
         ),
         'departures_count',
       ],
       [
         Sequelize.literal(
-          `(SELECT COUNT(*) FROM journeys WHERE journeys."Return_station_id" = "station"."ID" AND journeys."Return" ${between})`
+          `(SELECT COUNT(*) FROM journeys 
+          WHERE journeys."Return_station_id" = "station"."ID" 
+          AND journeys."Return" ${between})`
         ),
         'returns_count',
       ],
       [
         Sequelize.literal(
-          `(SELECT SUM(journeys."Covered_distance_m") / COUNT(*) FROM journeys WHERE journeys."Departure_station_id" = "station"."ID" AND journeys."Departure" ${between})`
+          `(SELECT SUM(journeys."Covered_distance_m") / 
+          COUNT(*) FROM journeys 
+          WHERE journeys."Departure_station_id" = "station"."ID" 
+          AND journeys."Departure" ${between})`
         ),
         'average_distance_departures',
       ],
       [
         Sequelize.literal(
-          `(SELECT SUM(journeys."Covered_distance_m") / COUNT(*) FROM journeys WHERE journeys."Return_station_id" = "station"."ID" AND journeys."Return" ${between})`
+          `(SELECT SUM(journeys."Covered_distance_m") / 
+          COUNT(*) FROM journeys 
+          WHERE journeys."Return_station_id" = "station"."ID" 
+          AND journeys."Return" ${between})`
         ),
         'average_distance_returns',
       ],
       [
         Sequelize.literal(
-          `(SELECT SUM(journeys."Covered_distance_m") / COUNT(*) FROM journeys WHERE journeys."Return_station_id" = "station"."ID" AND journeys."Return" ${between})`
+          `(SELECT SUM(journeys."Covered_distance_m") / 
+          COUNT(*) FROM journeys 
+          WHERE journeys."Return_station_id" = "station"."ID" 
+          AND journeys."Return" ${between})`
         ),
         'average_distance_returns',
       ],
@@ -196,4 +211,5 @@ route.delete('/:id', async (req, res) => {
 
   res.status(200).json(`Deleted Station ${id}`)
 })
+
 module.exports = route
