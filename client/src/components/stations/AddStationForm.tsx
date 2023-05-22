@@ -1,5 +1,9 @@
 import { Field, Form, Formik, ErrorMessage } from 'formik'
-import { StationFormFields } from '../../types/station'
+import {
+  FINNISH_CITY_NAMES,
+  SWEDISH_CITY_NAMES,
+  StationFormFields,
+} from '../../types/station'
 import * as Yup from 'yup'
 import { getSwedishCityName } from '../../utils/getSwedishCityName'
 
@@ -70,8 +74,8 @@ export const AddStationForm = (props: StationFormProps) => {
         Namn: '',
         Osoite: '',
         Adress: '',
-        Kaupunki: '',
-        Stad: '',
+        Kaupunki: '' as FINNISH_CITY_NAMES,
+        Stad: '' as SWEDISH_CITY_NAMES,
         Operaattor: '',
         Kapasiteet: 0,
         x: 0,

@@ -2,7 +2,7 @@ import { Field, Form, Formik, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { JourneyFormFields } from '../../types/journey'
 import DateTimePicker from '../common/DateTimePicker'
-import { getDateDifferenceInMinutes } from '../../utils/getDateDifferenceInMinutes'
+import { getDateDifferenceInSeconds } from '../../utils/getDateDifferenceInSeconds'
 import { StationNameAndID } from '../../types/station'
 import JourneysFormInput from './JourneyFormInput'
 
@@ -29,7 +29,7 @@ const JourneySchema = Yup.object().shape({
       'Time difference must be at least 10 minutes',
       function (value: Date) {
         const departure = this.resolve(Yup.ref<Date>('Departure'))
-        return getDateDifferenceInMinutes(value, departure) >= 600
+        return getDateDifferenceInSeconds(value, departure) >= 600
       }
     ),
   Covered_distance_m: Yup.number()
@@ -165,7 +165,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                         setFieldValue('Return', value)
                         setFieldValue(
                           'Duration_sec',
-                          getDateDifferenceInMinutes(
+                          getDateDifferenceInSeconds(
                             values.Departure,
                             value
                           ).toFixed(0)
