@@ -13,10 +13,13 @@ import { LatLngTuple } from 'leaflet'
 import { Station } from '../../types/station'
 import SearchBar from '../common/SearchBar'
 import { useDebounce } from 'use-debounce'
+import useDeleteStation from './hooks/useDeleteStation'
 
 const InfiniteScrollStations = () => {
   const [showMap, setShowMap] = useState<boolean>(true)
   const [station, setStation] = useState<Station | null>(null)
+  const { mutate: deleteStation } = useDeleteStation()
+
   const { queryParams, setSearch, findByField } = useQueryParams()
   const [searchValue] = useDebounce(queryParams.search, 300)
 
@@ -51,6 +54,9 @@ const InfiniteScrollStations = () => {
   const handleSelectStation = (station: Station) => {
     setShowMap(true)
     setStation(station)
+  }
+  const handleDeleteStation = (stationID: number) => {
+    console.log(stationID)
   }
 
   useEffect(() => {
@@ -107,7 +113,11 @@ const InfiniteScrollStations = () => {
         {isLoading ? <p>Fetching stations</p> : null}
         {isSuccess && (
           <div className="max-w-6xl mx-auto max-h-[20vh]">
-            <StationTable data={rows} onClick={handleSelectStation} />
+            <StationTable
+              data={rows}
+              onClick={handleSelectStation}
+              deleteStation={handleDeleteStation}
+            />
             <div ref={loadMoreRef}></div>
           </div>
         )}

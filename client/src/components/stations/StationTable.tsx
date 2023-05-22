@@ -4,11 +4,14 @@ import { Station } from '../../types/station'
 import { useMemo } from 'react'
 import React, { Fragment } from 'react'
 
+import { MdDeleteOutline } from 'react-icons/md'
+
 import StationDetailsView from './StationDetailsView'
 
 interface Props {
   data: Station[]
   onClick: (value: Station) => void
+  deleteStation: (stationID: number) => void
 }
 
 interface TableProps {
@@ -21,9 +24,10 @@ interface TableProps {
   x: string
   y: string
   isExpanded?: boolean
+  delete?: string
 }
 
-const StationTable = ({ data, onClick }: Props) => {
+const StationTable = ({ data, onClick, deleteStation }: Props) => {
   const columns = useMemo<Column<TableProps>[]>(
     () => [
       {
@@ -62,6 +66,18 @@ const StationTable = ({ data, onClick }: Props) => {
       {
         Header: 'Y',
         accessor: 'y',
+      },
+      {
+        Header: () => null,
+        accessor: 'delete',
+        Cell: ({ row }: any) => (
+          <button
+            className="hover:scale-110 flex"
+            onClick={() => deleteStation(row.original.ID)}
+          >
+            <MdDeleteOutline color="red" size={24} />
+          </button>
+        ),
       },
     ],
     []
