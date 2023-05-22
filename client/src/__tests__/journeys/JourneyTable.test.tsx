@@ -1,13 +1,7 @@
 import { describe, expect, test, vi } from 'vitest'
-import {
-  screen,
-  render,
-  within,
-  getByRole,
-  getAllByRole,
-} from '@testing-library/react'
-import JourneyTable from '../components/journeys/JourneyTable'
-import { Journey } from '../types/journey'
+import { screen, render, within } from '@testing-library/react'
+import JourneyTable from '../../components/journeys/JourneyTable'
+import { Journey } from '../../types/journey'
 
 const journeys: Journey[] = [
   {

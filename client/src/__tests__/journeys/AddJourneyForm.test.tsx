@@ -2,8 +2,8 @@ import { describe, expect, test, vi } from 'vitest'
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 
 import userEvent from '@testing-library/user-event'
-import { AddJourneyForm } from '../components/journeys/AddJourneyForm'
-import { getFormattedDate } from '../utils/getFormattedDate'
+import { AddJourneyForm } from '../../components/journeys/AddJourneyForm'
+import { getFormattedDate } from '../../utils/getFormattedDate'
 
 describe('AddJourneyForm.tsx', () => {
   const props = {
