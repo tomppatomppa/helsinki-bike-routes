@@ -1,7 +1,6 @@
 const supertest = require('supertest')
 const request = supertest
 const app = require('../../app')
-const { Station } = require('../../models')
 const { connectToDatabase, sequelize } = require('../../utils/database')
 
 beforeAll(async () => {

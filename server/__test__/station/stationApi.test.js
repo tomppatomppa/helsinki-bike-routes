@@ -19,6 +19,7 @@ const {
 } = require('./createData')
 
 beforeAll(async () => {
+  await new Promise((resolve) => setTimeout(resolve, 200))
   await connectToDatabase()
 })
 
