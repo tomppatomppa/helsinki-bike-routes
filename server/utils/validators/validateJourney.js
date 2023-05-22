@@ -28,6 +28,7 @@ function validateJourney(row) {
     Object.entries(row).map(([key, value]) => [key.trim(), value])
   )
 
+  // Validate if all required fields are present
   if (!Object.keys(trimmedRow).every((field) => VALID_KEYS.includes(field))) {
     return false
   }

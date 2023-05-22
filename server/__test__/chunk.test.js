@@ -1,7 +1,7 @@
 const { chunk } = require('../utils/helpers')
 
 describe('chunk.js', () => {
-  test('Should throw error when  size is < 1', () => {
+  test('Should throw error when size is < 1', () => {
     expect(() => chunk([1, 2, 3, 4], 0)).toThrow('Size must be positive')
   })
   test('Should return array with 4 subarrays', () => {
