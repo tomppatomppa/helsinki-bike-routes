@@ -1,6 +1,6 @@
 import { describe, expect, test, vi } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
-import { AddStationForm } from '../components/stations/AddStationForm'
+import { AddStationForm } from '../../components/stations/AddStationForm'
 import userEvent from '@testing-library/user-event'
 
 describe('StationForm.tsx', () => {
