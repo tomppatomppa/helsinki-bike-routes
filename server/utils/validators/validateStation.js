@@ -1,14 +1,11 @@
-const isFloat = require('./isFloat')
 const isString = require('./isString')
-const isPositiveInteger = require('./isPositiveInteger')
+const isValidPositiveInteger = require('./isValidPositiveInteger')
 
 const MAX_X_COORDINATE = 180
 const MIN_X_COORDINATE = -180
 const MAX_Y_COORDINATE = 90
 const MIN_Y_COORDINATE = -90
 
-const MIN_FID = 1
-const MIN_ID = 1
 const FID = 'FID'
 const ID = 'ID'
 const NAME_FI = 'Nimi'
@@ -24,19 +21,19 @@ const X_COORDINATE = 'x'
 const Y_COORDINATE = 'y'
 
 const VALID_KEYS = [
-  'FID',
-  'ID',
-  'Nimi',
-  'Namn',
-  'Name',
-  'Osoite',
-  'Adress',
-  'Kaupunki',
-  'Stad',
-  'Operaattor',
-  'Kapasiteet',
-  'x',
-  'y',
+  FID,
+  ID,
+  NAME_FI,
+  NAME_SWE,
+  NAME_EN,
+  ADDRESS_FIN,
+  ADDRESS_SWE,
+  CITY_NAME_FIN,
+  CITY_NAME_SWE,
+  OPERAATTOR,
+  KAPASITEET,
+  X_COORDINATE,
+  Y_COORDINATE,
 ]
 
 function validateStation(row) {
@@ -48,25 +45,15 @@ function validateStation(row) {
     return false
   }
 
-  //FID
+  // Validate FID and ID
   if (
-    parseInt(trimmedRow[FID]) < MIN_FID ||
-    isFloat(Number(trimmedRow[FID])) ||
-    isNaN(parseInt(trimmedRow[FID]))
+    !isValidPositiveInteger(trimmedRow[FID]) ||
+    !isValidPositiveInteger(trimmedRow[ID])
   ) {
     return false
   }
 
-  //ID
-  if (
-    parseInt(trimmedRow[ID]) < MIN_ID ||
-    isFloat(Number(trimmedRow[ID])) ||
-    isNaN(parseInt(trimmedRow[ID]))
-  ) {
-    return false
-  }
-
-  //Nimi, Namn, Name
+  //Validate Nimi, Namn, Name
   if (
     !isString(trimmedRow[NAME_FI]) ||
     !isString(trimmedRow[NAME_SWE]) ||
@@ -75,7 +62,7 @@ function validateStation(row) {
     return false
   }
 
-  //Osoite, Adress
+  //Validate Osoite, Adress
   if (
     !isString(trimmedRow[ADDRESS_FIN]) ||
     !isString(trimmedRow[ADDRESS_SWE])
@@ -83,12 +70,12 @@ function validateStation(row) {
     return false
   }
 
-  //Kapasiteet should be a positive Integer
-  if (!trimmedRow[KAPASITEET] || !isPositiveInteger(trimmedRow[KAPASITEET])) {
+  //Validate Kapasiteet
+  if (!isValidPositiveInteger(trimmedRow[KAPASITEET])) {
     return false
   }
 
-  //X coordinate
+  //Validate X coordinate
   if (
     isNaN(parseFloat(trimmedRow[X_COORDINATE])) ||
     parseFloat(trimmedRow[X_COORDINATE]) > MAX_X_COORDINATE ||
@@ -97,7 +84,7 @@ function validateStation(row) {
     return false
   }
 
-  //Y coordinate
+  //Validate Y coordinate
   if (
     isNaN(parseFloat(trimmedRow[Y_COORDINATE])) ||
     parseFloat(trimmedRow[Y_COORDINATE]) > MAX_Y_COORDINATE ||
