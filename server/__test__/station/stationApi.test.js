@@ -210,7 +210,7 @@ describe('GET /api/station/', () => {
   })
 })
 
-describe('Test /api/stations/:id', () => {
+describe('GET /api/stations/:id', () => {
   test('Reset Stations and Journeys', async () => {
     await Station.truncate({ cascade: true, restartIdentity: true })
     await Journey.truncate()
@@ -452,7 +452,7 @@ describe('Test /api/stations/:id', () => {
   })
 })
 
-describe('/api/stations/names', () => {
+describe('GET /api/stations/names', () => {
   test('Stations should have only ID and Name field', async () => {
     const { body } = await request(app).get('/api/stations/names').expect(200)
 
@@ -462,5 +462,20 @@ describe('/api/stations/names', () => {
       expect(keys.includes('Name')).toBe(true)
       expect(keys.includes('ID')).toBe(true)
     })
+  })
+})
+
+describe('DELETE /api/station/:id', () => {
+  test('Should return 404 when station doesnt exist', async () => {
+    await request(app).delete('/api/stations/901').expect(404)
+  })
+  test('Should return 200 when succesfully deleted station', async () => {
+    await request(app).delete('/api/stations/501').expect(200)
+    const station = await Station.findOne({
+      where: {
+        ID: 501,
+      },
+    })
+    expect(station).toBe(null)
   })
 })
