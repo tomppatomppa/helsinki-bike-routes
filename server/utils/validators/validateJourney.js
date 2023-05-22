@@ -1,4 +1,4 @@
-const isString = require('./isString')
+const isNonEmptyString = require('./isNonEmptyString')
 const isValidPositiveInteger = require('./isValidPositiveInteger')
 
 const MIN_JOURNEY_DURATION = 600
@@ -74,8 +74,8 @@ function validateJourney(row) {
 
   // Validate station name fields
   if (
-    !isString(trimmedRow[DEPARTURE_STATION_NAME]) ||
-    !isString(trimmedRow[RETURN_STATION_NAME])
+    !isNonEmptyString(trimmedRow[DEPARTURE_STATION_NAME]) ||
+    !isNonEmptyString(trimmedRow[RETURN_STATION_NAME])
   ) {
     return false
   }

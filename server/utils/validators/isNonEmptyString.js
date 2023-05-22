@@ -1,7 +1,7 @@
-function isString(value) {
+function isNonEmptyString(value) {
   if (typeof value === 'string' && isNaN(Number(value))) {
     return true
   }
   return false
 }
-module.exports = isString
+module.exports = isNonEmptyString

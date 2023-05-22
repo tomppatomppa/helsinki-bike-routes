@@ -1,4 +1,4 @@
-const isString = require('./isString')
+const isNonEmptyString = require('./isNonEmptyString')
 const isValidPositiveInteger = require('./isValidPositiveInteger')
 
 const MAX_X_COORDINATE = 180
@@ -55,17 +55,17 @@ function validateStation(row) {
 
   //Validate Nimi, Namn, Name
   if (
-    !isString(trimmedRow[NAME_FI]) ||
-    !isString(trimmedRow[NAME_SWE]) ||
-    !isString(trimmedRow[NAME_EN])
+    !isNonEmptyString(trimmedRow[NAME_FI]) ||
+    !isNonEmptyString(trimmedRow[NAME_SWE]) ||
+    !isNonEmptyString(trimmedRow[NAME_EN])
   ) {
     return false
   }
 
   //Validate Osoite, Adress
   if (
-    !isString(trimmedRow[ADDRESS_FIN]) ||
-    !isString(trimmedRow[ADDRESS_SWE])
+    !isNonEmptyString(trimmedRow[ADDRESS_FIN]) ||
+    !isNonEmptyString(trimmedRow[ADDRESS_SWE])
   ) {
     return false
   }
