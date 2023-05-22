@@ -1,6 +1,6 @@
-const isFloat = require('./isFloat')
+const isString = require('./isString')
+const isValidPositiveInteger = require('./isValidPositiveInteger')
 
-const MIN_STATION_ID = 1
 const MIN_JOURNEY_DURATION = 600
 const MIN_COVERED_DISTANCE = 10
 
@@ -32,15 +32,16 @@ function validateJourney(row) {
   if (!Object.keys(trimmedRow).every((field) => VALID_KEYS.includes(field))) {
     return false
   }
-  //Covered_distance_m
+
+  //Validate Covered_distance_m
   if (
-    isNaN(trimmedRow[COVERED_DISTANCE]) ||
-    isFloat(trimmedRow[COVERED_DISTANCE]) ||
+    !isValidPositiveInteger(trimmedRow[COVERED_DISTANCE]) ||
     trimmedRow[COVERED_DISTANCE] < MIN_COVERED_DISTANCE
   ) {
     return false
   }
 
+  // Validate departure and return date
   if (
     isNaN(Date.parse(trimmedRow[DEPARTURE_DATE])) ||
     isNaN(Date.parse(trimmedRow[RETURN_DATE]))
@@ -48,29 +49,29 @@ function validateJourney(row) {
     return false
   }
 
+  // Validate departure date is before return date
   if (
     Date.parse(trimmedRow[DEPARTURE_DATE]) > Date.parse(trimmedRow[RETURN_DATE])
   ) {
     return false
   }
 
-  if (
-    isNaN(trimmedRow[DEPARTURE_STATION_ID]) ||
-    parseInt(trimmedRow[DEPARTURE_STATION_ID]) < MIN_STATION_ID
-  ) {
+  // Validate departure station ID
+  if (!isValidPositiveInteger(trimmedRow[DEPARTURE_STATION_ID])) {
     return false
   }
-  //Duration
+
+  // Validate journey duration
   if (
-    isNaN(trimmedRow[JOURNEY_DURATION]) ||
-    isFloat(trimmedRow[JOURNEY_DURATION]) ||
+    !isValidPositiveInteger(trimmedRow[JOURNEY_DURATION]) ||
     trimmedRow[JOURNEY_DURATION] < MIN_JOURNEY_DURATION
   )
     return false
 
+  // Validate station name fields
   if (
-    typeof trimmedRow[DEPARTURE_STATION_NAME] !== 'string' ||
-    typeof trimmedRow[RETURN_STATION_NAME] !== 'string'
+    !isString(trimmedRow[DEPARTURE_STATION_NAME]) ||
+    !isString(trimmedRow[RETURN_STATION_NAME])
   ) {
     return false
   }
