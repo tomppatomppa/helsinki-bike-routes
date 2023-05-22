@@ -9,7 +9,10 @@ const deleteTmpFile = require('../middleware/deleteTmpFile')
 const { Station } = require('../models/index')
 const { Op, Sequelize } = require('sequelize')
 
-const stationsQueryValidator = require('../utils/validators/stationsQueryValidator')
+const {
+  validateStationsQueryParams,
+  validateStationIdQueryParams,
+} = require('../utils/validators/stationsQueryValidator')
 const { validationResult } = require('express-validator')
 
 route.post('/add-many', upload.single('file'), async (req, res) => {
@@ -45,7 +48,7 @@ route.get('/names', async (req, res) => {
   res.status(200).json(allStationNamesAndId)
 })
 
-route.get('/', stationsQueryValidator(), async (req, res) => {
+route.get('/', validateStationsQueryParams(), async (req, res) => {
   const errors = validationResult(req)
 
   if (!errors.isEmpty()) {
@@ -96,7 +99,7 @@ route.get('/', stationsQueryValidator(), async (req, res) => {
   res.status(200).json({ ...allStations, nextCursor: cursor })
 })
 
-route.get('/:id', async (req, res) => {
+route.get('/:id', validateStationIdQueryParams(), async (req, res) => {
   const { startDate = '2000-01-01', endDate = '2100-12-31' } = req.query
 
   const between = `BETWEEN CAST('${startDate}' AS timestamp with time zone) AND CAST('${endDate}' AS timestamp with time zone)`

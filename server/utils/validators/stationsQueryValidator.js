@@ -1,6 +1,6 @@
 const { query } = require('express-validator')
 
-function stationsQueryValidator() {
+function validateStationsQueryParams() {
   return [
     query('limit').default(1).isInt({ min: 1, max: 50 }),
     query('offset').default(0).isInt(),
@@ -23,4 +23,7 @@ function stationsQueryValidator() {
   ]
 }
 
-module.exports = stationsQueryValidator
+function validateStationIdQueryParams() {
+  return [query('between').isDate()]
+}
+module.exports = { validateStationsQueryParams, validateStationIdQueryParams }
