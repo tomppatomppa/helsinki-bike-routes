@@ -5,7 +5,6 @@ function journeysQueryValidator() {
     query('limit').default(1).isInt({ min: 1, max: 50 }),
     query('offset').default(0).isInt(),
     query('order')
-      .optional()
       .default(['id', 'ASC'])
       .isArray()
       .custom((value) => {
