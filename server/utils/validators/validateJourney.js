@@ -4,23 +4,24 @@ const isValidPositiveInteger = require('./isValidPositiveInteger')
 const MIN_JOURNEY_DURATION = 600
 const MIN_COVERED_DISTANCE = 10
 
-const COVERED_DISTANCE = 'Covered distance (m)'
 const DEPARTURE_DATE = 'Departure'
 const RETURN_DATE = 'Return'
 const DEPARTURE_STATION_ID = 'Departure station id'
-const JOURNEY_DURATION = 'Duration (sec.)'
-const RETURN_STATION_NAME = 'Return station name'
 const DEPARTURE_STATION_NAME = 'Departure station name'
+const RETURN_STATION_NAME = 'Return station name'
+const RETURN_STATION_ID = 'Return station id'
+const COVERED_DISTANCE = 'Covered distance (m)'
+const JOURNEY_DURATION = 'Duration (sec.)'
 
 const VALID_KEYS = [
-  'Covered distance (m)',
-  'Departure station id',
-  'Departure station name',
-  'Duration (sec.)',
-  'Return',
-  'Return station id',
-  'Return station name',
-  'Departure',
+  DEPARTURE_DATE,
+  RETURN_DATE,
+  DEPARTURE_STATION_ID,
+  DEPARTURE_STATION_NAME,
+  RETURN_STATION_ID,
+  RETURN_STATION_NAME,
+  COVERED_DISTANCE,
+  JOURNEY_DURATION,
 ]
 
 function validateJourney(row) {
@@ -56,8 +57,11 @@ function validateJourney(row) {
     return false
   }
 
-  // Validate departure station ID
-  if (!isValidPositiveInteger(trimmedRow[DEPARTURE_STATION_ID])) {
+  // Validate departure station ID and return station ID
+  if (
+    !isValidPositiveInteger(trimmedRow[DEPARTURE_STATION_ID]) ||
+    !isValidPositiveInteger(trimmedRow[RETURN_STATION_ID])
+  ) {
     return false
   }
 
