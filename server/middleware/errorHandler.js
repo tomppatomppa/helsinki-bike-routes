@@ -1,14 +1,7 @@
 const multer = require('multer')
 const { getNextAvailableID } = require('../utils/helpers')
-const { validationResult } = require('express-validator')
 
 async function errorHandler(error, req, res, next) {
-  if (!validationResult(req).isEmpty()) {
-    return res
-      .status(400)
-      .json({ errors: validationResult(req).errors.array() })
-  }
-
   if (error instanceof multer.MulterError) {
     res.status(400).json({ error: 'File upload error' })
   } else if (error) {
