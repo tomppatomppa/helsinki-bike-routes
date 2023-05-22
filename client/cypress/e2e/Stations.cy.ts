@@ -78,7 +78,7 @@ describe('Station Creation and Deletion', () => {
     cy.contains('Toggle Sidebar').click()
     cy.contains('Add Station').click()
   })
-  it('Fill in the form, create and delete', () => {
+  it('Fill in the form, create', () => {
     cy.visit('/')
     cy.contains('Toggle Sidebar').click()
     cy.contains('Add Station').click()
@@ -96,7 +96,13 @@ describe('Station Creation and Deletion', () => {
     cy.get('form').submit()
 
     cy.contains('Succesfully added station').should('exist')
-    cy.contains('button', 'Delete Created Station').click()
-    cy.contains('Deleted Station').should('exist')
+  })
+  it('Delete created station', () => {
+    cy.visit('/')
+    cy.get('#dropdown').select('Name')
+    cy.get('#search-input')
+      .type('testStation')
+      .should('have.value', 'testStation')
+    cy.get('#delete-station').should('be.visible').wait(500).click()
   })
 })
