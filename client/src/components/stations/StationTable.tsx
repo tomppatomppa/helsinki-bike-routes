@@ -73,7 +73,15 @@ const StationTable = ({ data, onClick, deleteStation }: Props) => {
         Cell: ({ row }: any) => (
           <button
             className="hover:scale-110 flex"
-            onClick={() => deleteStation(row.original.ID)}
+            onClick={() => {
+              const result = prompt('Confirm by typing the Name of the station')
+              if (result && result.trim() === row.original.Name) {
+                deleteStation(row.original.ID)
+                alert('Station deleted!')
+              } else {
+                alert('Station name does not match. Deletion canceled.')
+              }
+            }}
           >
             <MdDeleteOutline color="red" size={24} />
           </button>

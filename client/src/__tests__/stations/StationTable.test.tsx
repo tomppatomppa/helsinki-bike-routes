@@ -28,16 +28,30 @@ const stations: Station[] = [
 ]
 
 describe('JourneyTable', () => {
-  test('renders correct number of headers + expand row column', () => {
+  const onDelete = vi.fn
+  test('renders correct number of headers + expand row column + delete', () => {
     const onClick = vi.fn()
-    render(<StationTable data={stations} onClick={onClick} />)
+
+    render(
+      <StationTable
+        data={stations}
+        onClick={onClick}
+        deleteStation={onDelete}
+      />
+    )
     const headers = screen.getAllByRole('columnheader')
-    expect(headers).toHaveLength(6)
+    expect(headers).toHaveLength(7)
   })
 
   test('Headers have correct text content', () => {
     const onClick = vi.fn()
-    render(<StationTable data={stations} onClick={onClick} />)
+    render(
+      <StationTable
+        data={stations}
+        onClick={onClick}
+        deleteStation={onDelete}
+      />
+    )
     const headerColumns = screen.getAllByRole('columnheader')
 
     const expectedHeaders = [
@@ -47,6 +61,7 @@ describe('JourneyTable', () => {
       'Name',
       'Osoite',
       'Adress',
+      '',
     ]
 
     headerColumns.forEach((column) =>
@@ -56,7 +71,13 @@ describe('JourneyTable', () => {
 
   test('renders correct number of table rows', () => {
     const onClick = vi.fn()
-    render(<StationTable data={stations} onClick={onClick} />)
+    render(
+      <StationTable
+        data={stations}
+        onClick={onClick}
+        deleteStation={onDelete}
+      />
+    )
     const tbody = screen.getByTestId('table-rows')
     const rows = within(tbody).getAllByRole('row')
 
@@ -64,7 +85,13 @@ describe('JourneyTable', () => {
   })
   test('Renders correct table content', () => {
     const onClick = vi.fn()
-    render(<StationTable data={stations} onClick={onClick} />)
+    render(
+      <StationTable
+        data={stations}
+        onClick={onClick}
+        deleteStation={onDelete}
+      />
+    )
     const tbody = screen.getByTestId('table-rows')
     const rows = within(tbody).getAllByRole('row')
 

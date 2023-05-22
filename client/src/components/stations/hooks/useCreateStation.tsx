@@ -10,7 +10,8 @@ const useCreateStation = () => {
     mutate: sendStationForm,
     isLoading,
     isSuccess,
-    data: station,
+
+    isError,
   } = useMutation(createStation, {
     onError: ({ response }) => {
       const ID = response?.data?.nextAvailableID
@@ -23,7 +24,7 @@ const useCreateStation = () => {
     },
   })
 
-  return { sendStationForm, nextID, isLoading, isSuccess, station }
+  return { sendStationForm, nextID, isLoading, isSuccess, isError }
 }
 
 export default useCreateStation

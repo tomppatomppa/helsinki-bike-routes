@@ -1,46 +1,34 @@
-import { useMutation } from 'react-query'
 import CloseButton from '../common/CloseButton'
 import { AddStationForm } from './AddStationForm'
 
 import useCreateStation from './hooks/useCreateStation'
-import { deleteStation } from '../../api/stationApi'
 
 interface Props {
   setShowModal: (value: boolean) => void
 }
 
 const AddStation = ({ setShowModal }: Props) => {
-  const { sendStationForm, nextID, station } = useCreateStation()
-  const {
-    mutate: deleteCreatedStation,
-    isSuccess,
-    isError,
-  } = useMutation(deleteStation)
+  const { sendStationForm, nextID, isSuccess, isError } = useCreateStation()
 
-  return station ? (
-    <div className="relative p-12 bg-white flex rounded-md flex-col">
-      <label className="text-xl">
-        {isSuccess ? 'Deleted Station' : 'Succesfully added station'}
-      </label>
-      {isError && <label>Station has already been deleted</label>}
+  return (
+    <div className="relative bg-white flex rounded-md flex-col">
+      {isSuccess && (
+        <label className="text-xl bg-green-200">
+          Succesfully added station
+        </label>
+      )}
+      {isError ? (
+        <p className="text-red-900">There was a problem with adding station</p>
+      ) : null}
       <div className="absolute top-0 right-0">
         <CloseButton onClick={() => setShowModal(false)} />
       </div>
-      {!isSuccess && (
-        <button
-          className="p-2 mt-6 bg-red-900 text-white"
-          onClick={() => deleteCreatedStation(station?.ID)}
-        >
-          Delete Created Station
-        </button>
-      )}
+      <AddStationForm
+        nextAvailableID={nextID}
+        onSubmit={sendStationForm}
+        onCancel={() => setShowModal(false)}
+      />
     </div>
-  ) : (
-    <AddStationForm
-      nextAvailableID={nextID}
-      onSubmit={sendStationForm}
-      onCancel={() => setShowModal(false)}
-    />
   )
 }
 

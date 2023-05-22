@@ -55,9 +55,6 @@ const InfiniteScrollStations = () => {
     setShowMap(true)
     setStation(station)
   }
-  const handleDeleteStation = (stationID: number) => {
-    console.log(stationID)
-  }
 
   useEffect(() => {
     if (inView && !isFetchingNextPage && hasNextPage) {
@@ -116,7 +113,7 @@ const InfiniteScrollStations = () => {
             <StationTable
               data={rows}
               onClick={handleSelectStation}
-              deleteStation={handleDeleteStation}
+              deleteStation={deleteStation}
             />
             <div ref={loadMoreRef}></div>
           </div>
