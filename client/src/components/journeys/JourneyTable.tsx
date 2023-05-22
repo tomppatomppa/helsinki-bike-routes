@@ -67,7 +67,11 @@ const JourneyTable = ({ data, orderByColumn }: JourneyTableProps) => {
             </tr>
           ))}
         </thead>
-        <tbody data-testid="table-rows" {...getTableBodyProps()}>
+        <tbody
+          id="table-rows"
+          data-testid="table-rows"
+          {...getTableBodyProps()}
+        >
           {rows.map((row) => {
             prepareRow(row)
             return (

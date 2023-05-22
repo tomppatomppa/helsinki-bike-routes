@@ -24,7 +24,7 @@ const journeys: Journey[] = [
   },
 ]
 
-describe('JourneyTable', () => {
+describe('JourneyTable.tsx', () => {
   test('renders correct number of headers', () => {
     const orderByColumn = vi.fn()
     render(<JourneyTable data={journeys} orderByColumn={orderByColumn} />)
@@ -32,30 +32,25 @@ describe('JourneyTable', () => {
     expect(headers).toHaveLength(4)
   })
 
-  test('renders correct headers', () => {
+  test('Renders correct headers content', () => {
     const orderByColumn = vi.fn()
     render(<JourneyTable data={journeys} orderByColumn={orderByColumn} />)
 
-    const departureStationHeader = screen.getByRole('columnheader', {
+    screen.getByRole('columnheader', {
       name: /Departure Station/i,
     })
-    const returnStationHeader = screen.getByRole('columnheader', {
+    screen.getByRole('columnheader', {
       name: /Return Station/i,
     })
-    const distanceHeader = screen.getByRole('columnheader', {
+    screen.getByRole('columnheader', {
       name: /Distance/i,
     })
-    const durationHeader = screen.getByRole('columnheader', {
+    screen.getByRole('columnheader', {
       name: /Duration/i,
     })
-
-    expect(departureStationHeader).toBeDefined()
-    expect(returnStationHeader).toBeDefined()
-    expect(distanceHeader).toBeDefined()
-    expect(durationHeader).toBeDefined()
   })
 
-  test('renders correct number of table rows', () => {
+  test('Renders correct number of table rows', () => {
     const orderByColumn = vi.fn()
     render(<JourneyTable data={journeys} orderByColumn={orderByColumn} />)
 

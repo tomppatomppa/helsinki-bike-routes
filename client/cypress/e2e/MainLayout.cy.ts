@@ -38,12 +38,12 @@ describe('template spec', () => {
 
       cy.contains('Toggle Sidebar').click()
 
-      cy.get('#sidebar-element').contains('Menu')
-      cy.get('#sidebar-element').contains('Journeys')
-      cy.get('#sidebar-element').contains('Stations')
-      cy.get('#sidebar-element').contains('Upload File')
-      cy.get('#sidebar-element').contains('Add Station')
-      cy.get('#sidebar-element').contains('Add Journey')
+      cy.get('[id="sidebar-element"]').contains('Menu')
+      cy.get('[id="sidebar-element"]').contains('Journeys')
+      cy.get('[id="sidebar-element"]').contains('Stations')
+      cy.get('[id="sidebar-element"]').contains('Upload File')
+      cy.get('[id="sidebar-element"]').contains('Add Station')
+      cy.get('[id="sidebar-element"]').contains('Add Journey')
     })
     it('Clicking Journeys should change route', () => {
       cy.visit('/')
