@@ -1,6 +1,6 @@
 import { describe, expect, test, vi } from 'vitest'
 import { render, fireEvent } from '@testing-library/react'
-import Checkbox from '../components/common/Checkbox'
+import Checkbox from '../../components/common/Checkbox'
 
 describe('Checkbox.tsx', () => {
   const title = 'MonthPicker'

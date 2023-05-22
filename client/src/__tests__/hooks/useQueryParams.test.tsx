@@ -1,8 +1,8 @@
 import { renderHook, act } from '@testing-library/react-hooks'
 import { describe, expect, test } from 'vitest'
 
-import useQueryParams, { SearchField } from '../hooks/useQueryParams'
-import { JourneyTableColumns } from '../types/journey'
+import useQueryParams, { SearchField } from '../../hooks/useQueryParams'
+import { JourneyTableColumns } from '../../types/journey'
 
 const departureStationName = 'Departure_station_name' as JourneyTableColumns
 const findByFieldNimi = 'Name' as SearchField

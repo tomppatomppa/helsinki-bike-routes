@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 import { render } from '@testing-library/react'
-import ProgressBar from '../components/common/ProgressBar'
+import ProgressBar from '../../components/common/ProgressBar'
 
 describe('ProgressBar.tsx', () => {
   test('Should show zero decimals', () => {

@@ -1,7 +1,7 @@
 import { describe, expect, test, vi } from 'vitest'
 import { render, fireEvent } from '@testing-library/react'
-import SearchBar from '../components/common/SearchBar'
-import { SearchField } from '../hooks/useQueryParams'
+import SearchBar from '../../components/common/SearchBar'
+import { SearchField } from '../../hooks/useQueryParams'
 
 describe('SearchBar.tsx', () => {
   const props = {

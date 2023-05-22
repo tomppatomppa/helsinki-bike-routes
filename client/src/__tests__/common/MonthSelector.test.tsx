@@ -1,6 +1,6 @@
 import { describe, expect, test, vi } from 'vitest'
 import { fireEvent, render } from '@testing-library/react'
-import { MonthSelector } from '../components/common/MonthSelector'
+import { MonthSelector } from '../../components/common/MonthSelector'
 
 const currentMonth = 5
 const currentYear = 2021
