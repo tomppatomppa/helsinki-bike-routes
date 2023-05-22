@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 
-import { arraysEqual } from '../utils/arraysAreEqual'
+import { arraysEqual } from '../../utils/arraysAreEqual'
 
 describe('arraysAreEqual', () => {
   test('Should return false when order is not the same', () => {

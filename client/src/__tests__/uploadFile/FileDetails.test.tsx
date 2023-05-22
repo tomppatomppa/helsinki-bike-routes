@@ -1,6 +1,6 @@
 import { describe, expect, test, vi } from 'vitest'
 import { fireEvent, render } from '@testing-library/react'
-import FileDetails from '../components/uploadFile/FileDetails'
+import FileDetails from '../../components/uploadFile/FileDetails'
 
 describe('FileDetails.tsx', () => {
   const file = new File(['hello'], 'hello.csv', { type: 'text/csv' })
