@@ -1,5 +1,11 @@
 import { describe, expect, test, vi } from 'vitest'
-import { screen, render, within } from '@testing-library/react'
+import {
+  screen,
+  render,
+  within,
+  getByRole,
+  getAllByRole,
+} from '@testing-library/react'
 import JourneyTable from '../components/journeys/JourneyTable'
 import { Journey } from '../types/journey'
 
@@ -58,5 +64,23 @@ describe('JourneyTable.tsx', () => {
     const rows = within(tbody).getAllByRole('row')
 
     expect(rows).toHaveLength(journeys.length)
+  })
+  test('Renders correct table content', () => {
+    const orderByColumn = vi.fn()
+    render(<JourneyTable data={journeys} orderByColumn={orderByColumn} />)
+    const tbody = screen.getByTestId('table-rows')
+    const rows = within(tbody).getAllByRole('row')
+
+    rows.forEach((row, index) => {
+      const journey = journeys[index]
+      const cells = within(row).getAllByRole('cell')
+
+      expect(cells[0].textContent).toEqual(journey.Departure_station_name)
+      expect(cells[1].textContent).toEqual(journey.Return_station_name)
+      expect(cells[2].textContent).toEqual(
+        journey.Covered_distance_m.toString()
+      )
+      expect(cells[3].textContent).toEqual(journey.Duration_sec.toString())
+    })
   })
 })
