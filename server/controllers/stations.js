@@ -100,12 +100,6 @@ route.get('/', validateStationsQueryParams(), async (req, res) => {
 })
 
 route.get('/:id', validateStationIdQueryParams(), async (req, res) => {
-  const errors = validationResult(req)
-
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() })
-  }
-
   const { startDate, endDate } = req.query
 
   const between = `BETWEEN CAST('${startDate}' AS timestamp with time zone) AND CAST('${endDate}' AS timestamp with time zone)`
