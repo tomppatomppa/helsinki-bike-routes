@@ -9,7 +9,7 @@ describe('template spec', () => {
 
     //Header
     cy.get('[id="header-element"]').should('exist')
-    cy.contains('Toggle Sidebar')
+    cy.get('button#toggle-sidebar-button').should('exist')
 
     //Footer
     cy.get('[id="footer-element"]').should('exist')
@@ -26,7 +26,7 @@ describe('template spec', () => {
 
       cy.get('[id="sidebar-element"]').should('not.exist')
       //Open
-      cy.contains('Toggle Sidebar').click()
+      cy.get('button#toggle-sidebar-button').click()
       cy.get('[id="sidebar-element"]').should('exist')
 
       //Close
@@ -36,7 +36,7 @@ describe('template spec', () => {
     it('Sidebar should contain menu items', () => {
       cy.visit('/')
 
-      cy.contains('Toggle Sidebar').click()
+      cy.get('button#toggle-sidebar-button').click()
 
       cy.get('[id="sidebar-element"]').contains('Menu')
       cy.get('[id="sidebar-element"]').contains('Journeys')
@@ -47,7 +47,7 @@ describe('template spec', () => {
     })
     it('Clicking Journeys should change route', () => {
       cy.visit('/')
-      cy.contains('button', 'Toggle Sidebar').click()
+      cy.get('button#toggle-sidebar-button').click()
 
       cy.contains('Journeys').click()
       cy.location().should((loc) => {
