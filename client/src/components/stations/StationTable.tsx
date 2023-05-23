@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { useTable, Column, useExpanded, Row } from 'react-table'
 import { Station } from '../../types/station'
-import { useMemo } from 'react'
+import { useMemo, lazy, Suspense } from 'react'
 import React, { Fragment } from 'react'
-
 import { MdDeleteOutline } from 'react-icons/md'
 
-import StationDetailsView from './StationDetailsView'
+const StationDetailsView = lazy(() => import('./StationDetailsView'))
 
 interface Props {
   data: Station[]
@@ -119,9 +118,9 @@ const StationTable = ({ data, onClick, deleteStation }: Props) => {
 
   const renderRowSubComponent = React.useCallback(
     ({ row }: { row: Row<TableProps> }) => (
-      <pre>
+      <Suspense fallback={<div>loading...</div>}>
         <StationDetailsView stationID={row.original.ID} />
-      </pre>
+      </Suspense>
     ),
     []
   )

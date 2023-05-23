@@ -14,7 +14,7 @@ function App() {
     <div className="App mx-auto text-center">
       <Suspense
         fallback={
-          <div className="flex justify-center">
+          <div className="flex justify-center items-center">
             <Spinner show delay={500} />
           </div>
         }
