@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-
+const path = require('path')
 require('express-async-errors')
 
 const cors = require('cors')
@@ -20,6 +20,9 @@ app.use('/api/stations/', stationsRouter)
 
 app.use(errorHandler)
 
+app.use('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'))
+})
 app.get('/api', (req, res) => {
   res.send('Hello World!')
 })
