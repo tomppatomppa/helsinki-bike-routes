@@ -28,7 +28,7 @@ const MainLayout = () => {
       </div>
       <Suspense
         fallback={
-          <div className="fixed flex justify-center items-center w-56">
+          <div className="fixed flex bg-white justify-center h-full w-56 items-center">
             <Spinner show delay={500} />
           </div>
         }
