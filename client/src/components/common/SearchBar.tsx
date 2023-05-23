@@ -12,7 +12,7 @@ interface SearchBarProps {
 const SearchBar = (props: SearchBarProps) => {
   const { search_field, search, setSearch, findByField, options } = props
   return (
-    <div className="flex items-center bg- justify-center flex-wrap bg-gray-300 p-2">
+    <div className="flex items-center justify-center flex-wrap gap-2 bg-gray-300 p-2">
       <Dropdown
         title="Search by"
         options={options}

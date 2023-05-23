@@ -36,9 +36,7 @@ const StationDetailsView = (props: Props) => {
           There was a problem with fetching station
         </p>
       ) : null}
-
       {isChecked && <MonthSelector dates={dates} setDates={setDates} />}
-
       <Checkbox
         title="Filter By Month"
         checked={isChecked}
