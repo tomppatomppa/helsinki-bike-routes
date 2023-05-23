@@ -64,18 +64,11 @@ const InfiniteScrollStations = () => {
 
   const rows = stations?.pages.flatMap((page) => page.rows) ?? []
 
-  const allStationCoordinates: LatLngTuple[] = rows.map((station) => {
-    return [station.y, station.x]
-  })
-
   return (
     <div className="flex flex-col overflow-hidden">
       {showMap && (
         <div className="z-0">
-          <Map
-            allStationCoordinates={allStationCoordinates}
-            station={station}
-          />
+          <Map station={station} />
         </div>
       )}
       <div className="self-start">

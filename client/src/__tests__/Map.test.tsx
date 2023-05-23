@@ -1,13 +1,8 @@
 import { describe, expect, test } from 'vitest'
-import { fireEvent, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import Map from '../components/map/Map'
-import { LatLngExpression } from 'leaflet'
 
 describe('Map.tsx', () => {
-  const allStationCoordinates: LatLngExpression[] = [
-    [60.192059, 24.945831],
-    [60.292059, 24.145831],
-  ]
   const station = {
     ID: 1,
     Name: 'station 1',
@@ -19,25 +14,8 @@ describe('Map.tsx', () => {
     y: 60,
   }
 
-  test('Should render 2 img elements on map when All stations is toggled', () => {
-    const { container, getByLabelText } = render(
-      <Map station={null} allStationCoordinates={allStationCoordinates} />
-    )
-    const checkbox = getByLabelText('All stations')
-    expect(checkbox).toBeDefined()
-    // Simulate a click on the checkbox
-    fireEvent.click(checkbox)
-
-    const markerPane = container.getElementsByClassName(
-      'leaflet-pane leaflet-marker-pane'
-    )[0]
-    const imgElements = markerPane.querySelectorAll('img')
-    expect(imgElements).toHaveLength(2)
-  })
   test('Should only show selected station as green marker', () => {
-    const { container } = render(
-      <Map station={station} allStationCoordinates={allStationCoordinates} />
-    )
+    const { container } = render(<Map station={station} />)
     const markerPane = container.getElementsByClassName(
       'leaflet-pane leaflet-marker-pane'
     )[0]
@@ -47,5 +25,13 @@ describe('Map.tsx', () => {
     expect(imgElements[0].getAttribute('src')).toBe(
       'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png'
     )
+  })
+  test('Should not show any marker', () => {
+    const { container } = render(<Map station={null} />)
+    const markerPane = container.getElementsByClassName(
+      'leaflet-pane leaflet-marker-pane'
+    )[0]
+    const imgElements = markerPane.querySelectorAll('img')
+    expect(imgElements).toHaveLength(0)
   })
 })
