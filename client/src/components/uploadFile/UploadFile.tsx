@@ -6,8 +6,11 @@ import UploadResults from './UploadResults'
 import ProgressBar from '../common/ProgressBar'
 import useUploadProgress from './hooks/useUploadProgres'
 import { MdOutlineFileUpload } from 'react-icons/md'
+
+export type FILETYPE = 'stations' | 'journeys'
+
 const UploadFile = () => {
-  const [filetype, setFileType] = useState<string | null>(null)
+  const [filetype, setFileType] = useState<FILETYPE | null>(null)
   const [file, setFile] = useState<File | null>(null)
   const { sendFile, isError, isLoading, data, error } = useUploadFile()
   const inputRef = useRef<HTMLInputElement | null>(null)

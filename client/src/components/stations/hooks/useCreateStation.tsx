@@ -10,7 +10,6 @@ const useCreateStation = () => {
     mutate: sendStationForm,
     isLoading,
     isSuccess,
-
     isError,
   } = useMutation(createStation, {
     onError: ({ response }) => {

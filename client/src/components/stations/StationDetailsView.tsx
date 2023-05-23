@@ -30,7 +30,7 @@ const StationDetailsView = (props: Props) => {
   }
 
   return (
-    <div className="bg-gray-200 sticky bottom-0">
+    <div className="bg-gray-200 sticky bottom-0 h-54">
       {isError ? (
         <p className="text-red-900">
           There was a problem with fetching station

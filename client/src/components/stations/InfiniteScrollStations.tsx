@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useCallback } from 'react'
 import { useInfiniteQuery } from 'react-query'
 import {
   StationDataWithCursor,
@@ -52,10 +52,10 @@ const InfiniteScrollStations = () => {
     skip: !hasNextPage,
   })
 
-  const handleSelectStation = (station: Station) => {
+  const handleSelectStation = useCallback((station: Station) => {
     setShowMap(true)
     setStation(station)
-  }
+  }, [])
 
   useEffect(() => {
     if (inView && !isFetchingNextPage && hasNextPage) {

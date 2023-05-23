@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { useTable, Column, useExpanded, Row } from 'react-table'
+import { useTable, Column, useExpanded, Row, CellProps } from 'react-table'
 import { Station } from '../../types/station'
 import { useMemo, lazy, Suspense } from 'react'
 import React, { Fragment } from 'react'
@@ -9,19 +9,11 @@ const StationDetailsView = lazy(() => import('./StationDetailsView'))
 
 interface Props {
   data: Station[]
-  onClick: (value: Station) => void
+  onClick: (station: Station) => void
   deleteStation: (stationID: number) => void
 }
 
-interface TableProps {
-  ID: number
-  Nimi: string
-  Name: string
-  Namn: string
-  Osoite: string
-  Adress: string
-  x: string
-  y: string
+interface TableProps extends Station {
   isExpanded?: boolean
   delete?: string
 }
@@ -69,7 +61,7 @@ const StationTable = ({ data, onClick, deleteStation }: Props) => {
       {
         Header: () => null,
         accessor: 'delete',
-        Cell: ({ row }: any) => (
+        Cell: ({ row }: CellProps<TableProps>) => (
           <button
             id="delete-station"
             className="hover:scale-110 flex"
@@ -89,11 +81,10 @@ const StationTable = ({ data, onClick, deleteStation }: Props) => {
     ],
     []
   )
-
   const tableInstance = useTable<TableProps>(
     {
       columns,
-      data: useMemo<any[]>(() => data, [data]),
+      data: useMemo<Station[]>(() => data, [data]),
       initialState: {
         hiddenColumns: ['x', 'y'],
       },

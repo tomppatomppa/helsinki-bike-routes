@@ -25,7 +25,7 @@ const Sidebar = ({ handleSetSidebar }: SidebarProps) => {
     <div
       id="sidebar-element"
       data-testid="sidebar-element"
-      className={` flex flex-col gap-5 bg-neutral-100 h-full w-56 px-6 py-4 divide-y-2`}
+      className={`flex flex-col gap-5 bg-neutral-100 h-full w-56 px-6 py-4 divide-y-2`}
     >
       <nav className="flex flex-col items-start space-y-3 ">
         <h5
@@ -34,7 +34,7 @@ const Sidebar = ({ handleSetSidebar }: SidebarProps) => {
         >
           Menu
         </h5>
-        <div className=" absolute top-0 right-2.5">
+        <div className="absolute top-0 right-2.5">
           <CloseButton onClick={handleSetSidebar} />
         </div>
         <Link className="hover:text-teal-700 flex-1" to={'/journeys'}>

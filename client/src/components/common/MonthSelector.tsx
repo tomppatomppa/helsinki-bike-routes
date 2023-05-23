@@ -4,6 +4,7 @@ interface Props {
   dates: object | null
   setDates: (value: object) => void
 }
+
 export const MonthSelector = ({ dates, setDates }: Props) => {
   const [currentMonth, setCurrentMonth] = useState(5)
   const [currentYear, setCurrentYear] = useState(2021)
