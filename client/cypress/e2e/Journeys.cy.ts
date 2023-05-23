@@ -45,7 +45,7 @@ describe('Filling out journey form', () => {
   it('Fill in the form', () => {
     cy.visit('/')
 
-    cy.contains('Toggle Sidebar').click()
+    cy.get('button#toggle-sidebar-button').click()
     cy.contains('Add Journey').click()
 
     cy.get('#Departure_station_name').focus()

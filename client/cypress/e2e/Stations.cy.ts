@@ -75,12 +75,12 @@ describe('Station Creation and Deletion', () => {
   })
   it('Visits the page', () => {
     cy.visit('/')
-    cy.contains('Toggle Sidebar').click()
+    cy.get('button#toggle-sidebar-button').click()
     cy.contains('Add Station').click()
   })
   it('Fill in the form, create', () => {
     cy.visit('/')
-    cy.contains('Toggle Sidebar').click()
+    cy.get('button#toggle-sidebar-button').click()
     cy.contains('Add Station').click()
 
     cy.get('#ID').clear()
