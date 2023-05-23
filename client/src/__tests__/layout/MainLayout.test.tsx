@@ -9,7 +9,7 @@ describe('MainLayout', () => {
     render(<MainLayout />)
 
     screen.getByText(/Helsinki city bike app/i)
-    screen.getByText(/Footer/i)
+    screen.getByText(/Created by Tomi West./i)
     const sidebar = screen.queryByTestId('sidebar-element')
 
     expect(sidebar).toBeNull()
