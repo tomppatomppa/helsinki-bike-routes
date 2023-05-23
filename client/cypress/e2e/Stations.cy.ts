@@ -97,6 +97,18 @@ describe('Station Creation and Deletion', () => {
 
     cy.contains('Succesfully added station').should('exist')
   })
+  it('Toggle expanded row', () => {
+    cy.visit('/')
+    cy.get('#dropdown').select('Name')
+    cy.get('#search-input')
+      .type('testStation')
+      .should('have.value', 'testStation')
+    cy.get('[data-testid="table-rows"] > :nth-child(1) > :nth-child(1) > span')
+      .should('be.visible')
+      .wait(500)
+      .click()
+    cy.contains(/station details/i)
+  })
   it('Delete created station', () => {
     cy.visit('/')
     cy.get('#dropdown').select('Name')

@@ -75,15 +75,12 @@ const StationTable = ({ data, onClick, deleteStation }: Props) => {
             id="delete-station"
             className="hover:scale-110 flex"
             onClick={() => {
-              deleteStation(row.original.ID)
-              alert('Station deleted!')
-              // const result = prompt('Confirm by typing the Name of the station')
-              // if (result && result.trim() === row.original.Name) {
-              //   deleteStation(row.original.ID)
-              //   alert('Station deleted!')
-              // } else {
-              //   alert('Station name does not match. Deletion canceled.')
-              // }
+              const result = window.confirm(
+                'Are you sure you want to delete this station?'
+              )
+              if (result) {
+                deleteStation(row.original.ID)
+              }
             }}
           >
             <MdDeleteOutline color="red" size={24} />
@@ -116,6 +113,7 @@ const StationTable = ({ data, onClick, deleteStation }: Props) => {
 
   const handleRowClick = (row: any, cell: any) => {
     if (cell.column.id === 'expander') return
+    if (cell.column.id === 'delete') return
     onClick(row.values)
   }
 
