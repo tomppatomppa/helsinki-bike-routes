@@ -9,11 +9,13 @@ import { useState } from 'react'
 import StationTable from './StationTable'
 import useQueryParams from '../../hooks/useQueryParams'
 import Map from '../map/Map'
-import { LatLngTuple } from 'leaflet'
 import { Station } from '../../types/station'
 import SearchBar from '../common/SearchBar'
 import { useDebounce } from 'use-debounce'
 import useDeleteStation from './hooks/useDeleteStation'
+
+import { BsMap } from 'react-icons/bs'
+import { HiOutlineMapPin } from 'react-icons/hi2'
 
 const InfiniteScrollStations = () => {
   const [showMap, setShowMap] = useState<boolean>(true)
@@ -71,19 +73,21 @@ const InfiniteScrollStations = () => {
           <Map station={station} />
         </div>
       )}
-      <div className="self-start">
+      <div className="self-start flex">
         <button
           onClick={() => setShowMap(!showMap)}
-          className="border p-2 bg-orange-300"
+          className="border p-2 bg-neutral-300 flex items-center"
         >
           {showMap ? 'Hide Map' : 'Show Map'}
+          <BsMap className="ml-2" />
         </button>
         {station && (
           <button
             onClick={() => setStation(null)}
-            className="border p-2 bg-red-300"
+            className="border p-2 bg-red-300 flex items-center"
           >
             Deselect
+            <HiOutlineMapPin size={22} className="ml-2" />
           </button>
         )}
       </div>
