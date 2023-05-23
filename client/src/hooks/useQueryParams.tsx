@@ -7,6 +7,7 @@ export type SearchField =
   | StationTableColumns
   | JourneyTableColumns.Departure_station_name
   | JourneyTableColumns.Return_station_name
+
 type OrderType = JourneyTableColumns
 type Order = [OrderType, 'ASC' | 'DESC'] | []
 
