@@ -48,7 +48,7 @@ const Sidebar = ({ handleSetSidebar }: SidebarProps) => {
       <div className="flex flex-col items-start">
         <UploadFile />
       </div>
-      <div className="flex flex-col flex-1">
+      <div className="flex flex-col">
         {!showModal && (
           <button
             className="border p-2 mt-2 bg-gray-300"

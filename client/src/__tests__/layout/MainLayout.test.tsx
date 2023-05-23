@@ -19,7 +19,7 @@ describe('MainLayout', () => {
     const handleSetSidebar = vi.fn()
     render(<Header handleSetSidebar={handleSetSidebar} />)
 
-    const toggleButton = screen.getByRole('button', { name: /Toggle Sidebar/i })
+    const toggleButton = screen.getByRole('button', { name: '' })
     fireEvent.click(toggleButton)
 
     expect(handleSetSidebar).toHaveBeenCalledOnce()

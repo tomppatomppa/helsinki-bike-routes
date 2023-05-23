@@ -5,7 +5,7 @@ import FileDetails from './FileDetails'
 import UploadResults from './UploadResults'
 import ProgressBar from '../common/ProgressBar'
 import useUploadProgress from './hooks/useUploadProgres'
-
+import { MdOutlineFileUpload } from 'react-icons/md'
 const UploadFile = () => {
   const [filetype, setFileType] = useState<string | null>(null)
   const [file, setFile] = useState<File | null>(null)
@@ -55,11 +55,11 @@ const UploadFile = () => {
       {!file && (
         <>
           <button
-            className="border p-2 mt-2 bg-gray-300"
+            className="border p-2 mt-2 bg-gray-300 flex items-center"
             data-testid="upload-button"
             onClick={onUploadButtonClick}
           >
-            Upload File
+            <MdOutlineFileUpload className="mr-2" /> Upload File
           </button>
         </>
       )}
