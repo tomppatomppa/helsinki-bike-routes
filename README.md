@@ -23,21 +23,22 @@
 - Journey list view: Pagination, Searching, Ordering per column
 - For each journey show departure and return stations, covered distance in kilometers and duration in minutes
 - Easily extendable to show more columns
-- UI for adding journeys
+- UI for adding additional journeys
 - e2e tests
 
 ## Station Features
 
 - Import station data from the CSV files
 - Validate data before importing
-- Station list view: Pagination, Searching, Delete station
+- Station list view: Pagination, Searching
 - For each station show station names and addresses
 - Expandable row with Station details
+- UI for adding additional stations
+- e2e tests
+- Delete station
 
 ## Single Station View Features
 
-- Station name
-- Station address
 - Total number of journeys starting from the station
 - Total number of journeys ending at the station
 - Top 5 most popular return stations for journeys starting from the station
