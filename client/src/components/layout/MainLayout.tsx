@@ -5,6 +5,7 @@ import { Outlet } from 'react-router-dom'
 import Footer from './Components/Footer'
 import ScrollWrapper from './Components/ScrollWrapper'
 import Spinner from '../common/Spinner'
+import LoadingSidebar from './Components/LoadingSidebar'
 
 const Sidebar = lazy(() => import('./Components/Sidebar'))
 
@@ -27,13 +28,7 @@ const MainLayout = () => {
       <div className="col-span-2 row-span-auto">
         <Header handleSetSidebar={handleSetSidebar} />
       </div>
-      <Suspense
-        fallback={
-          <div className="fixed z-10 flex bg-white justify-center h-full w-56 items-center">
-            <Spinner show delay={500} />
-          </div>
-        }
-      >
+      <Suspense fallback={<LoadingSidebar />}>
         <aside className="fixed z-10 bottom-0 h-full overscroll-auto">
           {showSidebar && <Sidebar handleSetSidebar={handleSetSidebar} />}
         </aside>
