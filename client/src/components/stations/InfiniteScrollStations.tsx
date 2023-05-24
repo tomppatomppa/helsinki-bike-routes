@@ -118,6 +118,14 @@ const InfiniteScrollStations = () => {
               deleteStation={deleteStation}
             />
             <div ref={loadMoreRef}></div>
+            {hasNextPage && (
+              <button
+                className="hover:text-gray-500"
+                onClick={() => fetchNextPage()}
+              >
+                load more
+              </button>
+            )}
           </div>
         )}
       </div>

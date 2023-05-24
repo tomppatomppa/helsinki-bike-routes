@@ -75,6 +75,14 @@ const InfiniteScrollJourneys = () => {
           <div className={`max-w-3xl mx-auto ${isFetching && 'opacity-70'}`}>
             <JourneyTable data={rows} orderByColumn={orderByColumn} />
             <div ref={loadMoreRef}></div>
+            {hasNextPage && (
+              <button
+                className="hover:text-gray-500"
+                onClick={() => fetchNextPage()}
+              >
+                load more
+              </button>
+            )}
           </div>
         )}
       </div>
