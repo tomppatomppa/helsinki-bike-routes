@@ -135,7 +135,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                   >
                     Departure Date
                   </label>
-                  <div className="mt-2 border border-neutral-300">
+                  <div className="mt-2">
                     <DateTimePicker
                       selectedDate={values.Departure}
                       id="Departure"
@@ -157,7 +157,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                   >
                     Return Date
                   </label>
-                  <div className="mt-2  border border-neutral-300">
+                  <div className="mt-2">
                     <DateTimePicker
                       selectedDate={values.Return}
                       id="Return"

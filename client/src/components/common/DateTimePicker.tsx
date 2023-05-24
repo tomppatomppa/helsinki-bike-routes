@@ -17,6 +17,7 @@ const DateTimePicker = ({
 
   return (
     <DatePicker
+      className="block w-full rounded-md p-1.5 border border-neutral-300 text-gray-900"
       autoComplete="off"
       id={id}
       selected={selectedDate}

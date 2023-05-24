@@ -23,8 +23,10 @@ const JourneyFormInput = (props: JourneyFormInputProps) => {
   const handleBlur = () => {
     setIsFocused(false)
   }
+
   const handleItemClick = (station: StationNameAndID) => {
     onClick(station)
+    setSearchValue('')
     handleBlur()
   }
 
