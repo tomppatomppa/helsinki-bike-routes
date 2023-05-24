@@ -5,14 +5,13 @@
 </h1>
 
 <p align="center">
- 
-  <a href="#InfiniteScroll">InfiniteScroll Components</a>
- 
+  <a href="#InfiniteScroll">InfiniteScroll</a>,
+  <a href="#PerformanceOptimisation">Performance</a>
 </p>
 
-## InfiniteScroll Components Key features
+## InfiniteScroll Components
 
-Both components utilize `useInfiniteQuery` from [ReactQuery](https://tanstack.com/) to fetch data from the backend. The data is displayed using [ReactTable](https://react-table-v7.tanstack.com/). Both components have the same basic functionality. Some additional performance improvements could be achieved with virtualizing the list to only render visible rows.
+Both components utilize `useInfiniteQuery` from [ReactQuery](https://tanstack.com/) to fetch data from the backend. The data is displayed using [ReactTable](https://react-table-v7.tanstack.com/). Both components have the same basic functionality.
 
 ```jsx
 </InfiniteScrollStations>
@@ -40,12 +39,13 @@ The `useQueryParams` hook is a custom hook that provides functionality for manag
 
 ```
 
-The `StationTable` component is used to display station data in a table format. It takes three props:
+The `</StationTable>` component is used to display station data in a table format. It takes three props:
 
 - `data` (required): An array of `Station` objects representing the station data to be displayed.
 - `onClick` (required): A callback function that will be called when a station is clicked. It takes a `Station` object as a parameter.
 - `deleteStation` (required): A callback function that will be called when the delete button is clicked for a station. It takes the station ID as a parameter.
 - \*`orderByColumn` from `useQueryParams` could also be added as the backend supports sorting by column for stations.
+- Has expandable row component to display additional details about a station
 
 ```jsx
 
@@ -63,7 +63,7 @@ interface Props {
 
 ```
 
-The `JourneyTable` component is used to display journey data in a table format. It takes two props:
+The `</JourneyTable>` component is used to display journey data in a table format. It takes two props:
 
 - `data` (required): An array of `Journey` objects representing the journey data to be displayed.
 - `orderByColumn` (required): A callback function that will be called when a column header is clicked for sorting. It takes a `JourneyTableColumns` value as a parameter.
@@ -71,17 +71,25 @@ The `JourneyTable` component is used to display journey data in a table format. 
 Example usage:
 
 ```jsx
-import JourneyTable from './JourneyTable';
 
 interface JourneyTableProps {
-  data: Journey[];
-  orderByColumn: (value: JourneyTableColumns) => void;
+  data: Journey[]
+  orderByColumn: (value: JourneyTableColumns) => void
 }
 
-<JourneyTable
-  data={journeys}
-  orderByColumn={orderByColumn}
-/>
+<JourneyTable data={journeys} orderByColumn={orderByColumn} />
+```
+
+## Performance Optimisation
+
+To optimize loading times and improve the overall performance of the application, I used React's lazy and Suspense features. Specifically for `<InfiniteScrollStations>`, `<InfiniteScrollJourneys>` and `<Sidebar>`. Some additional performance improvements could be achieved with virtualizing the list to only render visible rows. When e.g scrolling down to the end of the StationTable, there is a noticeable delay when clicking on one of the rows. As selecting a row will cause the StationTable to rerender all the + 400 rows
+
+```jsx
+Using React Developer Tools shows following
+Render 50 rows = StationTable (15.2ms of 26.3ms)
+Render 400+ rows = StationTable (141.2ms of 225ms)
+```
+
 ## License
 
 MIT
@@ -89,5 +97,3 @@ MIT
 ---
 
 > GitHub [@tomppatomppa](https://github.com/tomppatomppa) &nbsp;&middot;&nbsp;
-
-```
