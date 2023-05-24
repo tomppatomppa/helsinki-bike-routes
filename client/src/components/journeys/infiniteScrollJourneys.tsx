@@ -11,6 +11,8 @@ import JourneyTable from './JourneyTable'
 import useQueryParams from '../../hooks/useQueryParams'
 import SearchBar from '../common/SearchBar'
 import { useDebounce } from 'use-debounce'
+import ErrorMessage from '../common/ErrorMessage'
+import Spinner from '../common/Spinner'
 
 const InfiniteScrollJourneys = () => {
   const { queryParams, orderByColumn, findByField, setSearch } =
@@ -58,17 +60,16 @@ const InfiniteScrollJourneys = () => {
   return (
     <div>
       <div className="min-h-auto overflow-y-auto divide-y">
-        {isError ? (
-          <p className="text-red-900">
-            There was a problem with fetching journeys
-          </p>
-        ) : null}
-        {isLoading ? <p>Fetching journeys</p> : null}
         <SearchBar
           options={['Departure_station_name', 'Return_station_name']}
           {...queryParams}
           findByField={findByField}
           setSearch={setSearch}
+        />
+        <Spinner show={isLoading} />
+        <ErrorMessage
+          show={isError}
+          text="There was a problem with fetching journeys"
         />
         {isSuccess && (
           <div className={`max-w-3xl mx-auto ${isFetching && 'opacity-70'}`}>
