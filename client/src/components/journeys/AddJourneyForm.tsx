@@ -77,7 +77,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                       data-testid="departure-input"
                       placeholder="Departure station name"
                       type="input"
-                      className="block w-full rounded-md py-1.5  border border-neutral-300 text-gray-900"
+                      className="block w-full rounded-md p-1.5  border border-neutral-300 text-gray-900"
                       component={JourneysFormInput}
                       value={values.Departure_station_name}
                       options={stations}
@@ -109,7 +109,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                       data-testid="return-input"
                       placeholder="Return station name"
                       type="input"
-                      className="block w-full rounded-md py-1.5 border border-neutral-300 text-gray-900"
+                      className="block w-full rounded-md p-1.5 border border-neutral-300 text-gray-900"
                       component={JourneysFormInput}
                       value={values.Return_station_name}
                       options={stations}
@@ -135,7 +135,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                   >
                     Departure Date
                   </label>
-                  <div className="mt-2  border border-neutral-300">
+                  <div className="mt-2 border border-neutral-300">
                     <DateTimePicker
                       selectedDate={values.Departure}
                       id="Departure"
@@ -189,7 +189,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                   <div className="mt-2 ">
                     <Field
                       disabled={true}
-                      className="block w-full rounded-md py-1.5  border border-neutral-300 text-gray-900"
+                      className="block w-full rounded-md p-1.5  border border-neutral-300 text-gray-900"
                       id="Duration_sec"
                       name="Duration_sec"
                       placeholder="Duration_sec"
@@ -211,7 +211,7 @@ export const AddJourneyForm = (props: JourneyFormProps) => {
                   </label>
                   <div className="mt-2">
                     <Field
-                      className="block w-full rounded-md py-1.5  border border-neutral-300 text-gray-900"
+                      className="block w-full rounded-md p-1.5  border border-neutral-300 text-gray-900"
                       id="Covered_distance_m"
                       name="Covered_distance_m"
                       placeholder="Covered_distance_m"

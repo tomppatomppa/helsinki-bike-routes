@@ -103,7 +103,7 @@ export const AddStationForm = (props: StationFormProps) => {
                   </label>
                   <div className="mt-2">
                     <Field
-                      className="block w-full rounded-md py-1.5 border border-neutral-300 text-gray-900"
+                      className="block w-full rounded-md p-1.5 border border-neutral-300 text-gray-900"
                       id="ID"
                       name="ID"
                       placeholder="ID"
@@ -133,7 +133,7 @@ export const AddStationForm = (props: StationFormProps) => {
                       id="Operaattor"
                       name="Operaattor"
                       placeholder="Operaattor"
-                      className="block w-full rounded-md py-1.5 border border-neutral-300 text-gray-900"
+                      className="block w-full rounded-md p-1.5 border border-neutral-300 text-gray-900"
                     />
                     <ErrorMessage className="text-red-900" name="Operaattor">
                       {(msg) => <div className="text-red-900">{msg}</div>}
@@ -154,7 +154,7 @@ export const AddStationForm = (props: StationFormProps) => {
                       id="Nimi"
                       name="Nimi"
                       placeholder="Nimi"
-                      className="block w-full rounded-md py-1.5 border border-neutral-300 text-gray-900"
+                      className="block w-full rounded-md p-1.5 border border-neutral-300 text-gray-900"
                     />
                     <ErrorMessage className="text-red-900" name="Nimi">
                       {(msg) => <div className="text-red-900">{msg}</div>}
@@ -175,7 +175,7 @@ export const AddStationForm = (props: StationFormProps) => {
                       id="Namn"
                       name="Namn"
                       placeholder="Namn"
-                      className="block w-full rounded-md py-1.5 border border-neutral-300 text-gray-900"
+                      className="block w-full rounded-md p-1.5 border border-neutral-300 text-gray-900"
                     />
                     <ErrorMessage className="text-red-900" name="Namn">
                       {(msg) => <div className="text-red-900">{msg}</div>}
@@ -196,7 +196,7 @@ export const AddStationForm = (props: StationFormProps) => {
                       id="Name"
                       name="Name"
                       placeholder="Name"
-                      className="block w-full rounded-md py-1.5 border border-neutral-300 text-gray-900"
+                      className="block w-full rounded-md p-1.5 border border-neutral-300 text-gray-900"
                     />
                     <ErrorMessage className="text-red-900" name="Name">
                       {(msg) => <div className="text-red-900">{msg}</div>}
@@ -214,7 +214,7 @@ export const AddStationForm = (props: StationFormProps) => {
                   </label>
                   <div className="mt-2">
                     <Field
-                      className="block w-full rounded-md py-1.5 border border-neutral-300 text-gray-900"
+                      className="block w-full rounded-md p-1.5 border border-neutral-300 text-gray-900"
                       id="Osoite"
                       name="Osoite"
                       placeholder="Osoite"
@@ -239,7 +239,7 @@ export const AddStationForm = (props: StationFormProps) => {
                       id="Adress"
                       name="Adress"
                       placeholder="Adress"
-                      className="block w-full rounded-md py-1.5 border border-neutral-300 text-gray-900"
+                      className="block w-full rounded-md p-1.5 border border-neutral-300 text-gray-900"
                     />
                     <ErrorMessage className="text-red-900" name="Adress">
                       {(msg) => <div className="text-red-900">{msg}</div>}
@@ -260,7 +260,7 @@ export const AddStationForm = (props: StationFormProps) => {
                       as="select"
                       id="Kaupunki"
                       name="Kaupunki"
-                      className="block w-full rounded-md py-1.5 border border-neutral-300 text-gray-900"
+                      className="block w-full rounded-md p-1.5 border border-neutral-300 text-gray-900"
                     >
                       <option value="">Select a city</option>
                       <option value="Helsinki">Helsinki</option>
@@ -286,7 +286,7 @@ export const AddStationForm = (props: StationFormProps) => {
                       as="select"
                       id="Stad"
                       name="Stad"
-                      className="block w-full rounded-md py-1.5 border border-neutral-300 text-gray-900"
+                      className="block w-full rounded-md p-1.5 border border-neutral-300 text-gray-900"
                     >
                       <option value="">Select a city</option>
                       <option value="Helsingfors">Helsingfors</option>
@@ -314,7 +314,7 @@ export const AddStationForm = (props: StationFormProps) => {
                       min={0}
                       placeholder="Kapasiteet"
                       type="number"
-                      className="block w-full rounded-md py-1.5 border border-neutral-300 text-gray-900"
+                      className="block w-full rounded-md p-1.5 border border-neutral-300 text-gray-900"
                     />
                     <ErrorMessage className="text-red-900" name="Kapasiteet">
                       {(msg) => <div className="text-red-900">{msg}</div>}
@@ -337,7 +337,7 @@ export const AddStationForm = (props: StationFormProps) => {
                         name="x"
                         placeholder="x"
                         type="number"
-                        className="block w-full rounded-md py-1.5 border border-neutral-300 text-gray-900"
+                        className="block w-full rounded-md p-1.5 border border-neutral-300 text-gray-900"
                       />
                       <ErrorMessage className="text-red-900" name="x">
                         {(msg) => <div className="text-red-900">{msg}</div>}
@@ -357,7 +357,7 @@ export const AddStationForm = (props: StationFormProps) => {
                         name="y"
                         placeholder="y"
                         type="number"
-                        className="block w-full rounded-md py-1.5 border border-neutral-300 text-gray-900"
+                        className="block w-full rounded-md p-1.5 border border-neutral-300 text-gray-900"
                       />
                       <ErrorMessage className="text-red-900" name="y">
                         {(msg) => <div className="text-red-900">{msg}</div>}

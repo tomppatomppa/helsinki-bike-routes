@@ -14,7 +14,6 @@ Journey.belongsTo(Station, {
   as: 'departureStation',
   targetKey: 'ID',
 })
-
 Station.hasMany(Journey, {
   foreignKey: 'Return_station_id',
   as: 'returns',
