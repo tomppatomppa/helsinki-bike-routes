@@ -25,6 +25,7 @@ const InfiniteScrollJourneys = () => {
     isError,
     fetchNextPage,
     hasNextPage,
+    isFetching,
   } = useInfiniteQuery<JourneysDataWithCursor>(
     ['journeys', searchValue, queryParams.order],
     ({ pageParam = 0 }) =>
@@ -70,7 +71,7 @@ const InfiniteScrollJourneys = () => {
           setSearch={setSearch}
         />
         {isSuccess && (
-          <div className="max-w-3xl mx-auto">
+          <div className={`max-w-3xl mx-auto ${isFetching && 'opacity-70'}`}>
             <JourneyTable data={rows} orderByColumn={orderByColumn} />
             <div ref={loadMoreRef}></div>
           </div>
