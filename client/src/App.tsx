@@ -1,5 +1,4 @@
 import { lazy, Suspense } from 'react'
-import InfiniteScrollStations from './components/stations/InfiniteScrollStations'
 
 import { Routes, Route } from 'react-router-dom'
 import MainLayout from './components/layout/MainLayout'
@@ -7,6 +6,9 @@ import Spinner from './components/common/Spinner'
 
 const InfiniteScrollJourneys = lazy(
   () => import('./components/journeys/infiniteScrollJourneys')
+)
+const InfiniteScrollStations = lazy(
+  () => import('./components/stations/InfiniteScrollStations')
 )
 
 function App() {
