@@ -1,4 +1,5 @@
 import { getFormattedDate } from '../../src/utils/getFormattedDate'
+
 describe('Journeys Table', () => {
   it('Search by options are correctly set', () => {
     cy.visit('/journeys')
