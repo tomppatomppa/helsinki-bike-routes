@@ -32,6 +32,7 @@ const InfiniteScrollStations = () => {
     isError,
     fetchNextPage,
     hasNextPage,
+    isFetching,
   } = useInfiniteQuery<StationDataWithCursor>(
     ['stations', searchValue],
     ({ pageParam = 0 }) =>
@@ -105,7 +106,11 @@ const InfiniteScrollStations = () => {
         ) : null}
         {isLoading ? <p>Fetching stations</p> : null}
         {isSuccess && (
-          <div className="max-w-6xl mx-auto max-h-[20vh]">
+          <div
+            className={`max-w-6xl mx-auto max-h-[20vh] ${
+              isFetching && 'opacity-70'
+            }`}
+          >
             <StationTable
               data={rows}
               onClick={handleSelectStation}
