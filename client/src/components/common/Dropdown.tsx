@@ -16,7 +16,9 @@ const Dropdown = (props: DropdownProps) => {
 
   return (
     <div>
-      <label htmlFor="dropdown">{title}</label>
+      <label className="mr-1" htmlFor="dropdown">
+        {title}
+      </label>
       <select id="dropdown" value={value} onChange={handleOnChange}>
         <option value="">--Please select an option--</option>
         {options?.map((item, index) => (

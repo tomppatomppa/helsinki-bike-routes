@@ -38,17 +38,23 @@ export const MonthSelector = ({ dates, setDates }: Props) => {
 
   return (
     <div>
-      <button className="p-2 border bg-neutral-300" onClick={handlePrevMonth}>
+      <button
+        className="p-2 border border-secondary bg-white"
+        onClick={handlePrevMonth}
+      >
         Previous Month
       </button>
       <span>{`${currentMonth}/${currentYear}`}</span>
-      <button className="p-2 border bg-neutral-300" onClick={handleNextMonth}>
+      <button
+        className="p-2 border border-secondary bg-white"
+        onClick={handleNextMonth}
+      >
         Next Month
       </button>
       {!currentDateApplied && (
         <button
           onClick={() => setDates({ startDate, endDate })}
-          className="p-2 border bg-green-300"
+          className="p-2 border bg-primary"
         >
           Apply
         </button>

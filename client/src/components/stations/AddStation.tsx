@@ -1,4 +1,5 @@
 import CloseButton from '../common/CloseButton'
+import ErrorMessage from '../common/ErrorMessage'
 import { AddStationForm } from './AddStationForm'
 
 import useCreateStation from './hooks/useCreateStation'
@@ -12,14 +13,15 @@ const AddStation = ({ setShowModal }: Props) => {
 
   return (
     <div className="relative bg-white flex rounded-md flex-col">
+      <ErrorMessage
+        show={isError}
+        text="There was a problem with adding station"
+      />
       {isSuccess && (
         <label className="text-xl bg-green-200">
           Succesfully added station
         </label>
       )}
-      {isError ? (
-        <p className="text-red-900">There was a problem with adding station</p>
-      ) : null}
       <div className="absolute top-0 right-0">
         <CloseButton onClick={() => setShowModal(false)} />
       </div>

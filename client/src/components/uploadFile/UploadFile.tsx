@@ -6,6 +6,7 @@ import UploadResults from './UploadResults'
 import ProgressBar from '../common/ProgressBar'
 import useUploadProgress from './hooks/useUploadProgres'
 import { MdOutlineFileUpload } from 'react-icons/md'
+import ErrorMessage from '../common/ErrorMessage'
 
 export type FILETYPE = 'stations' | 'journeys'
 
@@ -58,7 +59,7 @@ const UploadFile = () => {
       {!file && (
         <>
           <button
-            className="border p-2 mt-2 bg-gray-300 flex items-center"
+            className="border-2 p-2 mt-2 border-black flex items-center hover:border-primary"
             data-testid="upload-button"
             onClick={onUploadButtonClick}
           >
@@ -66,12 +67,9 @@ const UploadFile = () => {
           </button>
         </>
       )}
-      {isError ? (
-        <div className="text-red-900">
-          <p>There was a problem with uploading </p>
-          <p>Reason: {error?.response?.data.error}</p>
-        </div>
-      ) : null}
+      <ErrorMessage show={isError} text="There was a problem with uploading">
+        <p>Reason: {error?.response?.data.error}</p>
+      </ErrorMessage>
       {isLoading ? (
         <div>
           <p className="animate-pulse text-xl mt-12 text-red-900">

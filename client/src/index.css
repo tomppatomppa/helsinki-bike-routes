@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* index.css */
+@keyframes moveIcon {
+  0% {
+    transform: translateX(0) rotate(0deg);
+  }
+  50% {
+    transform: translateX(100px);
+  }
+
+  100% {
+    transform: translateX(0) rotate(-360deg);
+  }
+}
+
+.icon {
+  animation: moveIcon 6s infinite;
+}

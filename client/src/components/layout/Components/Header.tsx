@@ -8,7 +8,7 @@ const Header = ({ handleSetSidebar }: Props) => {
   return (
     <div
       id="header-element"
-      className="h-full  bg-neutral-400 p-2 shadow-lg flex items-center"
+      className="h-full  bg-primary p-2 shadow-lg flex items-center"
     >
       <button
         id="toggle-sidebar-button"

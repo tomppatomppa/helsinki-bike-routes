@@ -1,9 +1,15 @@
 interface ErrorMessageProps {
   show: boolean
   text: string
+  children?: JSX.Element
 }
 const ErrorMessage = (props: ErrorMessageProps) => {
-  return props.show ? <p className="text-red-900">{props.text}</p> : null
+  return props.show ? (
+    <div className="text-red-900">
+      <p>{props.text}</p>
+      {props.children}
+    </div>
+  ) : null
 }
 
 export default ErrorMessage

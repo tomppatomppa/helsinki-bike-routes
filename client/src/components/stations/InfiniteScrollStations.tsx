@@ -76,10 +76,10 @@ const InfiniteScrollStations = () => {
           <Map station={station} />
         </div>
       )}
-      <div className="self-start flex">
+      <div className="flex bg-secondary">
         <button
           onClick={() => setShowMap(!showMap)}
-          className="border p-2 bg-neutral-300 flex items-center"
+          className="border p-2 border-black bg-white flex items-center"
         >
           {showMap ? 'Hide Map' : 'Show Map'}
           <BsMap className="ml-2" />
@@ -87,7 +87,7 @@ const InfiniteScrollStations = () => {
         {station && (
           <button
             onClick={() => setStation(null)}
-            className="border p-2 bg-red-300 flex items-center"
+            className="border p-2 border-black bg-red-300 flex items-center"
           >
             Deselect
             <HiOutlineMapPin size={22} className="ml-2" />

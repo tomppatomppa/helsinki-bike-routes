@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { MonthSelector } from '../common/MonthSelector'
 import Checkbox from '../common/Checkbox'
 import StationDetailsComponent from './StationDetailsComponent'
+import ErrorMessage from '../common/ErrorMessage'
 
 interface Props {
   stationID: number
@@ -31,11 +32,10 @@ const StationDetailsView = (props: Props) => {
 
   return (
     <div className="bg-gray-200 sticky bottom-0 h-54">
-      {isError ? (
-        <p className="text-red-900">
-          There was a problem with fetching station
-        </p>
-      ) : null}
+      <ErrorMessage
+        show={isError}
+        text=" There was a problem with fetching station"
+      />
       {isChecked && <MonthSelector dates={dates} setDates={setDates} />}
       <Checkbox
         title="Filter By Month"
