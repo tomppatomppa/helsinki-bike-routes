@@ -17,19 +17,21 @@ const UploadFile = () => {
   const inputRef = useRef<HTMLInputElement | null>(null)
   const uploadProgress = useUploadProgress(isLoading)
 
-  const onUploadButtonClick = () => {
+  const openFileDialogWindow = () => {
     if (inputRef.current) {
       inputRef.current.click()
     }
   }
 
-  const handleSend = () => {
+  const handleSendFile = () => {
     if (!file || !filetype) return
     sendFile({ file, filetype: filetype })
-    handleRemove()
+    handleResetFile()
   }
 
-  const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSelectedFile = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     if (!event.target.files?.length) return
     const fileObj = event.target.files && event.target.files[0]
     const filetype = await readCsvFileHeaders(fileObj)
@@ -39,7 +41,7 @@ const UploadFile = () => {
     setFileType(filetype)
   }
 
-  const handleRemove = () => {
+  const handleResetFile = () => {
     setFile(null)
     setFileType(null)
   }
@@ -54,14 +56,14 @@ const UploadFile = () => {
         ref={inputRef}
         type="file"
         accept={'.csv'}
-        onChange={handleChange}
+        onChange={handleSelectedFile}
       />
       {!file && (
         <>
           <button
             className="border-2 p-2 mt-2 border-black flex items-center hover:border-primary"
             data-testid="upload-button"
-            onClick={onUploadButtonClick}
+            onClick={openFileDialogWindow}
           >
             <MdOutlineFileUpload className="mr-2" /> Upload File
           </button>
@@ -82,8 +84,8 @@ const UploadFile = () => {
         <FileDetails
           fileType={filetype}
           file={file}
-          handleSend={handleSend}
-          handleRemove={handleRemove}
+          handleSend={handleSendFile}
+          handleRemove={handleResetFile}
         />
       )}
       {data && <UploadResults data={data} />}
