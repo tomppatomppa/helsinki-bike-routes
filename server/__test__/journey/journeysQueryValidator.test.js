@@ -100,19 +100,19 @@ describe('journeysQueryValidator', () => {
         .query({ search_field: ['Invalid', 'Nimi'] })
         .expect(400)
     })
-    test('should return 200 when search_field empty', async () => {
+    test('should return 200 when search_field an empty array', async () => {
       await request(app)
         .get('/api/journeys')
         .query({ search_field: [] })
         .expect(200)
     })
-    test('should return 200 when search_field empty', async () => {
+    test('should return 200 when search_field empty and empty string', async () => {
       await request(app)
         .get('/api/journeys')
         .query({ search_field: '' })
         .expect(200)
     })
-    test('should return 200 when search_field empty', async () => {
+    test('should return 200 when search_field field is valid', async () => {
       await request(app)
         .get('/api/journeys')
         .query({ search_field: 'Departure_station_name' })
