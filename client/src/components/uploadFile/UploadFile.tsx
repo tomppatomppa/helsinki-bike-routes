@@ -59,15 +59,13 @@ const UploadFile = () => {
         onChange={handleSelectedFile}
       />
       {!file && (
-        <>
-          <button
-            className="border-2 p-2 mt-2 border-black flex items-center hover:border-primary"
-            data-testid="upload-button"
-            onClick={openFileDialogWindow}
-          >
-            <MdOutlineFileUpload className="mr-2" /> Upload File
-          </button>
-        </>
+        <button
+          className="border-2 p-2 mt-2 border-black flex items-center hover:border-primary"
+          data-testid="upload-button"
+          onClick={openFileDialogWindow}
+        >
+          <MdOutlineFileUpload className="mr-2" /> Upload File
+        </button>
       )}
       <ErrorMessage show={isError} text="There was a problem with uploading">
         <p>Reason: {error?.response?.data.error}</p>
