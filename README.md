@@ -69,14 +69,14 @@ $ psql -U postgres
 
 # Create databases
 $ CREATE DATABASE mydatabase;
-$ CREATE DATABASE my-testdatabase;
+$ CREATE DATABASE testdatabase;
 # Confirm they exist by running
 $ \l
 
 # Create a .env file in the /server folder with the following contents
 # local database connection string should look something like this.
 $ DATABASE_URL='postgres://postgres:<password>@localhost:5432/mydatabase'
-$ TEST_DATABASE_URL='postgres://postgres:<password>@localhost:5432/my-testdatabase'
+$ TEST_DATABASE_URL='postgres://postgres:<password>@localhost:5432/testdatabase'
 
 # Install dependencies
 $ npm install
