@@ -4,7 +4,7 @@
   <br>
 </h1>
 
-<h4 align="center">This web-based app that allows users to view data from journeys made with city bikes in the Helsinki Capital area. The platform will have both a user interface (UI) and a backend service. The UI allows users to upload large datasets or add individual Journeys and Stations <a href="https://nodejs.org/en" target="_blank">Node.js</a>, <a href="https://react.dev/" target="_blank">React</a>, <a href="https://www.typescriptlang.org/" target="_blank">Typescript</a>, <a href="https://tanstack.com/" target="_blank">React Query</a>, <a href="https://leafletjs.com/" target="_blank">Leaflet</a> and <a href="https://tailwindcss.com/" target="_blank">Tailwind</a>.</h4>
+<h4 align="center">This web-based app that allows users to view data from journeys made with city bikes in the Helsinki Capital area. The platform will have both a user interface (UI) and a backend service. The UI allows users to upload large datasets or add individual Journeys and Stations <a href="https://nodejs.org/en" target="_blank">Node.js</a>, <a href="https://react.dev/" target="_blank">React</a>, <a href="https://www.typescriptlang.org/" target="_blank">Typescript</a>, <a href="https://tanstack.com/" target="_blank">React Query</a>, <a href="https://leafletjs.com/" target="_blank">Leaflet</a>, <a href="https://www.postgresql.org/" target="_blank">Postgres</a>, <a href="https://sequelize.org/" target="_blank">Sequelize</a> and <a href="https://tailwindcss.com/" target="_blank">Tailwind</a>.</h4>
 
 <p align="center">
   <a href="#journey-features">Journey Features</a> •
@@ -48,7 +48,7 @@
 
 ## How To Use
 
-Everthing has been developed and tested on windows 10 pro
+Everything has been developed and tested on windows 10 pro
 
 > **Note**
 > For Windows only
@@ -150,17 +150,13 @@ $ npm run cy:open-e2e
 
 ```
 
-## Description
+## Client
 
-## Credits
+Client https://github.com/tomppatomppa/helsinki-bike-routes/tree/main/client
 
-This software uses the following open source packages:
+## Server
 
-- [Node.js](https://nodejs.org/en)
-- [React](https://react.dev/)
-- [Express](https://expressjs.com/)
-- [ReactQuery](https://tanstack.com/)
-- [Tailwind](https://tailwindcss.com/)
+Server https://github.com/tomppatomppa/helsinki-bike-routes/tree/main/server
 
 ## Live Website
 
