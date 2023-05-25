@@ -1,6 +1,5 @@
 import { useState, Suspense, lazy } from 'react'
 import Header from './Components/Header'
-// import Sidebar from './Components/Sidebar'
 import { Outlet } from 'react-router-dom'
 import Footer from './Components/Footer'
 import ScrollWrapper from './Components/ScrollWrapper'
