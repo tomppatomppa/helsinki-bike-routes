@@ -27,9 +27,9 @@ const Sidebar = ({ handleSetSidebar }: SidebarProps) => {
     <div
       id="sidebar-element"
       data-testid="sidebar-element"
-      className={`flex flex-col gap-5 bg-neutral-100 h-full w-56 px-6 py-4 divide-y-2`}
+      className={`flex flex-col gap-5 bg-neutral-100 h-full w-56 px-6 py-4 divide-y-2 border-r`}
     >
-      <nav className="flex flex-col items-start space-y-3 ">
+      <nav className="flex flex-col items-start space-y-3">
         <h5
           id="drawer-navigation-label"
           className="text-base font-semibold text-primary uppercase"
