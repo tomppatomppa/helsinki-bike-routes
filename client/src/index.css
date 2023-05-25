@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* index.css */
 @keyframes moveIcon {
   0% {
     transform: translateX(0) rotate(0deg);
