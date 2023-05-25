@@ -70,7 +70,7 @@ route.get('/', validateStationsQueryParams(), async (req, res) => {
     }
   }
 
-  const { offset = 0, limit } = req.query
+  const { offset, limit } = req.query
 
   const allStations = await Station.findAndCountAll({
     offset: offset,

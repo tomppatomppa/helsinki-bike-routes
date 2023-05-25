@@ -6,12 +6,14 @@
 
 <p align="center">
   <a href="#InfiniteScroll">InfiniteScroll</a>,
+  <a href="#InfiniteScroll">Upload</a>,
+  <a href="#InfiniteScroll">Forms</a>,
   <a href="#PerformanceOptimisation">Performance</a>
 </p>
 
 ## InfiniteScroll Components
 
-Both components utilize `useInfiniteQuery` from [ReactQuery](https://tanstack.com/) to fetch data from the backend. The data is displayed using [ReactTable](https://react-table-v7.tanstack.com/). Both components have the same basic functionality.
+Both components utilize `useInfiniteQuery` from [ReactQuery](https://tanstack.com/) to fetch data from the backend. The data is displayed using [ReactTable](https://react-table-v7.tanstack.com/). Both components have the same basic functionality. But different enough that I thought that it would be appropriate to create saperate components for both.<p> In hindsight I think having the map as the main focus would have been a good idea. For example in addition to display a single station, when clicking a journey you could see the start and return station on the map.
 
 ```jsx
 </InfiniteScrollStations>
@@ -49,7 +51,7 @@ The `</StationTable>` component is used to display station data in a table forma
 
 ```jsx
 
-interface Props {
+interface StationTableProps {
   data: Station[]
   onClick: (station: Station) => void
   deleteStation: (stationID: number) => void
@@ -80,9 +82,27 @@ interface JourneyTableProps {
 <JourneyTable data={journeys} orderByColumn={orderByColumn} />
 ```
 
+## Uploading files
+
+All the logic related to uploading files are in the `<UploadFile>` component. One problem I encountered uploading 100mb files to the server was the time it took for it complete and with no visual feedback I had to open the database logs to see if something was happening. I added an `useUploadProgress` hook for that purpose as an additional feature to improve user experience.
+
+<p></p> And in addition I didn't want seperate buttons to load Station and Journeys data. I wanted one upload functionality that would recognize what data is being uploaded. Sending the correct file to the correct endpoint ment just passing the filetype to the fetch function.
+
+```jsx
+//The function recognizes the filetype based on the headers.
+//It will return null if a file doesn't contain the appropriate headers
+const filetype = await readCsvFileHeaders(fileObj)
+```
+
+<p>
+
+## Forms
+
+The forms are built using `Formik` and form validation using `Yup`.
+
 ## Performance Optimisation
 
-To optimize loading times and improve the overall performance of the application, I used React's lazy and Suspense features. Specifically for `<InfiniteScrollStations>`, `<InfiniteScrollJourneys>` and `<Sidebar>`. Some additional performance improvements could be achieved with virtualizing the list to only render visible rows. When e.g scrolling down to the end of the StationTable, there is a noticeable delay when clicking on one of the rows. As selecting a row will cause the StationTable to rerender all the + 400 rows
+To optimize loading times and improve the overall performance of the application, I used React's lazy and Suspense features. Specifically for `<InfiniteScrollStations>`, `<InfiniteScrollJourneys>` and `<Sidebar>`.<p> Some additional performance improvements could be achieved with virtualizing the list to only render visible rows. When e.g scrolling down to the end of the StationTable, there is a noticeable delay when clicking on one of the rows. As selecting a row will cause the StationTable to rerender all the + 400 rows. Or alternatively (maybe a preferable solution) showing the data as pages instead of a infinite list.
 
 ```jsx
 Using React Developer Tools shows following

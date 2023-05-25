@@ -4,7 +4,7 @@
   <br>
 </h1>
 
-<h4 align="center">This web-based app that allows users to view data from journeys made with city bikes in the Helsinki Capital area. The platform will have both a user interface (UI) and a backend service. The UI allows users to easily navigate through the different features and view data about the city bike journeys. The backend service will be responsible for storing, validating, and processing the data from the city bike journeys. Users will be able to view a variety of data, such as the start and end locations of a journey, the duration and the distance covered by a journey. The app also include additional features, such as map view that allows users to visualize stations and see detailed statistics about a specific station. Built with <a href="https://nodejs.org/en" target="_blank">Node.js</a>, <a href="https://react.dev/" target="_blank">React</a>, <a href="https://www.typescriptlang.org/" target="_blank">Typescript</a>, <a href="https://tanstack.com/" target="_blank">React Query</a>, <a href="https://leafletjs.com/" target="_blank">Leaflet</a> and <a href="https://tailwindcss.com/" target="_blank">Tailwind</a>.</h4>
+<h4 align="center">This web-based app that allows users to view data from journeys made with city bikes in the Helsinki Capital area. The platform will have both a user interface (UI) and a backend service. The UI allows users to upload large datasets or add individual Journeys and Stations <a href="https://nodejs.org/en" target="_blank">Node.js</a>, <a href="https://react.dev/" target="_blank">React</a>, <a href="https://www.typescriptlang.org/" target="_blank">Typescript</a>, <a href="https://tanstack.com/" target="_blank">React Query</a>, <a href="https://leafletjs.com/" target="_blank">Leaflet</a> and <a href="https://tailwindcss.com/" target="_blank">Tailwind</a>.</h4>
 
 <p align="center">
   <a href="#journey-features">Journey Features</a> •
@@ -34,8 +34,8 @@
 - For each station show station names and addresses
 - Expandable row with Station details
 - UI for adding additional stations
+- UI for deleting stations
 - e2e tests
-- Delete station
 
 ## Single Station View Features
 
@@ -48,6 +48,8 @@
 
 ## How To Use
 
+Everthing has been developed and tested on windows 10 pro
+
 > **Note**
 > For Windows only
 
@@ -59,29 +61,39 @@ $ git clone https://github.com/tomppatomppa/helsinki-bike-routes.git
 # Go to server folder
 $ cd helsinki-bike-routes/server
 
-# Connect a postgres database
-# Create a .env file in the server folder with the following contents
-# Tested with https://api.elephantsql.com/ and local https://www.postgresql.org/
-# e.g 'postgres://postgres:<password>@localhost:5432/mydatabase' for local database connection
-$ DATABASE_URL="connectionstring"
-$ TEST_DATABASE_URL="testdatabaseurl"
+# How to setup local database
+# Download and install postgres https://www.postgresql.org/, (don't forget to set the password)
+# Login using the command line, <postgres> is the default user unless you specify something else
+$ psql -U postgres
+# Enter your password when asked
+
+# Create databases
+$ CREATE DATABASE mydatabase;
+$ CREATE DATABASE my-testdatabase;
+# Confirm they exist by running
+$ \l
+
+# Create a .env file in the /server folder with the following contents
+# local database connection string should look something like this.
+$ DATABASE_URL='postgres://postgres:<password>@localhost:5432/mydatabase'
+$ TEST_DATABASE_URL='postgres://postgres:<password>@localhost:5432/my-testdatabase'
 
 # Install dependencies
 $ npm install
 
-# Run script to create a client build
-# Or run the client seperately by going to /client folder and run npm start
+# Run script to create a client build. This will create a production build of the client and and start the server at port 3001
 $ npm run build:dev
-
-# Start server
-$ npm run dev
 
 # Open browser
 $ http://localhost:3001/
 
-# Populate the database with station.csv and journey.csv found in /client/data folder
-# Press menu icon -> Upload File -> /client/data/stations.csv
-# Upload File -> select /client/data/journeys.csv
+# Or run the client seperately by going to /client folder and run
+$ npm install
+$ npm run dev
+
+# Populate the database with small a small dataset found in station.csv and journey.csv found in /client/data folder
+# Press menu icon in the app -> Upload File -> /client/data/stations.csv
+# Upload File -> /client/data/journeys.csv
 ```
 
 ## Run Server Tests
