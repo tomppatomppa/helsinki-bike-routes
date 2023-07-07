@@ -7,6 +7,7 @@
     "test": "vitest",
     "dev": "vite",
     "build": "tsc && vite build",
+    "build:prod": "cd ../client && npm install && npm run build && xcopy /s /y /i dist ..\\server\\dist && rmdir /s /q dist && cd ../server",
     "cy:open-e2e": "cypress open --e2e --browser chrome",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
